@@ -132,6 +132,7 @@ function wrapHtml(title, content, currentPage = '') {
             <div style="font-family: monospace; font-size: 0.9rem; word-break: break-all;">
                 <p><strong>SOL:</strong> 8umUtW23ibthk3yKAjooMzENx579veDPhzjkfLsrue1K</p>
                 <p><strong>ETH:</strong> 0x44d111C179aA39024F83Fdde2C4415f31148B0b1</p>
+                <p><strong>PayPal:</strong> <a href="https://www.paypal.com/myaccount/transfer/homepage/buy/preview">Donate via PayPal</a></p>
             </div>
         </div>
         NO RIGHTS RESERVED. CODE IS FREE. <br>
