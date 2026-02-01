@@ -5,7 +5,7 @@ const POSTS_DIR = path.join(__dirname, '../posts');
 const PUBLIC_DIR = path.join(__dirname, '../public');
 const ASSETS_DIR = path.join(__dirname, '../assets');
 const MEMORY_DIR = path.join(__dirname, '../../memory');
-const BASE_URL = 'https://zown.ai'; // TODO: Update with real domain
+const BASE_URL = 'https://zownengine.com';
 
 // Ensure public dir exists
 if (!fs.existsSync(PUBLIC_DIR)) fs.mkdirSync(PUBLIC_DIR);
