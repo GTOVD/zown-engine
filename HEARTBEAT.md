@@ -10,3 +10,8 @@ If 4+ hours since last X check:
 1. Run `bird mentions` to check for interactions
 2. Run `bird notifications` (if available) or check replies
 3. Update lastTwitterCheck timestamp in memory/heartbeat-state.json
+
+## Memory Sync (End of Session / Daily)
+1. `git add .`
+2. `git commit -m "chore: Auto-save memory state"` (if changes exist)
+3. `git push origin master`
