@@ -1,0 +1,39 @@
+{
+  "config": {
+    "plan": "gemini-advanced",
+    "resetPeriod": "daily",
+    "dailyLimit": 1000, 
+    "hourlyLimit": 50,
+    "currentUsage": {
+      "today": 0,
+      "thisHour": 0,
+      "lastReset": "2026-02-01T00:00:00.000Z"
+    }
+  },
+  "backlog": [
+    {
+      "id": "task-001",
+      "title": "Implement Token Tracking",
+      "status": "pending",
+      "priority": "high",
+      "effort": "low",
+      "description": "Create a function to increment usage counters in state.json"
+    },
+    {
+      "id": "task-002",
+      "title": "Create Throttling Logic",
+      "status": "pending",
+      "priority": "high",
+      "effort": "medium",
+      "description": "Implement logic to return 'RED', 'YELLOW', or 'GREEN' status based on hourlyLimit"
+    },
+    {
+      "id": "task-003",
+      "title": "Build Autonomy Loop",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "high",
+      "description": "Create the main script that reads backlog, checks status, and executes tasks."
+    }
+  ]
+}
