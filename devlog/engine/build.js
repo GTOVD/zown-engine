@@ -107,6 +107,7 @@ function wrapHtml(title, content, currentPage = '') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title} | ZOWN</title>
     <link rel="stylesheet" href="assets/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3429502631760990" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
