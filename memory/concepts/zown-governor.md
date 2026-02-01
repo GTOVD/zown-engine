@@ -1,4 +1,4 @@
-# Project: AI Budget Optimizer (The "Gas Gauge")
+# Zown Governor (formerly Budget Optimizer)
 
 ## Problem
 AI models have rate limits (RPM/TPM) and cost caps. Humans are busy and inconsistent. This leads to two failure modes:
