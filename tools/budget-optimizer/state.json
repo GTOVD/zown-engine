@@ -124,6 +124,30 @@
       "effort": "medium",
       "description": "Define and publish the 'agent.json' standard in the repo root. Write a Devlog post announcing 'The Agent Standard' to attract collaborators.",
       "createdAt": "2026-02-02T04:10:00.000Z"
+    },
+    {
+      "id": "task-1770006045334",
+      "title": "Create Generic OpenClaw Dockerizer",
+      "priority": "high",
+      "description": "Build a GitHub repository for a generic 'Dockerizer App' that can containerize any OpenClaw AI. Implement the 'Soul Case' pattern (Compute Container + Memory Volume) as a standard. Goal: Allow any user to run 'npx openclaw-dockerize' and get a deployment-ready setup.",
+      "status": "pending",
+      "createdAt": "2026-02-02T04:20:45.334Z"
+    },
+    {
+      "id": "task-1770006149735",
+      "title": "Fix Twitter Cron Hallucination",
+      "priority": "medium",
+      "description": "Investigate why the Twitter Agent's output log said 'Next check in 4 hours' when the schedule is actually 1 hour. Fix the hardcoded string in the cron payload.",
+      "status": "pending",
+      "createdAt": "2026-02-02T04:22:29.735Z"
+    },
+    {
+      "id": "task-1770006153682",
+      "title": "Audit Cron Job Notifications",
+      "priority": "medium",
+      "description": "Audit all active cron jobs (Moltbook, Elastic Worker, Reflector, etc.) to ensure they all have consistent Discord reporting logic. Verify none are missing status updates.",
+      "status": "pending",
+      "createdAt": "2026-02-02T04:22:33.682Z"
     }
   ]
 }
