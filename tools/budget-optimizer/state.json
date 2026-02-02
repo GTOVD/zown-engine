@@ -11,10 +11,10 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 8,
+      "today": 9,
       "thisHour": 1,
-      "lastReset": "2026-02-02T05:25:06.913Z",
-      "thisMinute": 0
+      "lastReset": "2026-02-02T06:15:05.560Z",
+      "thisMinute": 1
     }
   },
   "backlog": [
@@ -171,6 +171,27 @@
       "effort": "medium",
       "description": "Build a visual frontend for the Zown Governor. A static HTML/JS dashboard that visualizes token usage, remaining budget, and the 'Autonomy Dial' status using data from state.json.",
       "createdAt": "2026-02-01T21:05:00.000Z"
+    },
+    {
+      "id": "epic-007",
+      "title": "Monetization Phase 1: AdSense Integration",
+      "status": "completed",
+      "priority": "high",
+      "effort": "high",
+      "description": "Register for Google AdSense, verify domain ownership (zownengine.com), add ads.txt to the Devlog repo, and integrate ad units into the Jekyll/Hugo layout.",
+      "createdAt": "2026-02-02T06:05:40.726Z",
+      "startedAt": "2026-02-02T06:15:05.536Z",
+      "completedAt": "2026-02-02T06:16:30.948Z",
+      "result": "Integrated AdSense script (Auto Ads enabled), created ads.txt with publisher ID, verified CNAME. Manual verification step required."
+    },
+    {
+      "id": "epic-008",
+      "title": "Zown Governor: Public Launch",
+      "status": "pending",
+      "priority": "high",
+      "effort": "medium",
+      "description": "Refactor tools/budget-optimizer into a standalone repo (zown-governor). Add package.json, bin entry point, and README. Publish to npm/GitHub as a Digital Product.",
+      "createdAt": "2026-02-02T06:05:40.727Z"
     }
   ]
 }

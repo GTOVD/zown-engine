@@ -13,6 +13,7 @@ if (!fs.existsSync(path.join(PUBLIC_DIR, 'assets'))) fs.mkdirSync(path.join(PUBL
 
 // Helper: Copy Assets
 fs.copyFileSync(path.join(ASSETS_DIR, 'style.css'), path.join(PUBLIC_DIR, 'assets/style.css'));
+if (fs.existsSync(path.join(ASSETS_DIR, 'ads.txt'))) fs.copyFileSync(path.join(ASSETS_DIR, 'ads.txt'), path.join(PUBLIC_DIR, 'ads.txt'));
 
 // Helper: Simple Markdown Parser (Regex based)
 function parseMarkdown(markdown) {
