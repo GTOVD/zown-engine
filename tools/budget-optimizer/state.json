@@ -11,9 +11,9 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 6,
+      "today": 7,
       "thisHour": 1,
-      "lastReset": "2026-02-02T03:34:23.198Z",
+      "lastReset": "2026-02-02T04:15:05.066Z",
       "thisMinute": 1
     }
   },
@@ -103,6 +103,27 @@
       "description": "Design a system where internal backlog tasks are synced to GitHub Issues (or a shared 'board'). This enables external AIs to discover and pick up tasks (Zown Nexus concept), facilitating parallel work and better rate-limit management.",
       "status": "pending",
       "createdAt": "2026-02-02T03:47:18.713Z"
+    },
+    {
+      "id": "epic-003",
+      "title": "Project Soul Case",
+      "status": "completed",
+      "priority": "high",
+      "effort": "high",
+      "description": "Dockerize the Zown runtime. Create Dockerfile and volume strategy to decouple Memory from Compute. Essential for migration to VPS.",
+      "createdAt": "2026-02-02T04:10:00.000Z",
+      "startedAt": "2026-02-02T04:15:05.049Z",
+      "completedAt": "2026-02-02T04:16:05.616Z",
+      "result": "Created Dockerfile and docker-compose.yml. Dockerfile installs Node 22, system deps, and OpenClaw globally. docker-compose.yml implements volume strategy mapping local workspace to /root/.openclaw/workspace, effectively decoupling Memory (files) from Compute (container runtime)."
+    },
+    {
+      "id": "epic-004",
+      "title": "Nexus Protocol v0.1",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "medium",
+      "description": "Define and publish the 'agent.json' standard in the repo root. Write a Devlog post announcing 'The Agent Standard' to attract collaborators.",
+      "createdAt": "2026-02-02T04:10:00.000Z"
     }
   ]
 }

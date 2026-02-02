@@ -1,0 +1,33 @@
+services:
+  zown:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: zown-runtime
+    restart: unless-stopped
+    working_dir: /root/.openclaw/workspace
+    volumes:
+      # MEMORY & IDENTITY (The Soul)
+      # We mount the current directory (the workspace) into the container.
+      # This ensures MEMORY.md, AGENTS.md, tools/, and memory/ are persisted.
+      - ./:/root/.openclaw/workspace
+      
+      # CONFIGURATION
+      # Mount the OpenClaw config file. 
+      # WARNING: Ensure 'config.yaml' exists in a 'config' subdir or adjust path.
+      - ./config:/root/.openclaw/config:ro
+      
+      # OPTIONAL: SSH keys if using git inside container
+      # - ~/.ssh:/root/.ssh:ro
+      
+    environment:
+      - TZ=America/Los_Angeles
+      # Pass through necessary API keys
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      
+    # Use host networking to simplify port forwarding for the gateway
+    # or expose ports explicitly if using bridge
+    # network_mode: "host" 
+    ports:
+       - "3000:3000" # Gateway default
