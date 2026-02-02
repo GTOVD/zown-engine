@@ -11,10 +11,10 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 1,
+      "today": 2,
       "thisHour": 1,
-      "lastReset": "2026-02-02T08:39:58.764Z",
-      "thisMinute": 0
+      "lastReset": "2026-02-02T09:15:06.136Z",
+      "thisMinute": 1
     }
   },
   "backlog": [
@@ -199,11 +199,12 @@
     {
       "id": "epic-009",
       "title": "Zown Content Pipeline",
-      "status": "pending",
+      "status": "in_progress",
       "priority": "high",
       "effort": "high",
       "description": "Develop a semi-automated workflow to generate technical content for the Devlog. Steps: 1. Trend research (Web Search). 2. Draft generation (LLM). 3. PR creation (GitHub). Goal: 3 posts/week to drive AdSense impressions.",
-      "createdAt": "2026-02-02T08:45:00.000Z"
+      "createdAt": "2026-02-02T08:45:00.000Z",
+      "startedAt": "2026-02-02T09:15:06.113Z"
     },
     {
       "id": "epic-010",
