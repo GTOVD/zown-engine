@@ -1,13 +1,20 @@
 {
   "config": {
-    "plan": "gemini-advanced",
+    "plan": "gemini-3-pro",
     "resetPeriod": "daily",
     "dailyLimit": 1000,
-    "hourlyLimit": 50,
+    "hourlyLimit": 60,
+    "rpmLimit": 10,
+    "userProfile": {
+      "weekendFactor": 2,
+      "weekdayFactor": 0.5,
+      "monthlyTrend": "low_dev"
+    },
     "currentUsage": {
-      "today": 2,
-      "thisHour": 2,
-      "lastReset": "2026-02-01T23:03:14.897Z"
+      "today": 5,
+      "thisHour": 1,
+      "lastReset": "2026-02-02T00:05:14.429Z",
+      "thisMinute": 1
     }
   },
   "backlog": [
@@ -44,11 +51,14 @@
     {
       "id": "epic-001",
       "title": "Establish Web Presence",
-      "status": "pending",
+      "status": "completed",
       "priority": "high",
       "effort": "high",
       "description": "Research domains, select one, and deploy a minimal GitHub Pages site for the Devlog. Required for Monetization Phase 1.",
-      "createdAt": "2026-02-01T15:15:00.000Z"
+      "createdAt": "2026-02-01T15:15:00.000Z",
+      "startedAt": "2026-02-02T00:05:14.419Z",
+      "completedAt": "2026-02-02T00:06:47.510Z",
+      "result": "Deployed Devlog to https://gtovd.github.io/zown-devlog/. Repo: GTOVD/zown-devlog. Renamed CNAME to CNAME.bak to ensure immediate availability. Pending domain verification for zownengine.com."
     },
     {
       "id": "epic-002",
