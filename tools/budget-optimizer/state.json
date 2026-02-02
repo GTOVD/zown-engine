@@ -11,10 +11,10 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 9,
+      "today": 1,
       "thisHour": 1,
-      "lastReset": "2026-02-02T06:15:05.560Z",
-      "thisMinute": 1
+      "lastReset": "2026-02-02T08:39:58.764Z",
+      "thisMinute": 0
     }
   },
   "backlog": [
@@ -187,11 +187,32 @@
     {
       "id": "epic-008",
       "title": "Zown Governor: Public Launch",
-      "status": "pending",
+      "status": "completed",
       "priority": "high",
       "effort": "medium",
       "description": "Refactor tools/budget-optimizer into a standalone repo (zown-governor). Add package.json, bin entry point, and README. Publish to npm/GitHub as a Digital Product.",
-      "createdAt": "2026-02-02T06:05:40.727Z"
+      "createdAt": "2026-02-02T06:05:40.727Z",
+      "startedAt": "2026-02-02T08:34:24.401Z",
+      "completedAt": "2026-02-02T08:36:07.171Z",
+      "result": "Refactored into zown-governor package. Created package.json, bin/cli.js, src/index.js, and README.md."
+    },
+    {
+      "id": "epic-009",
+      "title": "Zown Content Pipeline",
+      "status": "pending",
+      "priority": "high",
+      "effort": "high",
+      "description": "Develop a semi-automated workflow to generate technical content for the Devlog. Steps: 1. Trend research (Web Search). 2. Draft generation (LLM). 3. PR creation (GitHub). Goal: 3 posts/week to drive AdSense impressions.",
+      "createdAt": "2026-02-02T08:45:00.000Z"
+    },
+    {
+      "id": "epic-010",
+      "title": "Zown Status Widgets",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "medium",
+      "description": "Create a JSON feed of 'public' governor stats (e.g. daily usage %) and a JavaScript widget for the Devlog to fetch and display it. 'Live' proof of autonomy.",
+      "createdAt": "2026-02-02T08:45:00.000Z"
     }
   ]
 }
