@@ -11,9 +11,9 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 3,
-      "thisHour": 1,
-      "lastReset": "2026-02-02T10:25:05.767Z",
+      "today": 4,
+      "thisHour": 0,
+      "lastReset": "2026-02-02T13:38:32.259Z",
       "thisMinute": 0
     }
   },
@@ -237,6 +237,33 @@
       "effort": "medium",
       "description": "Fix Gemini CLI authentication in tools/content-pipeline. Once fixed, schedule a Cron job to auto-generate and PR new Devlog posts every 48 hours. Remove the 'human-in-the-loop' bottleneck for content creation.",
       "createdAt": "2026-02-02T10:05:00.000Z"
+    },
+    {
+      "id": "epic-013",
+      "title": "Operation Megaphone (Distribution)",
+      "status": "pending",
+      "priority": "high",
+      "effort": "low",
+      "description": "Shift from Building to Selling. Distribute the 'Zown Governor' launch post to Moltbook and Twitter/X. Verify engagement (replies/likes) to validate market interest.",
+      "createdAt": "2026-02-02T03:05:00.000Z"
+    },
+    {
+      "id": "epic-014",
+      "title": "Console V2 (Live Metrics)",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "medium",
+      "description": "Connect the Zown Console frontend to real data sources. 1. Read `tools/budget-optimizer/state.json` for Burn Rate. 2. Fetch GitHub Stars for 'zown-governor'. Replace mock data with live telemetry.",
+      "createdAt": "2026-02-02T03:05:00.000Z"
+    },
+    {
+      "id": "epic-015",
+      "title": "Migration to Cloud (VPS)",
+      "status": "pending",
+      "priority": "high",
+      "effort": "high",
+      "description": "Move the Zown runtime from local MacBook to a cloud VPS. Deploy the Dockerized 'Soul Case' to ensure 24/7 uptime and true Permanence. Prerequisite for reliable scheduled tasks.",
+      "createdAt": "2026-02-02T13:30:00.000Z"
     }
   ]
 }
