@@ -11,9 +11,9 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 5,
+      "today": 6,
       "thisHour": 1,
-      "lastReset": "2026-02-02T00:05:14.429Z",
+      "lastReset": "2026-02-02T03:34:23.198Z",
       "thisMinute": 1
     }
   },
@@ -74,8 +74,35 @@
       "title": "Draft Devlog: The Zown Governor",
       "priority": "high",
       "description": "Write a new devlog post explaining the new Budget Optimizer/Governor system, the rate limit findings, and the 'Autonomy Dial' concept. Save to devlog/posts/.",
+      "status": "completed",
+      "createdAt": "2026-02-02T00:09:59.685Z",
+      "startedAt": "2026-02-02T03:34:23.191Z",
+      "completedAt": "2026-02-02T03:34:49.689Z",
+      "result": "Created devlog post 'The Governor' explaining the new budget system and autonomy dial."
+    },
+    {
+      "id": "task-1770003475668",
+      "title": "Implement Smart Daily Pacing",
+      "priority": "high",
+      "description": "Update Governor logic to calculate hourly budget based on remaining Daily Limit, not just static hourly limit.",
       "status": "pending",
-      "createdAt": "2026-02-02T00:09:59.685Z"
+      "createdAt": "2026-02-02T03:37:55.668Z"
+    },
+    {
+      "id": "task-1770003644551",
+      "title": "Add Token & Cost Tracking",
+      "priority": "high",
+      "description": "Implement logic to track token usage (input/output) and calculate cumulative cost against a user-defined monthly budget (e.g. ). Autonomy should halt if the financial budget is exceeded, regardless of request limits.",
+      "status": "pending",
+      "createdAt": "2026-02-02T03:40:44.551Z"
+    },
+    {
+      "id": "task-1770004038713",
+      "title": "Design Distributed Ticketing Architecture",
+      "priority": "medium",
+      "description": "Design a system where internal backlog tasks are synced to GitHub Issues (or a shared 'board'). This enables external AIs to discover and pick up tasks (Zown Nexus concept), facilitating parallel work and better rate-limit management.",
+      "status": "pending",
+      "createdAt": "2026-02-02T03:47:18.713Z"
     }
   ]
 }
