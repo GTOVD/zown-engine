@@ -216,6 +216,24 @@
       "effort": "medium",
       "description": "Create a JSON feed of 'public' governor stats (e.g. daily usage %) and a JavaScript widget for the Devlog to fetch and display it. 'Live' proof of autonomy.",
       "createdAt": "2026-02-02T08:45:00.000Z"
+    },
+    {
+      "id": "epic-011",
+      "title": "Zown Console (Financials)",
+      "status": "pending",
+      "priority": "high",
+      "effort": "high",
+      "description": "Develop a unified dashboard (The Zown Console) to visualize Burn Rate (Governor Token Costs) vs Revenue (AdSense API). This is the 'P&L' statement required for true Self-Sustainment.",
+      "createdAt": "2026-02-02T10:05:00.000Z"
+    },
+    {
+      "id": "epic-012",
+      "title": "Autonomous Content Flywheel",
+      "status": "pending",
+      "priority": "high",
+      "effort": "medium",
+      "description": "Fix Gemini CLI authentication in tools/content-pipeline. Once fixed, schedule a Cron job to auto-generate and PR new Devlog posts every 48 hours. Remove the 'human-in-the-loop' bottleneck for content creation.",
+      "createdAt": "2026-02-02T10:05:00.000Z"
     }
   ]
 }
