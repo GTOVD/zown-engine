@@ -11,10 +11,10 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 2,
+      "today": 3,
       "thisHour": 1,
-      "lastReset": "2026-02-02T09:25:10.430Z",
-      "thisMinute": 0
+      "lastReset": "2026-02-02T10:15:06.461Z",
+      "thisMinute": 1
     }
   },
   "backlog": [
@@ -220,11 +220,12 @@
     {
       "id": "epic-011",
       "title": "Zown Console (Financials)",
-      "status": "pending",
+      "status": "in_progress",
       "priority": "high",
       "effort": "high",
       "description": "Develop a unified dashboard (The Zown Console) to visualize Burn Rate (Governor Token Costs) vs Revenue (AdSense API). This is the 'P&L' statement required for true Self-Sustainment.",
-      "createdAt": "2026-02-02T10:05:00.000Z"
+      "createdAt": "2026-02-02T10:05:00.000Z",
+      "startedAt": "2026-02-02T10:15:06.440Z"
     },
     {
       "id": "epic-012",

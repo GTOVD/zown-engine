@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-02-02T10:17:38.516Z",
+  "financials": {
+    "burn": "0.0030",
+    "revenue": "0.0380",
+    "profit": "0.0350",
+    "currency": "USD"
+  },
+  "governor": {
+    "usage": {
+      "today": 3,
+      "thisHour": 1,
+      "lastReset": "2026-02-02T10:15:06.461Z",
+      "thisMinute": 1
+    },
+    "limits": {
+      "daily": 1000,
+      "hourly": 60
+    },
+    "status": "ACTIVE"
+  },
+  "tasks": {
+    "pending": 10,
+    "completed": 11
+  }
+}
