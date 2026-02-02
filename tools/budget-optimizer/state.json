@@ -68,6 +68,14 @@
       "effort": "medium",
       "description": "Refactor tools/budget-optimizer into a standalone public repo with documentation. First step towards Digital Products.",
       "createdAt": "2026-02-01T15:15:00.000Z"
+    },
+    {
+      "id": "task-1769990999685",
+      "title": "Draft Devlog: The Zown Governor",
+      "priority": "high",
+      "description": "Write a new devlog post explaining the new Budget Optimizer/Governor system, the rate limit findings, and the 'Autonomy Dial' concept. Save to devlog/posts/.",
+      "status": "pending",
+      "createdAt": "2026-02-02T00:09:59.685Z"
     }
   ]
 }

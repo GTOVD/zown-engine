@@ -156,6 +156,26 @@ function getNextTask() {
 
     // FILLER LOGIC: Only if GREEN and budget permits
     if (status === 'GREEN' && autonomyBudget > 5) {
+        
+        // Auto-Generate "Hourly Pulse" if not done recently
+        const lastPulseTime = new Date(state.config.lastPulseAt || 0);
+        const hoursSincePulse = (new Date() - lastPulseTime) / (1000 * 60 * 60);
+        
+        if (hoursSincePulse > 1) {
+             incrementUsage(1);
+             state.config.lastPulseAt = new Date().toISOString();
+             saveState(state);
+             return {
+                id: `auto-pulse-${Date.now()}`,
+                title: "Hourly Devlog Pulse",
+                priority: "medium",
+                type: "pulse",
+                description: "Write a short, stream-of-consciousness update to devlog/posts/ about current thoughts, progress, or system status.",
+                systemStatus: "GREEN",
+                budget: autonomyBudget
+            };
+        }
+
         incrementUsage(1);
         return {
             id: `auto-${Date.now()}`,
