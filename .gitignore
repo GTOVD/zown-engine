@@ -10,3 +10,4 @@ node_modules/
 # System
 .openclaw/
 memory/wallet_secrets_DO_NOT_COMMIT.md
+config/
