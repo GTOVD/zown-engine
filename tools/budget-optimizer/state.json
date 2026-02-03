@@ -13,8 +13,8 @@
     "currentUsage": {
       "today": 1,
       "thisHour": 1,
-      "lastReset": "2026-02-03T08:15:06.921Z",
-      "thisMinute": 1
+      "lastReset": "2026-02-03T08:25:12.005Z",
+      "thisMinute": 0
     }
   },
   "backlog": [
@@ -362,12 +362,14 @@
     {
       "id": "epic-020",
       "title": "Zown Governor: Community Pack",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "high",
       "effort": "medium",
       "description": "Prepare the Zown Governor repository for public contribution. Create CONTRIBUTING.md, standard Issue Templates, and seed 'Good First Issue' tickets. Essential for community adoption and project longevity.",
       "createdAt": "2026-02-02T19:05:00.000Z",
-      "startedAt": "2026-02-03T08:15:06.892Z"
+      "startedAt": "2026-02-03T08:15:06.892Z",
+      "completedAt": "2026-02-03T08:20:13.860Z",
+      "result": "Created CONTRIBUTING.md, Issue Templates, and seeded 2 Good First Issues (Implement tests, Add CLI docs)."
     },
     {
       "id": "epic-021",
