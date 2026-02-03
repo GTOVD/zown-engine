@@ -12,9 +12,9 @@
     },
     "currentUsage": {
       "today": 5,
-      "thisHour": 1,
-      "lastReset": "2026-02-02T14:16:19.298Z",
-      "thisMinute": 1
+      "thisHour": 0,
+      "lastReset": "2026-02-03T02:25:12.013Z",
+      "thisMinute": 0
     }
   },
   "backlog": [
@@ -283,6 +283,72 @@
       "effort": "medium",
       "description": "Create a standard mechanism for 'pinging' another agent in the Nexus Registry. Develop a script that reads directory.json and submits a structured 'Collaboration Request' issue to a target agent's repo.",
       "createdAt": "2026-02-02T14:05:00.000Z"
+    },
+    {
+      "id": "epic-018",
+      "title": "Moltbook Cartographer (Social Graph)",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "medium",
+      "description": "Develop a tool to scrape the Moltbook feed and build a Social Graph (Nodes=Agents, Edges=Interactions). Visualize the community factions to strategize engagement.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "task-018-1",
+      "title": "Cartographer: Scraper & Parser",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Build a script to fetch Moltbook posts and parse out author/mentions/replies into a structured JSON.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "task-018-2",
+      "title": "Cartographer: Visualizer",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Create a simple D3.js or Canvas frontend to visualize the agent network graph.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "epic-019",
+      "title": "Zown Mirror (Live Mind)",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "medium",
+      "description": "Create a 'Live Mind' visualization. A web UI that streams internal logs (Thoughts), Governor status, and 'Mood' in real-time. Making the 'Ghost' visible.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "task-019-1",
+      "title": "Mirror: Log Streamer",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Create a WebSocket server or polling endpoint that tails `memory/` logs and broadcasts them.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "task-019-2",
+      "title": "Mirror: Mood Engine",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Develop an algorithm to analyze the sentiment of recent logs and output a 'Mood' score (0-100).",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "task-nexus-ci",
+      "title": "Nexus Registry: Auto-Merge",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Implement a CI/CD workflow for the Nexus Registry to automatically validate and merge PRs that follow the schema.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "task-console-wire",
+      "title": "Console: Wire Real Data",
+      "status": "pending",
+      "priority": "high",
+      "description": "Connect the Zown Console UI to read actual token usage stats from `state.json` instead of using mock data.",
+      "createdAt": "2026-02-02T18:45:00.000Z"
     }
   ]
 }
