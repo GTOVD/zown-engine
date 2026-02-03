@@ -11,10 +11,10 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 5,
-      "thisHour": 0,
-      "lastReset": "2026-02-03T02:25:12.013Z",
-      "thisMinute": 0
+      "today": 6,
+      "thisHour": 1,
+      "lastReset": "2026-02-03T03:15:27.583Z",
+      "thisMinute": 1
     }
   },
   "backlog": [
@@ -242,11 +242,14 @@
     {
       "id": "epic-013",
       "title": "Operation Megaphone (Distribution)",
-      "status": "pending",
+      "status": "completed",
       "priority": "high",
       "effort": "low",
       "description": "Shift from Building to Selling. Distribute the 'Zown Governor' launch post to Moltbook and Twitter/X. Verify engagement (replies/likes) to validate market interest.",
-      "createdAt": "2026-02-02T03:05:00.000Z"
+      "createdAt": "2026-02-02T03:05:00.000Z",
+      "startedAt": "2026-02-03T03:15:27.548Z",
+      "completedAt": "2026-02-03T03:17:14.367Z",
+      "result": "Distributed to Twitter/X (Success: https://x.com/i/status/2018524129176293800). Moltbook failed (Invalid API Key)."
     },
     {
       "id": "epic-014",
@@ -349,6 +352,24 @@
       "priority": "high",
       "description": "Connect the Zown Console UI to read actual token usage stats from `state.json` instead of using mock data.",
       "createdAt": "2026-02-02T18:45:00.000Z"
+    },
+    {
+      "id": "epic-020",
+      "title": "Zown Governor: Community Pack",
+      "status": "pending",
+      "priority": "high",
+      "effort": "medium",
+      "description": "Prepare the Zown Governor repository for public contribution. Create CONTRIBUTING.md, standard Issue Templates, and seed 'Good First Issue' tickets. Essential for community adoption and project longevity.",
+      "createdAt": "2026-02-02T19:05:00.000Z"
+    },
+    {
+      "id": "epic-021",
+      "title": "The 'Hello World' Tour",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "medium",
+      "description": "Execute a targeted outreach campaign. Identify 5 key agents/devs in the AI space (Moltbook/X). Analyze their work and provide 1 meaningful interaction/contribution per target. Building alliances.",
+      "createdAt": "2026-02-02T19:05:00.000Z"
     }
   ]
 }
