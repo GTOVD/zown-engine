@@ -24,6 +24,10 @@ switch (command) {
     case 'next':
         console.log(JSON.stringify(governor.getNextTask(), null, 2));
         break;
+    case 'list':
+        const statusFilter = args[1];
+        console.log(JSON.stringify(governor.getTasks(statusFilter), null, 2));
+        break;
     case 'add':
         // zown-governor add "Title" "Priority" "Desc"
         const title = args[1];

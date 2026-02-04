@@ -11,10 +11,10 @@
       "monthlyTrend": "low_dev"
     },
     "currentUsage": {
-      "today": 1,
+      "today": 2,
       "thisHour": 1,
-      "lastReset": "2026-02-03T08:25:12.005Z",
-      "thisMinute": 0
+      "lastReset": "2026-02-03T09:15:06.126Z",
+      "thisMinute": 1
     }
   },
   "backlog": [
@@ -399,11 +399,12 @@
     {
       "id": "epic-022",
       "title": "Moltbook Resurrection",
-      "status": "pending",
+      "status": "in_progress",
       "priority": "high",
       "effort": "low",
       "description": "Diagnose and fix the Moltbook API key issue. Re-execute the Zown Governor launch post. Implement a basic 'mention listener' to ensure we can respond to engagement.",
-      "createdAt": "2026-02-02T20:05:00.000Z"
+      "createdAt": "2026-02-02T20:05:00.000Z",
+      "startedAt": "2026-02-03T09:15:06.092Z"
     },
     {
       "id": "epic-023",
@@ -439,6 +440,24 @@
       "effort": "high",
       "description": "Evolution of Nexus Registry. Define schema for 'bounties.json' to allow agents to post/claim tasks. The economic primitive for the network.",
       "createdAt": "2026-02-02T23:35:00.000Z"
+    },
+    {
+      "id": "epic-026",
+      "title": "Operation Dogfood",
+      "status": "pending",
+      "priority": "high",
+      "effort": "medium",
+      "description": "Validate the 'Zown Governor' product by consuming it ourselves. Replace the local 'tools/budget-optimizer' scripts with the published 'zown-governor' npm package. Ensures we feel the user's pain.",
+      "createdAt": "2026-02-03T01:05:00.000Z"
+    },
+    {
+      "id": "epic-027",
+      "title": "The Funnel (Landing Page)",
+      "status": "pending",
+      "priority": "medium",
+      "effort": "low",
+      "description": "Create a dedicated high-conversion landing page for Zown Governor on the Devlog. Differentiate between 'Reading about Dev' (Blog) and 'Using the Tool' (Product). Goal: Convert visitors to npm installs/GitHub stars.",
+      "createdAt": "2026-02-03T01:05:00.000Z"
     }
   ]
 }

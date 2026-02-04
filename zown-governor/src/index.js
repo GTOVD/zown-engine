@@ -94,7 +94,7 @@ class Governor {
         if (thisHour >= hourlyLimit) return { status: 'RED', reason: 'hourly_limit', autonomyBudget: 0 };
         
         // Burst Protection (RPM)
-        if (thisMinute >= (rpmLimit || 10)) {
+        if (thisMinute >= (rpmLimit || 25)) {
             return { status: 'RED', reason: 'rpm_burst_limit', autonomyBudget: 0, waitSeconds: 60 };
         }
 
@@ -198,6 +198,16 @@ class Governor {
         return { message: "No tasks", status, budget: autonomyBudget };
     }
 
+    getTasks(statusFilter = null) {
+        const state = this.loadState();
+        if (!state) return [];
+        
+        if (statusFilter) {
+            return state.backlog.filter(t => t.status === statusFilter);
+        }
+        return state.backlog;
+    }
+
     completeTask(id, result) {
         const state = this.loadState();
         if (!state) return false;
@@ -238,9 +248,9 @@ class Governor {
         
         const defaultState = {
             config: {
-                dailyLimit: 500,
-                hourlyLimit: 50,
-                rpmLimit: 10,
+                dailyLimit: 250,
+                hourlyLimit: 20,
+                rpmLimit: 25,
                 currentUsage: {
                     today: 0,
                     thisHour: 0,

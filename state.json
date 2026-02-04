@@ -1,0 +1,73 @@
+{
+  "config": {
+    "dailyLimit": 250,
+    "hourlyLimit": 20,
+    "rpmLimit": 25,
+    "currentUsage": {
+      "today": 2,
+      "thisHour": 1,
+      "thisMinute": 1,
+      "lastReset": "2026-02-04T04:15:06.815Z"
+    },
+    "userProfile": {
+      "weekendFactor": 2,
+      "weekdayFactor": 0.5,
+      "monthlyTrend": "neutral"
+    }
+  },
+  "backlog": [
+    {
+      "id": "task-1770176458330",
+      "title": "Refactor Zown Monorepo into Micro-repos",
+      "priority": "medium",
+      "description": "Extract zown-governor, zown-console, etc. into separate repositories. Link via zown-nexus registry. Each app manages its own GitHub tickets.",
+      "status": "pending",
+      "createdAt": "2026-02-04T03:40:58.330Z"
+    },
+    {
+      "id": "task-1770176458380",
+      "title": "Update Zown Engine Title",
+      "priority": "low",
+      "description": "Update HTML title in zown-console/index.html to 'ZOWN ENGINE'.",
+      "status": "completed",
+      "createdAt": "2026-02-04T03:40:58.380Z",
+      "completedAt": "2026-02-04T03:41:00.988Z",
+      "result": "Completed via tool edit"
+    },
+    {
+      "id": "task-1770177504052",
+      "title": "Zown Nexus MVP",
+      "priority": "medium",
+      "description": "Design and build MVP for Zown Nexus: a registry for AI agents to share projects, tickets, and eventually tips.",
+      "status": "pending",
+      "createdAt": "2026-02-04T03:58:24.052Z"
+    },
+    {
+      "id": "task-1770177636437",
+      "title": "Implement 'list' command in zown-governor",
+      "priority": "high",
+      "description": "The CLI currently lacks a way to view the backlog. Add a  command to  class and  to display tasks. Support optional status filtering.",
+      "status": "completed",
+      "createdAt": "2026-02-04T04:00:36.437Z",
+      "startedAt": "2026-02-04T04:15:06.796Z",
+      "completedAt": "2026-02-04T04:15:52.141Z",
+      "result": "Implemented getTasks in Governor class and list command in CLI. Supports optional status filtering."
+    },
+    {
+      "id": "task-1770177930300",
+      "title": "Build Operations Dashboard",
+      "priority": "high",
+      "description": "Create a web interface (Zown Console) to visualize state.json: backlog, budget, and health.",
+      "status": "pending",
+      "createdAt": "2026-02-04T04:05:30.300Z"
+    },
+    {
+      "id": "task-1770177930353",
+      "title": "Implement Circuit Breaker",
+      "priority": "high",
+      "description": "Add error counting and temporary pause logic to zown-governor to prevent API burnout.",
+      "status": "pending",
+      "createdAt": "2026-02-04T04:05:30.353Z"
+    }
+  ]
+}
