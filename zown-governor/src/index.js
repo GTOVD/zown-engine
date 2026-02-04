@@ -224,6 +224,22 @@ class Governor {
         return false;
     }
 
+    failTask(id, reason) {
+        const state = this.loadState();
+        if (!state) return false;
+
+        const taskIndex = state.backlog.findIndex(t => t.id === id);
+        
+        if (taskIndex !== -1) {
+            state.backlog[taskIndex].status = 'failed';
+            state.backlog[taskIndex].failedAt = new Date().toISOString();
+            state.backlog[taskIndex].failureReason = reason || "No reason provided";
+            this.saveState(state);
+            return true;
+        }
+        return false;
+    }
+
     addTask(title, priority = 'medium', description = '') {
         const state = this.loadState();
         if (!state) return { error: "State file missing" };

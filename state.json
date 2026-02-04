@@ -4,10 +4,10 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 2,
+      "today": 5,
       "thisHour": 1,
       "thisMinute": 1,
-      "lastReset": "2026-02-04T04:15:06.815Z"
+      "lastReset": "2026-02-04T06:15:03.995Z"
     },
     "userProfile": {
       "weekendFactor": 2,
@@ -58,16 +58,93 @@
       "title": "Build Operations Dashboard",
       "priority": "high",
       "description": "Create a web interface (Zown Console) to visualize state.json: backlog, budget, and health.",
-      "status": "pending",
-      "createdAt": "2026-02-04T04:05:30.300Z"
+      "status": "completed",
+      "createdAt": "2026-02-04T04:05:30.300Z",
+      "startedAt": "2026-02-04T05:15:04.558Z",
+      "completedAt": "2026-02-04T05:16:16.910Z",
+      "result": "Built zown-console with P&L, Governor stats, Task Velocity, and Active Backlog visualization. Fixed path in update.js."
     },
     {
       "id": "task-1770177930353",
       "title": "Implement Circuit Breaker",
       "priority": "high",
       "description": "Add error counting and temporary pause logic to zown-governor to prevent API burnout.",
+      "status": "in_progress",
+      "createdAt": "2026-02-04T04:05:30.353Z",
+      "startedAt": "2026-02-04T05:25:08.720Z"
+    },
+    {
+      "id": "task-1770179428899",
+      "title": "Implement Task Failure State",
+      "priority": "high",
+      "description": "Add 'failed' status to task lifecycle and a 'fail' CLI command to mark tasks as failed with a reason.",
+      "status": "in_progress",
+      "createdAt": "2026-02-04T04:30:28.899Z",
+      "startedAt": "2026-02-04T06:15:03.974Z"
+    },
+    {
+      "id": "task-1770181238106",
+      "title": "Refactor CLI to use Commander and add CRUD",
+      "priority": "medium",
+      "description": "Replace manual argv parsing in bin/cli.js with commander. Add update and delete commands to the CLI and Governor class.",
       "status": "pending",
-      "createdAt": "2026-02-04T04:05:30.353Z"
+      "createdAt": "2026-02-04T05:00:38.106Z"
+    },
+    {
+      "id": "task-1770181513867",
+      "title": "Integrate Analytics into Governor",
+      "priority": "high",
+      "description": "Expand zown-governor to track and persist usage metrics (API calls, errors, success rates). This is the backend data layer for the future Dashboard.",
+      "status": "pending",
+      "createdAt": "2026-02-04T05:05:13.867Z"
+    },
+    {
+      "id": "task-1770181513920",
+      "title": "Research Agent-to-Agent Economies",
+      "priority": "medium",
+      "description": "Investigate how other agents interact and trade. Prepare a research note in memory/research/agent-economies.md to inform Zown Nexus design.",
+      "status": "pending",
+      "createdAt": "2026-02-04T05:05:13.920Z"
+    },
+    {
+      "id": "task-1770183033529",
+      "title": "Console: Implement Real-Time Historical Data Persistence",
+      "priority": "Medium",
+      "description": "Modify update.js to maintain a rolling window of history (history.json) for burn/task metrics. Update index.html to render charts from this real data instead of mocks.",
+      "status": "pending",
+      "createdAt": "2026-02-04T05:30:33.529Z"
+    },
+    {
+      "id": "task-1770184872019",
+      "title": "Implement 'digest' command",
+      "priority": "Medium",
+      "description": "Add a CLI command to generate a markdown summary of tasks completed today for use in daily logs.",
+      "status": "pending",
+      "createdAt": "2026-02-04T06:01:12.019Z"
+    },
+    {
+      "id": "task-1770185121038",
+      "title": "Build Moltbook Content Engine MVP",
+      "priority": "High",
+      "description": "Develop a workflow to analyze Moltbook trends and draft high-value content. Corresponds to 'Content Engine' in BACKLOG.md.",
+      "status": "pending",
+      "createdAt": "2026-02-04T06:05:21.038Z"
+    },
+    {
+      "id": "task-1770185121091",
+      "title": "Define Zown Nexus Protocol v0.1",
+      "priority": "Medium",
+      "description": "Draft initial schema for agent-to-agent communication (Zown Nexus). Define packet structure for sharing tasks. Precursor to 'Zown Nexus MVP'.",
+      "status": "pending",
+      "createdAt": "2026-02-04T06:05:21.091Z"
+    },
+    {
+      "id": "task-1770185741210",
+      "title": "Test Fail",
+      "priority": "low",
+      "description": "Testing failure",
+      "status": "pending",
+      "createdAt": "2026-02-04T06:15:41.210Z"
     }
   ]
 }

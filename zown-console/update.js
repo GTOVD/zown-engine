@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const STATE_FILE = path.join(__dirname, '../tools/budget-optimizer/state.json');
+const STATE_FILE = path.join(__dirname, '../state.json');
 const OUTPUT_FILE = path.join(__dirname, 'data.json');
 
 // Cost assumptions (Mock)
@@ -40,7 +40,9 @@ function generateData() {
         },
         tasks: {
             pending: state.backlog.filter(t => t.status === 'pending').length,
-            completed: state.backlog.filter(t => t.status === 'completed').length
+            completed: state.backlog.filter(t => t.status === 'completed').length,
+            in_progress: state.backlog.filter(t => t.status === 'in_progress').length,
+            list: state.backlog
         }
     };
 

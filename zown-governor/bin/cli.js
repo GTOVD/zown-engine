@@ -40,6 +40,11 @@ switch (command) {
         governor.completeTask(id, args[2] || "Done");
         console.log(`Task ${id} marked completed.`);
         break;
+    case 'fail':
+        const failId = args[1];
+        governor.failTask(failId, args[2] || "Failed");
+        console.log(`Task ${failId} marked failed.`);
+        break;
     default:
         console.log("Zown Governor CLI");
         console.log("Usage:");
@@ -49,4 +54,5 @@ switch (command) {
         console.log("  zown-governor next");
         console.log("  zown-governor add <title> <priority> <description>");
         console.log("  zown-governor complete <id> [result]");
+        console.log("  zown-governor fail <id> [reason]");
 }
