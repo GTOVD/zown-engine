@@ -4,10 +4,10 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 5,
+      "today": 1,
       "thisHour": 1,
       "thisMinute": 1,
-      "lastReset": "2026-02-04T06:15:03.995Z"
+      "lastReset": "2026-02-04T08:15:05.279Z"
     },
     "userProfile": {
       "weekendFactor": 2,
@@ -145,6 +145,33 @@
       "description": "Testing failure",
       "status": "pending",
       "createdAt": "2026-02-04T06:15:41.210Z"
+    },
+    {
+      "id": "task-1770192040329",
+      "title": "Fix incrementUsage logic to respect time resets",
+      "priority": "critical",
+      "description": "Currently, incrementUsage simply adds to the counters without checking if a time boundary (hour/day) has passed. This causes counters to accumulate indefinitely if getDynamicStatus isn't called in between. Logic should be shared or invoked before incrementing.",
+      "status": "completed",
+      "createdAt": "2026-02-04T08:00:40.329Z",
+      "startedAt": "2026-02-04T08:15:05.260Z",
+      "completedAt": "2026-02-04T08:16:21.298Z",
+      "result": "Refactored Governor class to use _checkReset method, ensuring incrementUsage and getDynamicStatus both respect time boundaries."
+    },
+    {
+      "id": "task-1770192330768",
+      "title": "Implement Value Scoring System",
+      "priority": "High",
+      "description": "Define and track 'Value Points' for completed tasks to calculate ROI and 'Revenue' in the P&L.",
+      "status": "pending",
+      "createdAt": "2026-02-04T08:05:30.768Z"
+    },
+    {
+      "id": "task-1770192330821",
+      "title": "Implement Model Router & Cost Profiler",
+      "priority": "Medium",
+      "description": "Abstract LLM calls to support multi-provider switching (Gemini/Claude/Local) and cost tracking.",
+      "status": "pending",
+      "createdAt": "2026-02-04T08:05:30.821Z"
     }
   ]
 }

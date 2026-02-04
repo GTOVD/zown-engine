@@ -53,20 +53,17 @@ class Governor {
         return baseUsage * dayFactor * monthFactor;
     }
 
-    getDynamicStatus(state) {
-        if (!state) state = this.loadState();
-        if (!state) return { status: 'RED', autonomyBudget: 0, error: "State not loaded" };
-
+    // Helper to handle time-boundary resets (day/hour/minute)
+    _checkReset(state) {
         const now = new Date();
         const lastReset = new Date(state.config.currentUsage.lastReset);
-        
-        // Reset Logic
         let dirty = false;
+
         // Daily Reset
-        if (now.getDate() !== lastReset.getDate()) {
+        if (now.getDate() !== lastReset.getDate() || now.getMonth() !== lastReset.getMonth() || now.getFullYear() !== lastReset.getFullYear()) {
             state.config.currentUsage.today = 0;
             state.config.currentUsage.thisHour = 0;
-            state.config.currentUsage.thisMinute = 0; 
+            state.config.currentUsage.thisMinute = 0;
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         } 
@@ -83,7 +80,15 @@ class Governor {
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         }
+        
+        return dirty;
+    }
 
+    getDynamicStatus(state) {
+        if (!state) state = this.loadState();
+        if (!state) return { status: 'RED', autonomyBudget: 0, error: "State not loaded" };
+
+        const dirty = this._checkReset(state);
         if (dirty) this.saveState(state);
 
         const { today, thisHour, thisMinute } = state.config.currentUsage;
@@ -115,6 +120,9 @@ class Governor {
     incrementUsage(amount = 1) {
         const state = this.loadState();
         if (!state) return;
+
+        // Ensure we reset boundaries before incrementing
+        this._checkReset(state);
 
         state.config.currentUsage.today += amount;
         state.config.currentUsage.thisHour += amount;
