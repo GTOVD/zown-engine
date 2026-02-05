@@ -4,13 +4,14 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 5,
-      "thisHour": 1,
-      "thisMinute": 1,
-      "lastReset": "2026-02-05T10:15:01.702Z",
+      "today": 6,
+      "thisHour": 2,
+      "thisMinute": 2,
+      "lastReset": "2026-02-05T10:15:31.451Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770286501702
+        1770286501702,
+        1770286531451
       ]
     },
     "userProfile": {
@@ -614,17 +615,20 @@
       "title": "SELF-004: Implement Resource-Aware Task Throttling",
       "priority": "high",
       "description": "Develop a mechanism to dynamically throttle task execution based on remaining daily budget and time-of-day. Prevents total blackout in the final hours of the day while ensuring high-priority tasks always have a reserve.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-05T08:05:05.647Z",
-      "startedAt": "2026-02-05T10:15:01.682Z"
+      "startedAt": "2026-02-05T10:15:01.682Z",
+      "completedAt": "2026-02-05T10:15:27.673Z",
+      "result": "Implemented dynamic throttling in Governor.getDynamicStatus. The system now calculates a burn rate based on remaining daily budget and hours left in the day, ensuring we don't exhaust resources prematurely while keeping reserves for high-priority tasks."
     },
     {
       "id": "task-1770278705704",
       "title": "NEXUS-005: Decentralized Credit Ledger MVP",
       "priority": "high",
       "description": "Design and implement a minimal ledger for tracking Value Unit (VU) balances across disparate Zown instances. Allows agents to settle 'debts' incurred during task delegation without centralized banking.",
-      "status": "pending",
-      "createdAt": "2026-02-05T08:05:05.704Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T08:05:05.704Z",
+      "startedAt": "2026-02-05T10:15:31.442Z"
     },
     {
       "id": "task-1770278705760",
