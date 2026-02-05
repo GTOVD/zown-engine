@@ -56,6 +56,10 @@ class Governor {
             { hour: 22, weight: 0.2, mode: 'filler' },
             { hour: 23, weight: 0.1, mode: 'filler' }
         ];
+
+        // Analytics Layer
+        const Analytics = require('./analytics');
+        this.analytics = new Analytics(this);
     }
 
     loadState() {
@@ -74,7 +78,15 @@ class Governor {
     }
 
     saveState(state) {
-        fs.writeFileSync(this.stateFile, JSON.stringify(state, null, 2));
+        const tempFile = `${this.stateFile}.tmp`;
+        try {
+            fs.writeFileSync(tempFile, JSON.stringify(state, null, 2));
+            fs.renameSync(tempFile, this.stateFile);
+        } catch (e) {
+            console.error("Critical: Failed to save state atomically.", e);
+            // Fallback to direct write if rename fails? No, better to keep current file safe.
+            // But we might want to know why it failed.
+        }
     }
 
     isWeekend() {
@@ -233,6 +245,10 @@ class Governor {
         state.config.currentUsage.lastReset = new Date().toISOString(); 
         
         this.saveState(state);
+
+        // Track Metrics
+        this.analytics.trackMetric('apiCalls', amount);
+        if (tokens > 0) this.analytics.trackMetric('tokens', tokens);
     }
 
     getNextTask() {
@@ -341,6 +357,10 @@ class Governor {
             state.config.currentUsage.lastErrorAt = new Date().toISOString();
 
             this.saveState(state);
+
+            // Track Metrics
+            this.analytics.trackMetric('errors');
+            
             return true;
         }
         return false;
@@ -361,6 +381,10 @@ class Governor {
             state.config.currentUsage.errorCount = 0;
 
             this.saveState(state);
+
+            // Track Metrics
+            this.analytics.trackMetric('tasksCompleted');
+
             return true;
         }
         return false;
