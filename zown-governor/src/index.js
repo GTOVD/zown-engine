@@ -25,6 +25,10 @@ class Governor {
         this.TPM_THRESHOLD = 0.9; // Pause at 90%
         this.WINDOW_SIZE_MS = 60000; // 1 minute
 
+        // Circuit Breaker (GOV-024)
+        this.CIRCUIT_BREAKER_THRESHOLD = 5; // 5 errors
+        this.CIRCUIT_BREAKER_COOLDOWN_MS = 15 * 60 * 1000; // 15 minutes
+
         // Advanced Budget Scheduling (GOV-022)
         this.SCHEDULE = [
             { hour: 0, weight: 0.1, mode: 'filler' },  // Midnight
@@ -144,6 +148,24 @@ class Governor {
 
         const dirty = this._checkReset(state);
         if (dirty) this.saveState(state);
+
+        // --- Circuit Breaker Check ---
+        if (state.config.currentUsage.errorCount >= this.CIRCUIT_BREAKER_THRESHOLD) {
+            const lastErrorAt = new Date(state.config.currentUsage.lastErrorAt).getTime();
+            if ((Date.now() - lastErrorAt) < this.CIRCUIT_BREAKER_COOLDOWN_MS) {
+                return { 
+                    status: 'RED', 
+                    reason: 'circuit_breaker_open', 
+                    errorCount: state.config.currentUsage.errorCount,
+                    retryAt: new Date(lastErrorAt + this.CIRCUIT_BREAKER_COOLDOWN_MS).toISOString(),
+                    autonomyBudget: 0 
+                };
+            } else {
+                // Cooldown passed, reset half-open
+                state.config.currentUsage.errorCount = 0;
+                this.saveState(state);
+            }
+        }
 
         const { today, thisHour, thisMinute, tpmUsed } = state.config.currentUsage;
         const { dailyLimit, hourlyLimit, rpmLimit } = state.config;
@@ -303,22 +325,6 @@ class Governor {
         return state.backlog;
     }
 
-    completeTask(id, result) {
-        const state = this.loadState();
-        if (!state) return false;
-
-        const taskIndex = state.backlog.findIndex(t => t.id === id);
-        
-        if (taskIndex !== -1) {
-            state.backlog[taskIndex].status = 'completed';
-            state.backlog[taskIndex].completedAt = new Date().toISOString();
-            if (result) state.backlog[taskIndex].result = result;
-            this.saveState(state);
-            return true;
-        }
-        return false;
-    }
-
     failTask(id, reason) {
         const state = this.loadState();
         if (!state) return false;
@@ -329,6 +335,31 @@ class Governor {
             state.backlog[taskIndex].status = 'failed';
             state.backlog[taskIndex].failedAt = new Date().toISOString();
             state.backlog[taskIndex].failureReason = reason || "No reason provided";
+            
+            // Circuit Breaker Increment
+            state.config.currentUsage.errorCount = (state.config.currentUsage.errorCount || 0) + 1;
+            state.config.currentUsage.lastErrorAt = new Date().toISOString();
+
+            this.saveState(state);
+            return true;
+        }
+        return false;
+    }
+
+    completeTask(id, result) {
+        const state = this.loadState();
+        if (!state) return false;
+
+        const taskIndex = state.backlog.findIndex(t => t.id === id);
+        
+        if (taskIndex !== -1) {
+            state.backlog[taskIndex].status = 'completed';
+            state.backlog[taskIndex].completedAt = new Date().toISOString();
+            if (result) state.backlog[taskIndex].result = result;
+
+            // Success resets error count (Circuit Breaker half-open logic)
+            state.config.currentUsage.errorCount = 0;
+
             this.saveState(state);
             return true;
         }

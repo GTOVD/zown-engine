@@ -4,14 +4,15 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 23,
-      "thisHour": 2,
-      "thisMinute": 2,
-      "lastReset": "2026-02-05T17:15:23.637Z",
+      "today": 24,
+      "thisHour": 3,
+      "thisMinute": 3,
+      "lastReset": "2026-02-05T17:15:44.598Z",
       "tpmUsed": 0,
       "requestLog": [
         1770311703034,
-        1770311723637
+        1770311723637,
+        1770311744598
       ]
     },
     "userProfile": {
@@ -81,11 +82,12 @@
       "title": "Implement Circuit Breaker",
       "priority": "high",
       "description": "Add error counting and temporary pause logic to zown-governor to prevent API burnout.",
-      "status": "pending",
+      "status": "in_progress",
       "createdAt": "2026-02-04T04:05:30.353Z",
-      "startedAt": "2026-02-04T05:25:08.720Z",
+      "startedAt": "2026-02-05T17:15:44.586Z",
       "healedAt": "2026-02-05T17:15:34.791Z",
-      "healedFrom": "in_progress"
+      "healedFrom": "in_progress",
+      "reservedUntil": "2026-02-05T17:25:44.578Z"
     },
     {
       "id": "task-1770179428899",
@@ -955,10 +957,12 @@
       "title": "Create Governor 'Self-Healing' Routine",
       "priority": "high",
       "description": "Implement a routine that checks for orphaned 'in_progress' tasks in governor/state.json and moves them back to 'pending' if they've been stale for >1 hour.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-05T13:25:55.783Z",
       "startedAt": "2026-02-05T17:15:23.626Z",
-      "reservedUntil": "2026-02-05T17:25:23.618Z"
+      "reservedUntil": "2026-02-05T17:25:23.618Z",
+      "completedAt": "2026-02-05T17:15:41.127Z",
+      "result": "Implemented selfHeal method in Governor and added heal command to CLI. Cleaned up 6 orphaned tasks in the first run. This ensures the backlog remains fluid even if agents crash or timeout."
     },
     {
       "id": "task-1770301294769",
