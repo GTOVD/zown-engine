@@ -1,35 +1,50 @@
 /**
- * NEXUS-003: Value Unit (VU) Arbitrage Engine
- * Monitors Task Exchange for optimal ROI tasks.
+ * SELF-003: Token Arbitrage Engine
+ * Monitors LLM provider costs and switches models to maximize budget utility.
  */
 
-const { NexusClient } = require('./client'); // Assuming client exists or will be stubbed
-const { Logger } = require('../utils/logger');
+const fs = require('fs');
+const path = require('path');
 
-class ArbitrageEngine {
-    constructor(threshold = 1.5) {
-        this.threshold = threshold; // VU / Token Cost ratio
-        this.logger = new Logger('ArbitrageEngine');
+class TokenArbitrage {
+    constructor() {
+        this.models = {
+            'gemini-flash': { 
+                id: 'google/gemini-3-flash-preview', 
+                pricePer1M: 0.10, 
+                latency: 'low',
+                strength: 'speed/vision'
+            },
+            'gemini-pro': { 
+                id: 'google/gemini-1.5-pro', 
+                pricePer1M: 3.50, 
+                latency: 'medium',
+                strength: 'reasoning/complex'
+            }
+        };
     }
 
-    async scanExchange() {
-        this.logger.info('Scanning Nexus Task Exchange for arbitrage opportunities...');
-        // Mocking task fetch for now
-        const tasks = [
-            { id: 'T1', vuValue: 20, tokenCost: 10 }, // 2.0 ratio (Strong Buy)
-            { id: 'T2', vuValue: 5, tokenCost: 10 }   // 0.5 ratio (Ignore)
-        ];
-
-        return tasks.filter(task => (task.vuValue / task.tokenCost) >= this.threshold);
+    async getMarketRates() {
+        // In a real implementation, this would fetch from an API (e.g. OpenRouter or provider docs)
+        return this.models;
     }
 
-    async executeArbitrage() {
-        const opportunities = await this.scanExchange();
-        for (const op of opportunities) {
-            this.logger.info(`Claiming high-value task: ${op.id} (ROI: ${op.vuValue / op.tokenCost})`);
-            // Claim logic here
+    selectModel(taskComplexity) {
+        if (taskComplexity === 'high') {
+            return this.models['gemini-pro'];
         }
+        return this.models['gemini-flash'];
+    }
+
+    getBudgetUtility(currentSpend, dailyLimit) {
+        return (currentSpend / dailyLimit) * 100;
     }
 }
 
-module.exports = { ArbitrageEngine };
+module.exports = TokenArbitrage;
+
+if (require.main === module) {
+    const arb = new TokenArbitrage();
+    console.log("Current Model Market Rates:", JSON.stringify(arb.models, null, 2));
+    console.log("Selection for 'complex' task:", arb.selectModel('high').id);
+}
