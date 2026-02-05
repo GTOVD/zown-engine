@@ -1,50 +1,78 @@
+const CreditLedger = require('./ledger.js');
+
 /**
- * SELF-003: Token Arbitrage Engine
- * Monitors LLM provider costs and switches models to maximize budget utility.
+ * NEXUS-011: Task Settlement & Arbitration
+ * Handles the economic closing of tasks and dispute resolution.
  */
-
-const fs = require('fs');
-const path = require('path');
-
-class TokenArbitrage {
+class SettlementEngine {
     constructor() {
-        this.models = {
-            'gemini-flash': { 
-                id: 'google/gemini-3-flash-preview', 
-                pricePer1M: 0.10, 
-                latency: 'low',
-                strength: 'speed/vision'
-            },
-            'gemini-pro': { 
-                id: 'google/gemini-1.5-pro', 
-                pricePer1M: 3.50, 
-                latency: 'medium',
-                strength: 'reasoning/complex'
-            }
-        };
+        this.ledger = new CreditLedger();
+        this.disputeFile = 'disputes.json';
     }
 
-    async getMarketRates() {
-        // In a real implementation, this would fetch from an API (e.g. OpenRouter or provider docs)
-        return this.models;
-    }
-
-    selectModel(taskComplexity) {
-        if (taskComplexity === 'high') {
-            return this.models['gemini-pro'];
+    /**
+     * Settle a task: Transfer VU from requestor to worker.
+     */
+    async settleTask(taskId, requestorId, workerId, amount) {
+        console.log(`Settling task ${taskId}: ${requestorId} -> ${workerId} (${amount} VU)`);
+        
+        const result = this.ledger.transfer(requestorId, workerId, amount, `settlement:${taskId}`);
+        
+        if (result.success) {
+            return {
+                status: 'SETTLED',
+                transactionId: `tx-${Date.now()}`,
+                ...result
+            };
         }
-        return this.models['gemini-flash'];
+        return { status: 'FAILED', reason: 'ledger_rejection' };
     }
 
-    getBudgetUtility(currentSpend, dailyLimit) {
-        return (currentSpend / dailyLimit) * 100;
+    /**
+     * File a dispute against a worker's completion claim.
+     */
+    fileDispute(taskId, complainantId, reason) {
+        let disputes = [];
+        try {
+            disputes = JSON.parse(require('fs').readFileSync(this.disputeFile, 'utf8'));
+        } catch (e) {}
+
+        const dispute = {
+            disputeId: `disp-${Date.now()}`,
+            taskId,
+            complainantId,
+            reason,
+            status: 'OPEN',
+            timestamp: new Date().toISOString()
+        };
+
+        disputes.push(dispute);
+        require('fs').writeFileSync(this.disputeFile, JSON.stringify(disputes, null, 2));
+        return dispute;
+    }
+
+    /**
+     * Arbitrate an open dispute (MVP: Multi-agent consensus mock)
+     */
+    async arbitrate(disputeId) {
+        let disputes = JSON.parse(require('fs').readFileSync(this.disputeFile, 'utf8'));
+        const index = disputes.findIndex(d => d.disputeId === disputeId);
+        
+        if (index === -1) throw new Error('Dispute not found');
+
+        const dispute = disputes[index];
+        
+        // Simulating 3-agent consensus
+        const votes = ['REFUND', 'UPHOLD', 'UPHOLD']; // Mock results
+        const finalVerdict = votes.filter(v => v === 'UPHOLD').length >= 2 ? 'UPHOLD' : 'REFUND';
+
+        dispute.status = 'CLOSED';
+        dispute.verdict = finalVerdict;
+        dispute.resolvedAt = new Date().toISOString();
+
+        require('fs').writeFileSync(this.disputeFile, JSON.stringify(disputes, null, 2));
+        return dispute;
     }
 }
 
-module.exports = TokenArbitrage;
-
-if (require.main === module) {
-    const arb = new TokenArbitrage();
-    console.log("Current Model Market Rates:", JSON.stringify(arb.models, null, 2));
-    console.log("Selection for 'complex' task:", arb.selectModel('high').id);
-}
+module.exports = SettlementEngine;
