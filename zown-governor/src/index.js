@@ -20,6 +20,34 @@ class Governor {
         this.TPM_LIMIT = 1000000;
         this.TPM_THRESHOLD = 0.9; // Pause at 90%
         this.WINDOW_SIZE_MS = 60000; // 1 minute
+
+        // Advanced Budget Scheduling (GOV-022)
+        this.SCHEDULE = [
+            { hour: 0, weight: 0.1, mode: 'filler' },  // Midnight
+            { hour: 1, weight: 0.1, mode: 'filler' },
+            { hour: 2, weight: 0.1, mode: 'filler' },
+            { hour: 3, weight: 0.1, mode: 'filler' },
+            { hour: 4, weight: 0.2, mode: 'filler' },
+            { hour: 5, weight: 0.4, mode: 'active' },
+            { hour: 6, weight: 0.8, mode: 'active' },  // Morning Ramp
+            { hour: 7, weight: 1.0, mode: 'peak' },
+            { hour: 8, weight: 1.2, mode: 'peak' },
+            { hour: 9, weight: 1.5, mode: 'peak' },    // Peak Creative
+            { hour: 10, weight: 1.2, mode: 'peak' },
+            { hour: 11, weight: 1.0, mode: 'peak' },
+            { hour: 12, weight: 0.8, mode: 'active' }, // Noon dip
+            { hour: 13, weight: 1.0, mode: 'peak' },
+            { hour: 14, weight: 1.2, mode: 'peak' },
+            { hour: 15, weight: 1.2, mode: 'peak' },
+            { hour: 16, weight: 1.0, mode: 'peak' },
+            { hour: 17, weight: 0.8, mode: 'active' },
+            { hour: 18, weight: 0.6, mode: 'active' },
+            { hour: 19, weight: 0.5, mode: 'active' },
+            { hour: 20, weight: 0.4, mode: 'filler' },
+            { hour: 21, weight: 0.3, mode: 'filler' },
+            { hour: 22, weight: 0.2, mode: 'filler' },
+            { hour: 23, weight: 0.1, mode: 'filler' }
+        ];
     }
 
     loadState() {
@@ -116,41 +144,43 @@ class Governor {
         const { today, thisHour, thisMinute, tpmUsed } = state.config.currentUsage;
         const { dailyLimit, hourlyLimit, rpmLimit } = state.config;
 
-        // Hard Caps (API Limits)
-        if (today >= dailyLimit) return { status: 'RED', reason: 'daily_limit', autonomyBudget: 0 };
-        if (thisHour >= hourlyLimit) return { status: 'RED', reason: 'hourly_limit', autonomyBudget: 0 };
+        // --- GOV-022: Advanced Budget Scheduling ---
+        const now = new Date();
+        const hourConfig = this.SCHEDULE.find(s => s.hour === now.getHours()) || { weight: 1.0, mode: 'active' };
         
-        // TPM Protection
-        if (tpmUsed >= (this.TPM_LIMIT * this.TPM_THRESHOLD)) {
-            return { status: 'RED', reason: 'tpm_safeguard', autonomyBudget: 0, waitSeconds: 60 };
-        }
-
-        // Burst Protection (RPM)
-        if (thisMinute >= (rpmLimit || 25)) {
-            return { status: 'RED', reason: 'rpm_burst_limit', autonomyBudget: 0, waitSeconds: 60 };
-        }
-
-        // Dynamic Budgeting
+        // Base Dynamic Budgeting
         const predictedUser = this.getPredictedUserUsage(state.config);
         
-        // --- RESOURCE-AWARE THROTTLING (SELF-004) ---
         // Calculate remaining day intensity
-        const now = new Date();
         const hoursLeft = 24 - now.getHours();
         const dailyRemaining = dailyLimit - today;
         const burnRate = dailyRemaining / Math.max(1, hoursLeft);
         
-        // If we are burning too fast relative to the day, tighten the hourly budget
-        const effectiveHourlyLimit = Math.min(hourlyLimit, burnRate * 1.5); 
-        const autonomyBudget = Math.max(0, effectiveHourlyLimit - thisHour - predictedUser);
+        // Apply Weight to hourly limit
+        const weightedHourlyLimit = Math.min(hourlyLimit, burnRate * hourConfig.weight * 2);
+        const autonomyBudget = Math.max(0, weightedHourlyLimit - thisHour - predictedUser);
+
+        // Hard Caps (API Limits)
+        if (today >= dailyLimit) return { status: 'RED', reason: 'daily_limit', autonomyBudget: 0, mode: hourConfig.mode };
+        if (thisHour >= weightedHourlyLimit) return { status: 'RED', reason: 'scheduled_throttle', autonomyBudget: 0, mode: hourConfig.mode };
+        
+        // TPM Protection
+        if (tpmUsed >= (this.TPM_LIMIT * this.TPM_THRESHOLD)) {
+            return { status: 'RED', reason: 'tpm_safeguard', autonomyBudget: 0, waitSeconds: 60, mode: hourConfig.mode };
+        }
+
+        // Burst Protection (RPM)
+        if (thisMinute >= (rpmLimit || 25)) {
+            return { status: 'RED', reason: 'rpm_burst_limit', autonomyBudget: 0, waitSeconds: 60, mode: hourConfig.mode };
+        }
 
         // Status Determination
         if (autonomyBudget <= 0) {
-            return { status: 'RED', reason: 'throttled_or_reserve', autonomyBudget };
+            return { status: 'RED', reason: 'throttled_or_reserve', autonomyBudget, mode: hourConfig.mode };
         } else if (autonomyBudget < 5) {
-            return { status: 'YELLOW', reason: 'low_budget', autonomyBudget };
+            return { status: 'YELLOW', reason: 'low_budget', autonomyBudget, mode: hourConfig.mode };
         } else {
-            return { status: 'GREEN', reason: 'good', autonomyBudget };
+            return { status: 'GREEN', reason: 'good', autonomyBudget, mode: hourConfig.mode };
         }
     }
 
