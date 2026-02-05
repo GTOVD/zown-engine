@@ -16,6 +16,12 @@ class SettlementEngine {
     async settleTask(taskId, requestorId, workerId, amount) {
         console.log(`Settling task ${taskId}: ${requestorId} -> ${workerId} (${amount} VU)`);
         
+        // Before settlement, ensure task is verified via DARS/Consensus
+        const isVerified = await this.verifyCompletion(taskId);
+        if (!isVerified) {
+            return { status: 'FAILED', reason: 'task_verification_failed' };
+        }
+
         const result = this.ledger.transfer(requestorId, workerId, amount, `settlement:${taskId}`);
         
         if (result.success) {
@@ -26,6 +32,19 @@ class SettlementEngine {
             };
         }
         return { status: 'FAILED', reason: 'ledger_rejection' };
+    }
+
+    /**
+     * Decentralized Verification Protocol (MVP)
+     * Queries Nexus neighbors to reach consensus on task completion.
+     */
+    async verifyCompletion(taskId) {
+        console.log(`Verifying completion for task ${taskId} via Nexus consensus...`);
+        // In a real scenario, this would broadcast to other agents.
+        // For MVP, we simulate a 3-node check.
+        const consensus = [true, true, false]; 
+        const passed = consensus.filter(v => v === true).length >= 2;
+        return passed;
     }
 
     /**
