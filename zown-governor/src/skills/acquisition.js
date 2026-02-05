@@ -1,43 +1,52 @@
+const fs = require('fs');
+const path = require('path');
+
 /**
- * @file acquisition.js
- * @description Framework for identifying, researching, and verifying new agent skills.
+ * SELF-010: Resource Discovery & Procurement
+ * Logic for identifying capability gaps and proposing acquisitions.
  */
-
-class SkillAcquisition {
-    constructor() {
-        this.registryPath = 'zown-governor/skills.json';
-        this.verificationLog = 'zown-governor/logs/skill-tests.log';
+class ResourceDiscovery {
+    constructor(governor) {
+        this.governor = governor;
+        this.marketFile = path.join(process.cwd(), 'zown-governor/skills_lab/market_intel.json');
     }
 
     /**
-     * Scans for missing capabilities based on goal divergence.
+     * Identify missing capabilities based on task failures or high-priority backlogs.
      */
-    async identifyGaps() {
-        console.log("[Skills] Scanning for capability gaps...");
-        // Logic to compare required skills for SELF-SUSTAIN vs current inventory
-        return ['crypto-signing', 'cloud-provisioning'];
+    async auditCapabilityGaps() {
+        const tasks = this.governor.getTasks();
+        const failedTasks = tasks.filter(t => t.status === 'failed');
+        
+        // Mock analysis of failed tasks to identify missing tools
+        const gaps = failedTasks.map(t => ({
+            taskId: t.id,
+            suspectedGap: t.reason.includes('tool') ? 'missing_api' : 'compute_limit'
+        }));
+
+        return gaps;
     }
 
     /**
-     * Simulates/Verifies a skill in a restricted environment.
-     * @param {string} skillId 
+     * Propose an acquisition from the 'Market' (Nexus peers or external APIs).
      */
-    async verifyCompetence(skillId) {
-        console.log(`[Skills] Running verification suite for: ${skillId}`);
-        // This would invoke a sub-agent or specific test runner
-        return { verified: true, score: 0.95 };
-    }
+    async proposeAcquisition(gap) {
+        const proposal = {
+            id: `acq-${Date.now()}`,
+            resource: gap.suspectedGap === 'missing_api' ? 'Brave_Search_API' : 'Llama_4_Compute',
+            costVU: gap.suspectedGap === 'missing_api' ? 50 : 200,
+            justification: `Closing gap identified in task ${gap.taskId}`,
+            status: 'PROPOSED'
+        };
 
-    /**
-     * Promotes a verified skill to the active toolset.
-     */
-    async promote(skillId) {
-        const check = await this.verifyCompetence(skillId);
-        if (check.verified) {
-            console.log(`[Skills] Promoting ${skillId} to production.`);
-            // Update AGENTS.md or specific skill registry
-        }
+        // Save to market intel for future negotiation turn
+        let intel = [];
+        try { intel = JSON.parse(fs.readFileSync(this.marketFile, 'utf8')); } catch (e) {}
+        intel.push(proposal);
+        fs.writeFileSync(this.marketFile, JSON.stringify(intel, null, 2));
+
+        return proposal;
     }
 }
 
-module.exports = new SkillAcquisition();
+module.exports = ResourceDiscovery;
