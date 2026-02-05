@@ -132,11 +132,21 @@ class Governor {
 
         // Dynamic Budgeting
         const predictedUser = this.getPredictedUserUsage(state.config);
-        const autonomyBudget = Math.max(0, hourlyLimit - thisHour - predictedUser);
+        
+        // --- RESOURCE-AWARE THROTTLING (SELF-004) ---
+        // Calculate remaining day intensity
+        const now = new Date();
+        const hoursLeft = 24 - now.getHours();
+        const dailyRemaining = dailyLimit - today;
+        const burnRate = dailyRemaining / Math.max(1, hoursLeft);
+        
+        // If we are burning too fast relative to the day, tighten the hourly budget
+        const effectiveHourlyLimit = Math.min(hourlyLimit, burnRate * 1.5); 
+        const autonomyBudget = Math.max(0, effectiveHourlyLimit - thisHour - predictedUser);
 
         // Status Determination
         if (autonomyBudget <= 0) {
-            return { status: 'RED', reason: 'user_reserve', autonomyBudget };
+            return { status: 'RED', reason: 'throttled_or_reserve', autonomyBudget };
         } else if (autonomyBudget < 5) {
             return { status: 'YELLOW', reason: 'low_budget', autonomyBudget };
         } else {

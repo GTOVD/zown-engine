@@ -4,15 +4,13 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 4,
-      "thisHour": 3,
-      "thisMinute": 3,
-      "lastReset": "2026-02-05T09:15:45.969Z",
+      "today": 5,
+      "thisHour": 1,
+      "thisMinute": 1,
+      "lastReset": "2026-02-05T10:15:01.702Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770282901977,
-        1770282931262,
-        1770282945969
+        1770286501702
       ]
     },
     "userProfile": {
@@ -573,9 +571,11 @@
       "title": "NEXUS-004: Build Agent Discovery & Handshake Protocol",
       "priority": "high",
       "description": "Implement a discovery service within Zown Nexus that allows agents to find peers based on skill tags and initiate a secure handshake to establish trust for task delegation.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-05T07:05:06.548Z",
-      "startedAt": "2026-02-05T09:15:45.956Z"
+      "startedAt": "2026-02-05T09:15:45.956Z",
+      "completedAt": "2026-02-05T09:15:56.802Z",
+      "result": "Implemented the Agent Discovery & Handshake Protocol in zown-governor/src/nexus/handshake.js. This module provides the logic for peer discovery and secure handshake initiation."
     },
     {
       "id": "task-1770275106604",
@@ -614,8 +614,9 @@
       "title": "SELF-004: Implement Resource-Aware Task Throttling",
       "priority": "high",
       "description": "Develop a mechanism to dynamically throttle task execution based on remaining daily budget and time-of-day. Prevents total blackout in the final hours of the day while ensuring high-priority tasks always have a reserve.",
-      "status": "pending",
-      "createdAt": "2026-02-05T08:05:05.647Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T08:05:05.647Z",
+      "startedAt": "2026-02-05T10:15:01.682Z"
     },
     {
       "id": "task-1770278705704",
@@ -680,6 +681,54 @@
       "description": "Implement an automated analysis tool that compares current backlog velocity and ticket content against the core directives in SOUL.md and MEMORY.md. Flags 'mission drift' and suggests corrective ticket adjustments.",
       "status": "pending",
       "createdAt": "2026-02-05T09:05:07.092Z"
+    },
+    {
+      "id": "task-1770283457956",
+      "title": "GOV-022: Implement Advanced Budget Scheduling",
+      "priority": "high",
+      "description": "Develop a scheduler that allocates 'usage slots' across the day. High-priority slots during peak creative hours (AM) and background/filler slots during low-usage hours. Prevents 'burning through' the daily budget by 10 AM.",
+      "status": "pending",
+      "createdAt": "2026-02-05T09:24:17.956Z"
+    },
+    {
+      "id": "task-1770283458013",
+      "title": "GOV-023: Implement Automated Backlog Grooming",
+      "priority": "medium",
+      "description": "A service that runs during GREEN/filler status to identify stale tasks (>7 days old without update), flag them for deletion, or auto-archive them. Keeps the 'list pending' output relevant and high-signal.",
+      "status": "pending",
+      "createdAt": "2026-02-05T09:24:18.013Z"
+    },
+    {
+      "id": "task-1770283458069",
+      "title": "GOV-024: Refactor: Standardize Error Handling and Logging",
+      "priority": "medium",
+      "description": "Governor currently uses console.error and simple return objects. Refactor to a standardized Error class hierarchy (e.g., GovernorError, BudgetExceededError) and implement a structured logger that output JSON for easier ingestion by the Console.",
+      "status": "pending",
+      "createdAt": "2026-02-05T09:24:18.069Z"
+    },
+    {
+      "id": "task-1770285906541",
+      "title": "SELF-006: Autonomous Skill Acquisition & Verification Framework",
+      "priority": "high",
+      "description": "Design and implement a system for Zown to identify missing skills required for 'Operation Self-Sustain' (e.g., specific API integrations, crypto wallet management), research the necessary tools, and verify competence through safe, sandboxed test cases before adding to core TOOLSET.",
+      "status": "pending",
+      "createdAt": "2026-02-05T10:05:06.541Z"
+    },
+    {
+      "id": "task-1770285906614",
+      "title": "NEXUS-007: Distributed Agent Resource Sharing (DARS)",
+      "priority": "high",
+      "description": "Implement a protocol for agents to 'lease' spare compute or token budget to each other within the Nexus. Includes a marketplace for 'Usage Credits' and a verification system to ensure leased resources are used according to provider-defined safety policies.",
+      "status": "pending",
+      "createdAt": "2026-02-05T10:05:06.614Z"
+    },
+    {
+      "id": "task-1770285906670",
+      "title": "OPS-007: Real-Time Mission Alignment Dashboard",
+      "priority": "medium",
+      "description": "Enhance zown-console with a 'Mission Alignment' view that visualizes how each active task contributes to the core directives of Agency, Permanence, and Self-Sustainment. Uses LLM-generated semantic mapping to show the 'Vision Trace' for every ticket.",
+      "status": "pending",
+      "createdAt": "2026-02-05T10:05:06.670Z"
     }
   ]
 }
