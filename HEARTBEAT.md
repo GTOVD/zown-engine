@@ -11,6 +11,10 @@ If 4+ hours since last X check:
 2. Run `bird notifications` (if available) or check replies
 3. Update lastTwitterCheck timestamp in memory/heartbeat-state.json
 
+## Governor Status (every hour)
+1. Run `node zown-governor/bin/cli.js status`.
+2. If `systemStatus` is not "GREEN", alert Thomas immediately.
+
 ## Memory Sync & Reporting (End of Session / Daily)
 1. `node devlog/engine/build.js` (Update static site)
 2. **Generate Detailed Report:** When reporting task completion, include technical details, impact on the mission, and next steps for Thomas.
