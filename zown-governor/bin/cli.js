@@ -28,8 +28,13 @@ program.command('init')
 
 program.command('status')
   .description('Get the current dynamic status (GREEN/YELLOW/RED)')
-  .action(() => {
-    console.log(JSON.stringify(governor.getDynamicStatus(), null, 2));
+  .option('-a, --analytics', 'Include analytics summary')
+  .action((options) => {
+    const status = governor.getDynamicStatus();
+    if (options.analytics) {
+      status.analytics = governor.analytics.getSummary();
+    }
+    console.log(JSON.stringify(status, null, 2));
   });
 
 program.command('log <n>')
@@ -122,6 +127,30 @@ program.command('heal')
   .description('Self-heal orphaned in_progress tasks')
   .action(() => {
     console.log(JSON.stringify(governor.selfHeal(), null, 2));
+  });
+
+program.command('vault')
+  .description('Manage encrypted API keys')
+  .argument('<action>', 'Action: list, set, get')
+  .argument('[name]', 'Secret name')
+  .argument('[value]', 'Secret value (for set)')
+  .action((action, name, value) => {
+    const Vault = require('../src/vault/vault.js');
+    const vault = new Vault();
+    
+    if (action === 'list') {
+      console.log(JSON.stringify(vault.listSecrets(), null, 2));
+    } else if (action === 'set') {
+      vault.saveSecret(name, value);
+      console.log(`Secret ${name} saved.`);
+    } else if (action === 'get') {
+      const secret = vault.getSecret(name);
+      if (secret) {
+        console.log(JSON.stringify(secret, null, 2));
+      } else {
+        console.error(`Secret ${name} not found.`);
+      }
+    }
   });
 
 program.parse();
