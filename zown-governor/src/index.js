@@ -219,8 +219,15 @@ class Governor {
             return { error: "RATE_LIMIT_EXCEEDED", status: "RED" };
         }
 
-        // Filter pending tasks
-        let tasks = state.backlog.filter(t => t.status === 'pending');
+        const now = Date.now();
+        const LOCK_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+        // Filter pending tasks, excluding those with active valid reservations
+        let tasks = state.backlog.filter(t => {
+            if (t.status !== 'pending') return false;
+            if (t.reservedUntil && new Date(t.reservedUntil).getTime() > now) return false;
+            return true;
+        });
 
         // Filter by Priority based on Status/Budget
         if (status === 'YELLOW' || autonomyBudget < 10) {
@@ -240,6 +247,7 @@ class Governor {
             const task = tasks[0];
             task.status = 'in_progress';
             task.startedAt = new Date().toISOString();
+            task.reservedUntil = new Date(now + LOCK_TTL_MS).toISOString();
             this.saveState(state);
             this.incrementUsage(1); 
             return { ...task, systemStatus: status, budget: autonomyBudget };
