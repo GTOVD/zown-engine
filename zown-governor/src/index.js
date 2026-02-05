@@ -16,6 +16,10 @@ class Governor {
             'cron_job': 3
         };
 
+        // Cloud Cost Monitoring (SELF-008)
+        const CloudCostMonitor = require('./finance/cloud_cost_monitor');
+        this.costMonitor = new CloudCostMonitor(this);
+
         // TPM Limits (1M TPM default for Gemini)
         this.TPM_LIMIT = 1000000;
         this.TPM_THRESHOLD = 0.9; // Pause at 90%
