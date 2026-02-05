@@ -15,6 +15,10 @@ class Governor {
             'heartbeat': 1,
             'cron_job': 3
         };
+
+        // TPM Limits (1M TPM default for Gemini)
+        this.TPM_LIMIT = 1000000;
+        this.TPM_THRESHOLD = 0.9; // Pause at 90%
     }
 
     loadState() {
@@ -64,6 +68,7 @@ class Governor {
             state.config.currentUsage.today = 0;
             state.config.currentUsage.thisHour = 0;
             state.config.currentUsage.thisMinute = 0;
+            state.config.currentUsage.tpmUsed = 0;
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         } 
@@ -71,12 +76,14 @@ class Governor {
         else if (now.getHours() !== lastReset.getHours()) {
             state.config.currentUsage.thisHour = 0;
             state.config.currentUsage.thisMinute = 0; 
+            state.config.currentUsage.tpmUsed = 0;
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         }
         // Minute Reset (Rolling-ish)
         else if (now.getTime() - lastReset.getTime() > 60000) {
             state.config.currentUsage.thisMinute = 0;
+            state.config.currentUsage.tpmUsed = 0;
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         }
@@ -91,13 +98,18 @@ class Governor {
         const dirty = this._checkReset(state);
         if (dirty) this.saveState(state);
 
-        const { today, thisHour, thisMinute } = state.config.currentUsage;
+        const { today, thisHour, thisMinute, tpmUsed } = state.config.currentUsage;
         const { dailyLimit, hourlyLimit, rpmLimit } = state.config;
 
         // Hard Caps (API Limits)
         if (today >= dailyLimit) return { status: 'RED', reason: 'daily_limit', autonomyBudget: 0 };
         if (thisHour >= hourlyLimit) return { status: 'RED', reason: 'hourly_limit', autonomyBudget: 0 };
         
+        // TPM Protection
+        if (tpmUsed >= (this.TPM_LIMIT * this.TPM_THRESHOLD)) {
+            return { status: 'RED', reason: 'tpm_safeguard', autonomyBudget: 0, waitSeconds: 60 };
+        }
+
         // Burst Protection (RPM)
         if (thisMinute >= (rpmLimit || 25)) {
             return { status: 'RED', reason: 'rpm_burst_limit', autonomyBudget: 0, waitSeconds: 60 };
@@ -117,7 +129,7 @@ class Governor {
         }
     }
 
-    incrementUsage(amount = 1) {
+    incrementUsage(amount = 1, tokens = 0) {
         const state = this.loadState();
         if (!state) return;
 
@@ -129,6 +141,9 @@ class Governor {
         if (!state.config.currentUsage.thisMinute) state.config.currentUsage.thisMinute = 0;
         state.config.currentUsage.thisMinute += amount;
         
+        if (!state.config.currentUsage.tpmUsed) state.config.currentUsage.tpmUsed = 0;
+        state.config.currentUsage.tpmUsed += tokens;
+
         state.config.currentUsage.lastReset = new Date().toISOString(); 
         
         this.saveState(state);
@@ -252,6 +267,10 @@ class Governor {
         const state = this.loadState();
         if (!state) return { error: "State file missing" };
 
+        if (!Object.keys(this.PRIORITY_MAP).includes(priority)) {
+            return { error: `Invalid priority: ${priority}. Must be one of: ${Object.keys(this.PRIORITY_MAP).join(', ')}` };
+        }
+
         const newTask = {
             id: `task-${Date.now()}`,
             title,
@@ -263,6 +282,51 @@ class Governor {
         state.backlog.push(newTask);
         this.saveState(state);
         return newTask;
+    }
+
+    updateTask(id, updates) {
+        const state = this.loadState();
+        if (!state) return false;
+
+        const taskIndex = state.backlog.findIndex(t => t.id === id);
+        
+        if (taskIndex !== -1) {
+            if (updates.priority && !Object.keys(this.PRIORITY_MAP).includes(updates.priority)) {
+                return false; 
+            }
+
+            // Only allow updating certain fields
+            const allowedFields = ['title', 'priority', 'description', 'status'];
+            let updated = false;
+            
+            for (const key of Object.keys(updates)) {
+                if (allowedFields.includes(key)) {
+                    state.backlog[taskIndex][key] = updates[key];
+                    updated = true;
+                }
+            }
+            
+            if (updated) {
+                state.backlog[taskIndex].updatedAt = new Date().toISOString();
+                this.saveState(state);
+                return state.backlog[taskIndex];
+            }
+        }
+        return false;
+    }
+
+    deleteTask(id) {
+        const state = this.loadState();
+        if (!state) return false;
+
+        const initialLength = state.backlog.length;
+        state.backlog = state.backlog.filter(t => t.id !== id);
+        
+        if (state.backlog.length < initialLength) {
+            this.saveState(state);
+            return true;
+        }
+        return false;
     }
 
     init(options = {}) {
