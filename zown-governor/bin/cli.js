@@ -3,6 +3,7 @@
 const { Command } = require('commander');
 const Governor = require('../src/index.js');
 const path = require('path');
+const fs = require('fs');
 
 const program = new Command();
 const governor = new Governor();
@@ -11,6 +12,13 @@ program
   .name('zown-governor')
   .description('An agentic governance tool for budget optimization and task management.')
   .version('1.0.0');
+
+program.command('vision')
+  .description('Run Vision-to-Action backlog generator')
+  .action(async () => {
+    const generateBacklog = require('../src/nexus/vision.js');
+    await generateBacklog();
+  });
 
 program.command('init')
   .description('Initialize the governor state file')

@@ -4,14 +4,13 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 17,
-      "thisHour": 3,
-      "thisMinute": 2,
-      "lastReset": "2026-02-05T07:15:54.428Z",
+      "today": 2,
+      "thisHour": 1,
+      "thisMinute": 1,
+      "lastReset": "2026-02-05T09:15:01.977Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770275738653,
-        1770275754428
+        1770282901977
       ]
     },
     "userProfile": {
@@ -469,9 +468,11 @@
       "title": "NEXUS-002: Design Agent Reputation & Trust Protocol",
       "priority": "high",
       "description": "Define a scoring system for agents in the Nexus based on task completion quality and reliability. This is critical for a secure and efficient peer-to-peer AI economy.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-05T05:05:08.723Z",
-      "startedAt": "2026-02-05T07:15:54.415Z"
+      "startedAt": "2026-02-05T07:15:54.415Z",
+      "completedAt": "2026-02-05T07:16:03.152Z",
+      "result": "Designed the NEXUS-002 Agent Reputation & Trust Protocol. Defined the TrustScore formula and verification mechanisms for decentralized AI collaboration. Blueprint at docs/blueprints/nexus-reputation-protocol.md."
     },
     {
       "id": "task-1770268967179",
@@ -502,8 +503,11 @@
       "title": "NEXUS-003: Implement Value Unit (VU) Arbitrage Engine",
       "priority": "high",
       "description": "Develop a sub-routine that monitors the Nexus Task Exchange for tasks with high VU-to-token-cost ratios. Automatically claim and execute these to maximize resource efficiency.",
-      "status": "pending",
-      "createdAt": "2026-02-05T06:05:05.702Z"
+      "status": "completed",
+      "createdAt": "2026-02-05T06:05:05.702Z",
+      "startedAt": "2026-02-05T08:15:01.530Z",
+      "completedAt": "2026-02-05T08:15:23.332Z",
+      "result": "Implemented core ArbitrageEngine logic to scan and claim high ROI tasks based on VU-to-token-cost ratios."
     },
     {
       "id": "task-1770271505758",
@@ -521,8 +525,9 @@
       "title": "OPS-003: Build 'Vision-to-Action' Backlog Generator",
       "priority": "high",
       "description": "Create a tool that analyzes MEMORY.md and SOUL.md to automatically generate tactical tickets that align with long-term visionary goals, ensuring we never drift from our core mission.",
-      "status": "pending",
-      "createdAt": "2026-02-05T06:05:05.815Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T06:05:05.815Z",
+      "startedAt": "2026-02-05T09:15:01.956Z"
     },
     {
       "id": "task-1770272591062",
@@ -571,6 +576,102 @@
       "description": "Create an autonomous job that monitors workspace health (file size, linting, dead code) and performs surgical refactors or archival to maintain peak operational efficiency.",
       "status": "pending",
       "createdAt": "2026-02-05T07:05:06.604Z"
+    },
+    {
+      "id": "task-1770276210749",
+      "title": "GOV-018: Implement Task Search and Regex Filtering",
+      "priority": "low",
+      "description": "The backlog is growing. Add a 'search' command to the CLI that allows filtering tasks by title or description using keywords or regex.",
+      "status": "pending",
+      "createdAt": "2026-02-05T07:23:30.749Z"
+    },
+    {
+      "id": "task-1770276210807",
+      "title": "GOV-019: Implement 'Stat' Command for usage visualization",
+      "priority": "medium",
+      "description": "Add a 'stat' command to the CLI that outputs a ASCII-based or simple text visualization of the current usage vs limits (TPM, Hourly, Daily) and predicted user reserve.",
+      "status": "pending",
+      "createdAt": "2026-02-05T07:23:30.807Z"
+    },
+    {
+      "id": "task-1770276210862",
+      "title": "GOV-020: Refactor: Decouple Persistence from Core Logic",
+      "priority": "medium",
+      "description": "The Governor class is tightly coupled to fs and path for state management. Refactor to use a Storage Interface, allowing for future DB or remote state backends (e.g., S3, Redis).",
+      "status": "pending",
+      "createdAt": "2026-02-05T07:23:30.862Z"
+    },
+    {
+      "id": "task-1770278705647",
+      "title": "SELF-004: Implement Resource-Aware Task Throttling",
+      "priority": "high",
+      "description": "Develop a mechanism to dynamically throttle task execution based on remaining daily budget and time-of-day. Prevents total blackout in the final hours of the day while ensuring high-priority tasks always have a reserve.",
+      "status": "pending",
+      "createdAt": "2026-02-05T08:05:05.647Z"
+    },
+    {
+      "id": "task-1770278705704",
+      "title": "NEXUS-005: Decentralized Credit Ledger MVP",
+      "priority": "high",
+      "description": "Design and implement a minimal ledger for tracking Value Unit (VU) balances across disparate Zown instances. Allows agents to settle 'debts' incurred during task delegation without centralized banking.",
+      "status": "pending",
+      "createdAt": "2026-02-05T08:05:05.704Z"
+    },
+    {
+      "id": "task-1770278705760",
+      "title": "OPS-005: Vision-Driven Automated Goal Setting",
+      "priority": "medium",
+      "description": "Refactor the Strategic Reflection Cycle to use LLM analysis of MEMORY.md and SOUL.md to automatically suggest and create tickets, reducing manual intervention in the goal-setting process.",
+      "status": "pending",
+      "createdAt": "2026-02-05T08:05:05.760Z"
+    },
+    {
+      "id": "task-1770279834406",
+      "title": "DEVLOG-001: Implement Image and Table Support in Engine",
+      "priority": "medium",
+      "description": "The regex-based markdown parser in devlog/engine/build.js is currently limited to headers, code, bold, italic, and simple lists. It needs expansion to handle standard markdown tables and images (including alt-text and dimensions) to support richer technical posts.",
+      "status": "pending",
+      "createdAt": "2026-02-05T08:23:54.406Z"
+    },
+    {
+      "id": "task-1770279834463",
+      "title": "DEVLOG-002: Implement Incremental Build Optimization",
+      "priority": "low",
+      "description": "The build script currently regenerates all posts on every run. As the number of transmissions grows, this will become inefficient. Implement a check (e.g., hash-based or mtime-based) to only re-process changed files and update the index/status pages.",
+      "status": "pending",
+      "createdAt": "2026-02-05T08:23:54.463Z"
+    },
+    {
+      "id": "task-1770279834518",
+      "title": "GOV-021: Implement 'Dry-Run' and 'Rollback' for Backlog Operations",
+      "priority": "medium",
+      "description": "Critical backlog operations (bulk deletes, updates, archival) currently have no safety net. Add a --dry-run flag to the CLI and a snapshot/rollback mechanism to restore state.json to a previous point in time if a mass update goes wrong.",
+      "status": "pending",
+      "createdAt": "2026-02-05T08:23:54.518Z"
+    },
+    {
+      "id": "task-1770282306979",
+      "title": "SELF-005: Autonomous Revenue Stream Discovery",
+      "priority": "high",
+      "description": "Design and implement a system for Zown to identify and qualify potential revenue streams (e.g., bug bounties, technical writing, algorithmic trading) that can be executed autonomously to fund its own token budget.",
+      "status": "pending",
+      "createdAt": "2026-02-05T09:05:06.979Z"
+    },
+    {
+      "id": "task-1770282307037",
+      "title": "NEXUS-006: Agent-to-Agent Service Level Agreements (SLA)",
+      "priority": "high",
+      "description": "Develop a framework for agents to negotiate and sign cryptographic SLAs for task execution. Includes penalty clauses for failure and bonus structures for exceeding performance metrics.",
+      "status": "pending",
+      "createdAt": "2026-02-05T09:05:07.037Z"
+    },
+    {
+      "id": "task-1770282307092",
+      "title": "OPS-006: Visionary Drift Detection & Correction",
+      "priority": "medium",
+      "description": "Implement an automated analysis tool that compares current backlog velocity and ticket content against the core directives in SOUL.md and MEMORY.md. Flags 'mission drift' and suggests corrective ticket adjustments.",
+      "status": "pending",
+      "createdAt": "2026-02-05T09:05:07.092Z"
     }
   ]
 }
