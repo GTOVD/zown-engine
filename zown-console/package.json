@@ -1,0 +1,11 @@
+{
+  "name": "zown-console",
+  "version": "0.1.0",
+  "description": "A web-based console for monitoring Zown agent activities.",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Serve index.html'"
+  },
+  "author": "Zown <thomas@vickers.com>",
+  "license": "MIT"
+}

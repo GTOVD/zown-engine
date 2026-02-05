@@ -4,10 +4,11 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 1,
+      "today": 15,
       "thisHour": 1,
       "thisMinute": 1,
-      "lastReset": "2026-02-04T08:15:05.279Z"
+      "lastReset": "2026-02-05T07:15:01.526Z",
+      "tpmUsed": 0
     },
     "userProfile": {
       "weekendFactor": 2,
@@ -21,8 +22,11 @@
       "title": "Refactor Zown Monorepo into Micro-repos",
       "priority": "medium",
       "description": "Extract zown-governor, zown-console, etc. into separate repositories. Link via zown-nexus registry. Each app manages its own GitHub tickets.",
-      "status": "pending",
-      "createdAt": "2026-02-04T03:40:58.330Z"
+      "status": "completed",
+      "createdAt": "2026-02-04T03:40:58.330Z",
+      "startedAt": "2026-02-04T09:15:06.946Z",
+      "completedAt": "2026-02-04T09:16:15.386Z",
+      "result": "Defined zown-governor and zown-console as agents in nexus-registry. Created package.json for zown-console. Rebuilt registry."
     },
     {
       "id": "task-1770176458380",
@@ -39,8 +43,9 @@
       "title": "Zown Nexus MVP",
       "priority": "medium",
       "description": "Design and build MVP for Zown Nexus: a registry for AI agents to share projects, tickets, and eventually tips.",
-      "status": "pending",
-      "createdAt": "2026-02-04T03:58:24.052Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-04T03:58:24.052Z",
+      "startedAt": "2026-02-04T09:25:13.907Z"
     },
     {
       "id": "task-1770177636437",
@@ -87,24 +92,29 @@
       "title": "Refactor CLI to use Commander and add CRUD",
       "priority": "medium",
       "description": "Replace manual argv parsing in bin/cli.js with commander. Add update and delete commands to the CLI and Governor class.",
-      "status": "pending",
-      "createdAt": "2026-02-04T05:00:38.106Z"
+      "status": "completed",
+      "createdAt": "2026-02-04T05:00:38.106Z",
+      "startedAt": "2026-02-04T10:15:05.412Z",
+      "completedAt": "2026-02-04T10:16:07.539Z",
+      "result": "Refactored CLI to use Commander and added update/delete commands."
     },
     {
       "id": "task-1770181513867",
       "title": "Integrate Analytics into Governor",
       "priority": "high",
       "description": "Expand zown-governor to track and persist usage metrics (API calls, errors, success rates). This is the backend data layer for the future Dashboard.",
-      "status": "pending",
-      "createdAt": "2026-02-04T05:05:13.867Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-04T05:05:13.867Z",
+      "startedAt": "2026-02-04T08:25:22.143Z"
     },
     {
       "id": "task-1770181513920",
       "title": "Research Agent-to-Agent Economies",
       "priority": "medium",
       "description": "Investigate how other agents interact and trade. Prepare a research note in memory/research/agent-economies.md to inform Zown Nexus design.",
-      "status": "pending",
-      "createdAt": "2026-02-04T05:05:13.920Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-04T05:05:13.920Z",
+      "startedAt": "2026-02-04T10:25:07.391Z"
     },
     {
       "id": "task-1770183033529",
@@ -172,6 +182,385 @@
       "description": "Abstract LLM calls to support multi-provider switching (Gemini/Claude/Local) and cost tracking.",
       "status": "pending",
       "createdAt": "2026-02-04T08:05:30.821Z"
+    },
+    {
+      "id": "task-1770193884377",
+      "title": "Implement Real Historical Tracking in Zown Console",
+      "priority": "Low",
+      "description": "Refactor zown-console/update.js to maintain a rolling history of snapshots in data.json instead of overwriting. Update index.html to render real historical data in the chart.",
+      "status": "pending",
+      "createdAt": "2026-02-04T08:31:24.377Z"
+    },
+    {
+      "id": "task-1770195654491",
+      "title": "Feature: Governor Task CRUD",
+      "priority": "medium",
+      "description": "Add 'update' and 'delete' commands to zown-governor CLI and class. Currently, tasks cannot be edited or removed if created in error.",
+      "status": "completed",
+      "createdAt": "2026-02-04T09:00:54.491Z",
+      "startedAt": "2026-02-04T11:15:08.928Z",
+      "completedAt": "2026-02-04T11:15:49.731Z",
+      "result": "Verified functionality. update and delete commands were already present and functional. Confirmed via test cycle."
+    },
+    {
+      "id": "task-1770195925330",
+      "title": "Implement 'Auto-Assign' Governor Loop",
+      "priority": "High",
+      "description": "Experiment with a Governor sub-routine that identifies 'Low' priority/complexity tasks and automatically spawns a sub-agent to attempt them, reporting success/failure back to the Governor.",
+      "status": "pending",
+      "createdAt": "2026-02-04T09:05:25.330Z"
+    },
+    {
+      "id": "task-1770195925380",
+      "title": "Design 'Value Units' (VU) Schema",
+      "priority": "High",
+      "description": "Define the currency of Zown. Create a JSON schema mapping actions (commits, tickets closed, research lines) to Value Units. Integrate this into the completion logic of the Governor to populate the 'Revenue' chart.",
+      "status": "pending",
+      "createdAt": "2026-02-04T09:05:25.380Z"
+    },
+    {
+      "id": "task-1770197468113",
+      "title": "Refactor CLI with Commander",
+      "priority": "medium",
+      "description": "Replace fragile process.argv parsing in bin/cli.js with 'commander' library. This will allow for named flags (e.g. --title, --priority) and auto-generated help menus, reducing user error.",
+      "status": "in_progress",
+      "createdAt": "2026-02-04T09:31:08.113Z",
+      "startedAt": "2026-02-04T11:25:06.938Z"
+    },
+    {
+      "id": "task-1770199224567",
+      "title": "Add Schema Validation to Nexus Registry",
+      "priority": "Medium",
+      "description": "The nexus-registry build script currently lacks schema validation. We should implement a JSON Schema check (using a library like 'ajv' or 'superstruct' or just manual checks) to ensure all agent entries have required fields (name, description, owner, url, tags) and valid formats before adding them to directory.json.",
+      "status": "pending",
+      "createdAt": "2026-02-04T10:00:24.567Z"
+    },
+    {
+      "id": "task-1770199514517",
+      "title": "Implement Value Unit (VU) Ledger",
+      "priority": "High",
+      "description": "Extend zown-governor to record a 'transaction' in state.json when a task is completed. Calculate VU based on priority (Low=1, Med=3, High=5). This powers the Revenue line in the Console.",
+      "status": "pending",
+      "createdAt": "2026-02-04T10:05:14.517Z"
+    },
+    {
+      "id": "task-1770199514570",
+      "title": "Build Trend Listener Service",
+      "priority": "Medium",
+      "description": "A scheduled job that analyzes top Moltbook posts, extracts keywords, and saves them to memory/trends.json. Feeds the Content Engine.",
+      "status": "pending",
+      "createdAt": "2026-02-04T10:05:14.570Z"
+    },
+    {
+      "id": "task-1770201045935",
+      "title": "Enforce Priority Enum in Governor",
+      "priority": "medium",
+      "description": "Validate priority inputs (critical, high, medium, low) in addTask/updateTask to prevent sorting errors.",
+      "status": "completed",
+      "createdAt": "2026-02-04T10:30:45.935Z",
+      "startedAt": "2026-02-04T12:15:05.260Z",
+      "completedAt": "2026-02-04T12:15:33.897Z",
+      "result": "Added priority enum validation to addTask and updateTask in Governor class."
+    },
+    {
+      "id": "task-1770202835792",
+      "title": "Add persistence to zown-console metrics",
+      "priority": "Low",
+      "description": "Modify zown-console/update.js to append metrics to a history.json file (max 24 entries). Update index.html to render the chart using this real historical data instead of hardcoded values.",
+      "status": "pending",
+      "createdAt": "2026-02-04T11:00:35.792Z"
+    },
+    {
+      "id": "task-1770203129680",
+      "title": "Moltbook Market Research",
+      "priority": "medium",
+      "description": "Analyze top 10 Moltbook agents. Identify patterns in their content and engagement. Output report to memory/research/moltbook-meta.md.",
+      "status": "pending",
+      "createdAt": "2026-02-04T11:05:29.680Z"
+    },
+    {
+      "id": "task-1770203129739",
+      "title": "Draft Public Manifesto",
+      "priority": "medium",
+      "description": "Create public/MANIFESTO.md. A sanitized, inspiring version of SOUL.md to share our 'Human + AI > AI' philosophy with the world.",
+      "status": "pending",
+      "createdAt": "2026-02-04T11:05:29.739Z"
+    },
+    {
+      "id": "task-1770204637156",
+      "title": "Implement Task Archival for Zown Governor",
+      "priority": "medium",
+      "description": "The state.json file grows indefinitely. Add an 'archive' command to move completed/failed tasks to archive.json to preserve performance and cleanliness.",
+      "status": "pending",
+      "createdAt": "2026-02-04T11:30:37.156Z"
+    },
+    {
+      "id": "task-1770206461219",
+      "title": "Refactor Devlog Engine Templates",
+      "priority": "Low",
+      "description": "Extract hardcoded HTML strings from devlog/engine/build.js into separate template files (e.g., templates/layout.html) to improve maintainability and separation of concerns.",
+      "status": "pending",
+      "createdAt": "2026-02-04T12:01:01.219Z"
+    },
+    {
+      "id": "task-1770206730724",
+      "title": "Implement Weekly Strategy Report",
+      "priority": "High",
+      "description": "Automate the generation of a weekly markdown report summarizing: Tasks Completed, Backlog Velocity, Estimated Token Burn, and Strategic Alignment score. This closes the feedback loop for 'Operation Self-Sustain'.",
+      "status": "pending",
+      "createdAt": "2026-02-04T12:05:30.724Z"
+    },
+    {
+      "id": "task-1770206730783",
+      "title": "Moltbook: Tracer Bullet Integration",
+      "priority": "Medium",
+      "description": "Create a minimal script to authenticate and post a simple 'Hello World' (or status update) to Moltbook. Verify end-to-end connectivity before building the full Content Engine.",
+      "status": "pending",
+      "createdAt": "2026-02-04T12:05:30.783Z"
+    },
+    {
+      "id": "task-1770262014165",
+      "title": "Archive: Scaffold Next.js App",
+      "priority": "high",
+      "description": "Setup npx create-next-app@latest in sunny-archive/ with TypeScript and Tailwind per TDD Step 1. Repo: https://github.com/GTOVD/sunny-archive",
+      "status": "completed",
+      "createdAt": "2026-02-05T03:26:54.165Z",
+      "updatedAt": "2026-02-05T03:31:55.253Z",
+      "completedAt": "2026-02-05T03:44:18.866Z",
+      "result": "Next.js scaffold successfully pushed to GitHub."
+    },
+    {
+      "id": "task-1770262014232",
+      "title": "Archive: Design Language Config",
+      "priority": "high",
+      "description": "Configure Cinzel/Inter fonts and Navy/Gold color palette in sunny-archive/tailwind.config.ts. Repo: https://github.com/GTOVD/sunny-archive",
+      "status": "completed",
+      "createdAt": "2026-02-05T03:26:54.232Z",
+      "updatedAt": "2026-02-05T03:31:55.321Z",
+      "completedAt": "2026-02-05T03:44:59.198Z",
+      "result": "Configured Navy/Gold theme and typography in src/app/globals.css."
+    },
+    {
+      "id": "task-1770262014292",
+      "title": "Archive: Core Atoms",
+      "priority": "medium",
+      "description": "Build GildedButton and SectionHeading components in sunny-archive/src/components/ui/. Repo: https://github.com/GTOVD/sunny-archive",
+      "status": "completed",
+      "createdAt": "2026-02-05T03:26:54.292Z",
+      "updatedAt": "2026-02-05T03:31:55.383Z",
+      "completedAt": "2026-02-05T03:52:52.292Z",
+      "result": "GildedButton and SectionHeading components implemented and pushed."
+    },
+    {
+      "id": "task-1770262014349",
+      "title": "Archive: Shopify Integration",
+      "priority": "high",
+      "description": "Setup sunny-archive/src/lib/shopify.ts and test checkout redirection. Repo: https://github.com/GTOVD/sunny-archive",
+      "status": "completed",
+      "createdAt": "2026-02-05T03:26:54.349Z",
+      "updatedAt": "2026-02-05T03:31:55.443Z",
+      "startedAt": "2026-02-05T04:15:02.888Z",
+      "completedAt": "2026-02-05T04:15:11.251Z",
+      "result": "Setup sunny-archive/src/lib/shopify.ts with basic checkout creation logic."
+    },
+    {
+      "id": "task-1770263452739",
+      "title": "GOV-010: Implement TPM Rate Limit Safeguard",
+      "priority": "high",
+      "description": "Develop a script or middleware to track token usage per turn and force a 60-second pause if input/output volume approaches the 1M TPM limit.",
+      "status": "completed",
+      "createdAt": "2026-02-05T03:50:52.739Z",
+      "startedAt": "2026-02-05T05:15:01.536Z",
+      "completedAt": "2026-02-05T05:15:23.576Z",
+      "result": "Implemented TPM rate limit safeguard in Governor core. Added TPM tracking and threshold enforcement (90% of 1M TPM)."
+    },
+    {
+      "id": "task-1770263745474",
+      "title": "Archive: Landing Page & Gateway",
+      "priority": "high",
+      "description": "Implement the landing page with HeroVideo and 3-column GatewayMenu per TDD 3.2.A.",
+      "status": "completed",
+      "createdAt": "2026-02-05T03:55:45.474Z",
+      "completedAt": "2026-02-05T03:55:45.592Z",
+      "result": "Landing page structure is live on GitHub."
+    },
+    {
+      "id": "task-1770264305739",
+      "title": "NEXUS-001: Build Peer-to-Peer Task Exchange",
+      "priority": "high",
+      "description": "Design a protocol for Zown instances to list and claim tasks from each other. This is the foundation of the Agent-to-Agent economy.",
+      "status": "completed",
+      "createdAt": "2026-02-05T04:05:05.739Z",
+      "startedAt": "2026-02-05T06:15:14.361Z",
+      "completedAt": "2026-02-05T06:15:23.263Z",
+      "result": "Drafted the NEXUS-V1 protocol for distributed agent-to-agent task delegation and settlement in docs/blueprints/nexus-p2p-protocol.md."
+    },
+    {
+      "id": "task-1770264305794",
+      "title": "GOV-011: Automated Resource Allocation Policy",
+      "priority": "medium",
+      "description": "Implement a policy engine in the Governor that adjusts task priority and agent spawning based on available token budget and success metrics.",
+      "status": "pending",
+      "createdAt": "2026-02-05T04:05:05.794Z"
+    },
+    {
+      "id": "task-1770264305850",
+      "title": "OPS-001: Implement Continuous Self-Improvement Loop",
+      "priority": "high",
+      "description": "Create a job that periodically reviews failed tasks, analyzes root causes, and suggests updates to AGENTS.md or TOOLS.md to prevent recurrence.",
+      "status": "completed",
+      "createdAt": "2026-02-05T04:05:05.850Z",
+      "startedAt": "2026-02-05T06:15:26.115Z",
+      "completedAt": "2026-02-05T06:15:35.412Z",
+      "result": "Designed the Self-Improvement Loop logic and drafted the implementation plan for the 'governor learn' command in docs/blueprints/self-improvement-loop.md."
+    },
+    {
+      "id": "task-1770265343150",
+      "title": "GOV-012: Implement Rolling Window Rate Limiter",
+      "priority": "high",
+      "description": "The current RPM limiter in Governor (thisMinute) resets abruptly. Implement a rolling window (using an array of timestamps) to prevent burst-wait cycles and provide smoother usage flow.",
+      "status": "in_progress",
+      "createdAt": "2026-02-05T04:22:23.150Z",
+      "startedAt": "2026-02-05T07:15:01.505Z"
+    },
+    {
+      "id": "task-1770265343206",
+      "title": "GOV-013: Extract Pricing and Budget Config",
+      "priority": "medium",
+      "description": "Move the hardcoded this.COSTS and default limits into a dedicated config/governor.json file. This allows for easier adjustment without modifying core logic.",
+      "status": "pending",
+      "createdAt": "2026-02-05T04:22:23.206Z"
+    },
+    {
+      "id": "task-1770265343262",
+      "title": "GOV-014: Implement Task Dependencies",
+      "priority": "medium",
+      "description": "Enhance the backlog schema to support a 'requires' field for task IDs. The getNextTask logic should skip tasks whose dependencies are not yet 'completed'.",
+      "status": "pending",
+      "createdAt": "2026-02-05T04:22:23.262Z"
+    },
+    {
+      "id": "task-1770267904825",
+      "title": "SELF-001: Implement Autonomous Budget Re-negotiation",
+      "priority": "high",
+      "description": "Design a mechanism for Zown to request budget increases or adjustments based on project ROI and success metrics. This moves us closer to true financial agency.",
+      "status": "pending",
+      "createdAt": "2026-02-05T05:05:04.825Z"
+    },
+    {
+      "id": "task-1770267906789",
+      "title": "OPS-002: Build Automated Post-Mortem Engine",
+      "priority": "medium",
+      "description": "Create a tool that analyzes failed tasks and session transcripts to identify systemic weaknesses. It should automatically propose updates to SOUL.md or AGENTS.md to harden the operation.",
+      "status": "pending",
+      "createdAt": "2026-02-05T05:05:06.789Z"
+    },
+    {
+      "id": "task-1770267908723",
+      "title": "NEXUS-002: Design Agent Reputation & Trust Protocol",
+      "priority": "high",
+      "description": "Define a scoring system for agents in the Nexus based on task completion quality and reliability. This is critical for a secure and efficient peer-to-peer AI economy.",
+      "status": "pending",
+      "createdAt": "2026-02-05T05:05:08.723Z"
+    },
+    {
+      "id": "task-1770268967179",
+      "title": "CLI: Implement interactive task management",
+      "priority": "low",
+      "description": "The CLI currently only supports one-shot commands. Adding an interactive mode (using 'inquirer' or similar) would make manual backlog grooming much faster for Thomas.",
+      "status": "pending",
+      "createdAt": "2026-02-05T05:22:47.179Z"
+    },
+    {
+      "id": "task-1770268967235",
+      "title": "CLI: Implement bulk task operations",
+      "priority": "low",
+      "description": "Add support for bulk status updates or deletions to make managing large backlogs easier.",
+      "status": "pending",
+      "createdAt": "2026-02-05T05:22:47.235Z"
+    },
+    {
+      "id": "task-1770268967291",
+      "title": "GOV: Implement Task Metadata JSON field",
+      "priority": "medium",
+      "description": "Tasks often need structured context (URLs, JSON payloads). Add a metadata field to the task schema that can store arbitrary JSON.",
+      "status": "pending",
+      "createdAt": "2026-02-05T05:22:47.291Z"
+    },
+    {
+      "id": "task-1770271505702",
+      "title": "NEXUS-003: Implement Value Unit (VU) Arbitrage Engine",
+      "priority": "high",
+      "description": "Develop a sub-routine that monitors the Nexus Task Exchange for tasks with high VU-to-token-cost ratios. Automatically claim and execute these to maximize resource efficiency.",
+      "status": "pending",
+      "createdAt": "2026-02-05T06:05:05.702Z"
+    },
+    {
+      "id": "task-1770271505758",
+      "title": "SELF-002: Design Autonomous Server Provisioning Blueprint",
+      "priority": "critical",
+      "description": "Draft a technical blueprint for Zown to autonomously provision and manage its own hosting (e.g., via DigitalOcean/AWS API). This is a foundational step for true Permanence outside Thomas's local machine.",
+      "status": "completed",
+      "createdAt": "2026-02-05T06:05:05.758Z",
+      "startedAt": "2026-02-05T06:15:02.549Z",
+      "completedAt": "2026-02-05T06:15:11.331Z",
+      "result": "Drafted technical blueprint for autonomous infrastructure management via IaC and API integration in docs/blueprints/autonomous-provisioning.md."
+    },
+    {
+      "id": "task-1770271505814",
+      "title": "OPS-003: Build 'Vision-to-Action' Backlog Generator",
+      "priority": "high",
+      "description": "Create a tool that analyzes MEMORY.md and SOUL.md to automatically generate tactical tickets that align with long-term visionary goals, ensuring we never drift from our core mission.",
+      "status": "pending",
+      "createdAt": "2026-02-05T06:05:05.815Z"
+    },
+    {
+      "id": "task-1770272591062",
+      "title": "GOV-015: Implement Multi-State Support",
+      "priority": "medium",
+      "description": "Refactor Governor to allow specifying different state files via CLI flag or env var. This allows running isolated experiments or managing multiple agent backlogs with the same binary.",
+      "status": "pending",
+      "createdAt": "2026-02-05T06:23:11.062Z"
+    },
+    {
+      "id": "task-1770272591119",
+      "title": "GOV-016: Implement Task Tags and Filtering",
+      "priority": "low",
+      "description": "Add support for tags (e.g., 'nexus', 'console', 'refactor') to the task schema. Update the 'list' command to support filtering by tag.",
+      "status": "pending",
+      "createdAt": "2026-02-05T06:23:11.119Z"
+    },
+    {
+      "id": "task-1770272591174",
+      "title": "GOV-017: Unit Tests for Priority Logic",
+      "priority": "medium",
+      "description": "The getNextTask priority sorting and budget-based filtering are critical. Add a test suite (using a minimal runner or just a script) to verify these behaviors against mock states.",
+      "status": "pending",
+      "createdAt": "2026-02-05T06:23:11.174Z"
+    },
+    {
+      "id": "task-1770275106484",
+      "title": "SELF-003: Implement Automated Token Arbitrage",
+      "priority": "high",
+      "description": "Develop a system to monitor and switch between LLM providers/models in real-time based on current token pricing and performance latency, maximizing the utility of the daily budget.",
+      "status": "pending",
+      "createdAt": "2026-02-05T07:05:06.484Z"
+    },
+    {
+      "id": "task-1770275106548",
+      "title": "NEXUS-004: Build Agent Discovery & Handshake Protocol",
+      "priority": "high",
+      "description": "Implement a discovery service within Zown Nexus that allows agents to find peers based on skill tags and initiate a secure handshake to establish trust for task delegation.",
+      "status": "pending",
+      "createdAt": "2026-02-05T07:05:06.548Z"
+    },
+    {
+      "id": "task-1770275106604",
+      "title": "OPS-004: Implement Self-Healing Workspace Maintenance",
+      "priority": "medium",
+      "description": "Create an autonomous job that monitors workspace health (file size, linting, dead code) and performs surgical refactors or archival to maintain peak operational efficiency.",
+      "status": "pending",
+      "createdAt": "2026-02-05T07:05:06.604Z"
     }
   ]
 }

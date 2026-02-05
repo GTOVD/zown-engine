@@ -1,30 +1,24 @@
-# Engineering Ideation Log - 2026-02-04
+# Engineering Reflection Log
 
-## Target: `zown-governor/src/index.js`
+## [2026-02-05 10:22 PM] Engineering Thought Cycle
+
+### Scan: `zown-governor/`
+I reviewed the core logic of `zown-governor`, including the CLI entry point (`bin/cli.js`) and the main library (`src/index.js`).
 
 ### Critique
-I reviewed the `Governor` class, specifically the `incrementUsage` and `getDynamicStatus` methods.
+As a Senior Software Engineer, I've identified several areas for improvement:
+1. **Tech Debt**: The `stateFile` location is somewhat brittle, defaulting to `process.cwd()`. This makes it difficult to run the governor from different directories without manually specifying paths or symlinking.
+2. **Architecture**: The `Governor` class is becoming a "God Object." It handles state persistence, budget calculations, task scheduling, and filler logic. While efficient for a V1, this should eventually be decoupled into a `StateStore`, `BudgetEngine`, and `Scheduler`.
+3. **Missing Features**:
+    - **Tagging**: The backlog is growing large (32+ tasks). Without tags, it's hard to filter for specific project areas (Console, Nexus, etc.).
+    - **Multi-tenancy**: No easy way to manage multiple separate backlogs for different agent roles without using different workspace directories.
+    - **Reliability**: The core priority sorting logic lacks automated tests, which is risky as we add more complex budget-based filtering.
 
-**Identified Issue:**
-The `incrementUsage` method blindly increments the counters (`today`, `thisHour`, `thisMinute`) without checking if the time window has shifted. 
-- `getDynamicStatus` contains the logic to reset these counters based on `lastReset` timestamp.
-- However, `incrementUsage` reads state, adds to the *existing* numbers, and then updates `lastReset`.
-- **Scenario:** 
-  1. `thisHour` is 10 at 1:59 PM.
-  2. No activity until 3:00 PM.
-  3. `incrementUsage(1)` is called.
-  4. It loads `thisHour` (10), adds 1 -> 11.
-  5. It saves `thisHour` as 11 and `lastReset` as 3:00 PM.
-  6. **Result:** The 10 requests from 1:00 PM are effectively carried over to 3:00 PM, artificially inflating the usage and potentially triggering false rate limits.
+### Ideated Tasks
+1. **GOV-015: Multi-State Support**: Refactor to allow dynamic state file selection.
+2. **GOV-016: Task Tags**: Add structured tagging and filter support to the CLI.
+3. **GOV-017: Unit Testing**: Implement a test suite for the scheduling and priority engine.
 
-**Architecture Note:**
-The reset logic should be extracted into a private method (e.g., `_applyTimeResets(state)`) and called by both `getDynamicStatus` and `incrementUsage` to ensure consistency.
-
-### Ideation
-**Task:** Refactor `zown-governor` to centralize time-based counter resetting logic.
-**Goal:** Ensure usage metrics are accurate regardless of the interval between calls.
-
-### Ticket
-**ID:** task-1770192040329
-**Title:** Fix incrementUsage logic to respect time resets
-**Priority:** Critical
+### Action Taken
+- Added 3 new tickets to the Governor.
+- Synchronized memory state.

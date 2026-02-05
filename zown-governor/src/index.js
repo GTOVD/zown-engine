@@ -19,12 +19,18 @@ class Governor {
         // TPM Limits (1M TPM default for Gemini)
         this.TPM_LIMIT = 1000000;
         this.TPM_THRESHOLD = 0.9; // Pause at 90%
+        this.WINDOW_SIZE_MS = 60000; // 1 minute
     }
 
     loadState() {
         if (!fs.existsSync(this.stateFile)) return null;
         try {
-            return JSON.parse(fs.readFileSync(this.stateFile, 'utf-8'));
+            const state = JSON.parse(fs.readFileSync(this.stateFile, 'utf-8'));
+            // Ensure rolling window array exists
+            if (!state.config.currentUsage.requestLog) {
+                state.config.currentUsage.requestLog = [];
+            }
+            return state;
         } catch (e) {
             console.error("Error reading state file:", e);
             return null;
@@ -57,6 +63,19 @@ class Governor {
         return baseUsage * dayFactor * monthFactor;
     }
 
+    // Clean up rolling window
+    _cleanRollingWindow(state) {
+        const now = Date.now();
+        const initialCount = state.config.currentUsage.requestLog.length;
+        
+        state.config.currentUsage.requestLog = state.config.currentUsage.requestLog.filter(ts => (now - ts) < this.WINDOW_SIZE_MS);
+        
+        // Update thisMinute for backward compatibility / status display
+        state.config.currentUsage.thisMinute = state.config.currentUsage.requestLog.length;
+        
+        return state.config.currentUsage.requestLog.length !== initialCount;
+    }
+
     // Helper to handle time-boundary resets (day/hour/minute)
     _checkReset(state) {
         const now = new Date();
@@ -69,26 +88,22 @@ class Governor {
             state.config.currentUsage.thisHour = 0;
             state.config.currentUsage.thisMinute = 0;
             state.config.currentUsage.tpmUsed = 0;
+            state.config.currentUsage.requestLog = [];
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         } 
         // Hourly Reset
         else if (now.getHours() !== lastReset.getHours()) {
             state.config.currentUsage.thisHour = 0;
-            state.config.currentUsage.thisMinute = 0; 
-            state.config.currentUsage.tpmUsed = 0;
-            state.config.currentUsage.lastReset = now.toISOString();
-            dirty = true;
-        }
-        // Minute Reset (Rolling-ish)
-        else if (now.getTime() - lastReset.getTime() > 60000) {
-            state.config.currentUsage.thisMinute = 0;
             state.config.currentUsage.tpmUsed = 0;
             state.config.currentUsage.lastReset = now.toISOString();
             dirty = true;
         }
         
-        return dirty;
+        // Always clean rolling window for minute-level accuracy
+        const windowCleaned = this._cleanRollingWindow(state);
+        
+        return dirty || windowCleaned;
     }
 
     getDynamicStatus(state) {
@@ -138,8 +153,13 @@ class Governor {
 
         state.config.currentUsage.today += amount;
         state.config.currentUsage.thisHour += amount;
-        if (!state.config.currentUsage.thisMinute) state.config.currentUsage.thisMinute = 0;
-        state.config.currentUsage.thisMinute += amount;
+        
+        // Rolling window log
+        const now = Date.now();
+        for (let i = 0; i < amount; i++) {
+            state.config.currentUsage.requestLog.push(now);
+        }
+        state.config.currentUsage.thisMinute = state.config.currentUsage.requestLog.length;
         
         if (!state.config.currentUsage.tpmUsed) state.config.currentUsage.tpmUsed = 0;
         state.config.currentUsage.tpmUsed += tokens;

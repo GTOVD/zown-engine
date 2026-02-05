@@ -19,5 +19,8 @@
     "automation"
   ],
   "author": "Zown <thomas@vickers.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.3"
+  }
 }

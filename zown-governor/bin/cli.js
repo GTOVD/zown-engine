@@ -1,58 +1,113 @@
 #!/usr/bin/env node
 
+const { Command } = require('commander');
 const Governor = require('../src/index.js');
 const path = require('path');
 
-// Allow overriding state file via env var or arg
-// Simple arg parsing for now
-const args = process.argv.slice(2);
-const command = args[0];
-
+const program = new Command();
 const governor = new Governor();
 
-switch (command) {
-    case 'init':
-        console.log(JSON.stringify(governor.init(), null, 2));
-        break;
-    case 'status':
-        console.log(JSON.stringify(governor.getDynamicStatus(), null, 2));
-        break;
-    case 'log':
-        governor.incrementUsage(parseInt(args[1] || 1));
-        console.log('Usage logged.');
-        break;
-    case 'next':
-        console.log(JSON.stringify(governor.getNextTask(), null, 2));
-        break;
-    case 'list':
-        const statusFilter = args[1];
-        console.log(JSON.stringify(governor.getTasks(statusFilter), null, 2));
-        break;
-    case 'add':
-        // zown-governor add "Title" "Priority" "Desc"
-        const title = args[1];
-        const prio = args[2];
-        const desc = args[3];
-        console.log(JSON.stringify(governor.addTask(title, prio, desc), null, 2));
-        break;
-    case 'complete':
-        const id = args[1];
-        governor.completeTask(id, args[2] || "Done");
-        console.log(`Task ${id} marked completed.`);
-        break;
-    case 'fail':
-        const failId = args[1];
-        governor.failTask(failId, args[2] || "Failed");
-        console.log(`Task ${failId} marked failed.`);
-        break;
-    default:
-        console.log("Zown Governor CLI");
-        console.log("Usage:");
-        console.log("  zown-governor init");
-        console.log("  zown-governor status");
-        console.log("  zown-governor log <n>");
-        console.log("  zown-governor next");
-        console.log("  zown-governor add <title> <priority> <description>");
-        console.log("  zown-governor complete <id> [result]");
-        console.log("  zown-governor fail <id> [reason]");
-}
+program
+  .name('zown-governor')
+  .description('An agentic governance tool for budget optimization and task management.')
+  .version('1.0.0');
+
+program.command('init')
+  .description('Initialize the governor state file')
+  .action(() => {
+    console.log(JSON.stringify(governor.init(), null, 2));
+  });
+
+program.command('status')
+  .description('Get the current dynamic status (GREEN/YELLOW/RED)')
+  .action(() => {
+    console.log(JSON.stringify(governor.getDynamicStatus(), null, 2));
+  });
+
+program.command('log <n>')
+  .description('Log usage (increment counters)')
+  .action((n) => {
+    governor.incrementUsage(parseInt(n || 1));
+    console.log('Usage logged.');
+  });
+
+program.command('next')
+  .description('Get the next task based on priority and budget')
+  .action(() => {
+    console.log(JSON.stringify(governor.getNextTask(), null, 2));
+  });
+
+program.command('list')
+  .description('List tasks')
+  .argument('[status]', 'Filter by status (pending, in_progress, completed, failed)')
+  .action((status) => {
+    console.log(JSON.stringify(governor.getTasks(status), null, 2));
+  });
+
+program.command('add')
+  .description('Add a new task')
+  .argument('<title>', 'Task title')
+  .argument('[priority]', 'Task priority (low, medium, high, critical)', 'medium')
+  .argument('[description]', 'Task description', '')
+  .action((title, priority, description) => {
+    console.log(JSON.stringify(governor.addTask(title, priority, description), null, 2));
+  });
+
+program.command('complete')
+  .description('Mark a task as completed')
+  .argument('<id>', 'Task ID')
+  .argument('[result]', 'Result summary', 'Done')
+  .action((id, result) => {
+    if (governor.completeTask(id, result)) {
+      console.log(`Task ${id} marked completed.`);
+    } else {
+      console.error(`Task ${id} not found.`);
+    }
+  });
+
+program.command('fail')
+  .description('Mark a task as failed')
+  .argument('<id>', 'Task ID')
+  .argument('[reason]', 'Failure reason', 'Failed')
+  .action((id, reason) => {
+    if (governor.failTask(id, reason)) {
+      console.log(`Task ${id} marked failed.`);
+    } else {
+      console.error(`Task ${id} not found.`);
+    }
+  });
+
+program.command('update')
+  .description('Update a task')
+  .argument('<id>', 'Task ID')
+  .option('-t, --title <title>', 'New title')
+  .option('-p, --priority <priority>', 'New priority')
+  .option('-d, --description <description>', 'New description')
+  .option('-s, --status <status>', 'New status')
+  .action((id, options) => {
+      const updates = {};
+      if (options.title) updates.title = options.title;
+      if (options.priority) updates.priority = options.priority;
+      if (options.description) updates.description = options.description;
+      if (options.status) updates.status = options.status;
+      
+      const result = governor.updateTask(id, updates);
+      if (result) {
+          console.log(JSON.stringify(result, null, 2));
+      } else {
+          console.error(`Task ${id} not found or no valid updates provided.`);
+      }
+  });
+
+program.command('delete')
+  .description('Delete a task')
+  .argument('<id>', 'Task ID')
+  .action((id) => {
+      if (governor.deleteTask(id)) {
+          console.log(`Task ${id} deleted.`);
+      } else {
+          console.error(`Task ${id} not found.`);
+      }
+  });
+
+program.parse();
