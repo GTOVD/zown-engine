@@ -118,4 +118,10 @@ program.command('delete')
       }
   });
 
+program.command('heal')
+  .description('Self-heal orphaned in_progress tasks')
+  .action(() => {
+    console.log(JSON.stringify(governor.selfHeal(), null, 2));
+  });
+
 program.parse();

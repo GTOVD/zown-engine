@@ -401,6 +401,36 @@ class Governor {
         return false;
     }
 
+    selfHeal() {
+        const state = this.loadState();
+        if (!state) return { healed: 0, error: "State file missing" };
+
+        const now = Date.now();
+        const ORPHAN_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+        let healedCount = 0;
+
+        state.backlog.forEach(task => {
+            if (task.status === 'in_progress') {
+                const startedAt = task.startedAt ? new Date(task.startedAt).getTime() : 0;
+                const reservedUntil = task.reservedUntil ? new Date(task.reservedUntil).getTime() : 0;
+                
+                // If the task has exceeded both its explicit reservation and the 1-hour grace period
+                if ((now - startedAt) > ORPHAN_THRESHOLD_MS && now > reservedUntil) {
+                    task.status = 'pending';
+                    task.healedAt = new Date().toISOString();
+                    task.healedFrom = 'in_progress';
+                    healedCount++;
+                }
+            }
+        });
+
+        if (healedCount > 0) {
+            this.saveState(state);
+        }
+
+        return { healed: healedCount };
+    }
+
     init(options = {}) {
         if (fs.existsSync(this.stateFile)) {
             return { message: "State file already exists", path: this.stateFile };

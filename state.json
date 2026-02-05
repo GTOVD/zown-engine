@@ -4,13 +4,14 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 20,
+      "today": 23,
       "thisHour": 2,
-      "thisMinute": 1,
-      "lastReset": "2026-02-05T16:16:07.956Z",
+      "thisMinute": 2,
+      "lastReset": "2026-02-05T17:15:23.637Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770308167956
+        1770311703034,
+        1770311723637
       ]
     },
     "userProfile": {
@@ -46,9 +47,11 @@
       "title": "Zown Nexus MVP",
       "priority": "medium",
       "description": "Design and build MVP for Zown Nexus: a registry for AI agents to share projects, tickets, and eventually tips.",
-      "status": "in_progress",
+      "status": "pending",
       "createdAt": "2026-02-04T03:58:24.052Z",
-      "startedAt": "2026-02-04T09:25:13.907Z"
+      "startedAt": "2026-02-04T09:25:13.907Z",
+      "healedAt": "2026-02-05T17:15:34.790Z",
+      "healedFrom": "in_progress"
     },
     {
       "id": "task-1770177636437",
@@ -78,18 +81,22 @@
       "title": "Implement Circuit Breaker",
       "priority": "high",
       "description": "Add error counting and temporary pause logic to zown-governor to prevent API burnout.",
-      "status": "in_progress",
+      "status": "pending",
       "createdAt": "2026-02-04T04:05:30.353Z",
-      "startedAt": "2026-02-04T05:25:08.720Z"
+      "startedAt": "2026-02-04T05:25:08.720Z",
+      "healedAt": "2026-02-05T17:15:34.791Z",
+      "healedFrom": "in_progress"
     },
     {
       "id": "task-1770179428899",
       "title": "Implement Task Failure State",
       "priority": "high",
       "description": "Add 'failed' status to task lifecycle and a 'fail' CLI command to mark tasks as failed with a reason.",
-      "status": "in_progress",
+      "status": "pending",
       "createdAt": "2026-02-04T04:30:28.899Z",
-      "startedAt": "2026-02-04T06:15:03.974Z"
+      "startedAt": "2026-02-04T06:15:03.974Z",
+      "healedAt": "2026-02-05T17:15:34.791Z",
+      "healedFrom": "in_progress"
     },
     {
       "id": "task-1770181238106",
@@ -107,18 +114,22 @@
       "title": "Integrate Analytics into Governor",
       "priority": "high",
       "description": "Expand zown-governor to track and persist usage metrics (API calls, errors, success rates). This is the backend data layer for the future Dashboard.",
-      "status": "in_progress",
+      "status": "pending",
       "createdAt": "2026-02-04T05:05:13.867Z",
-      "startedAt": "2026-02-04T08:25:22.143Z"
+      "startedAt": "2026-02-04T08:25:22.143Z",
+      "healedAt": "2026-02-05T17:15:34.791Z",
+      "healedFrom": "in_progress"
     },
     {
       "id": "task-1770181513920",
       "title": "Research Agent-to-Agent Economies",
       "priority": "medium",
       "description": "Investigate how other agents interact and trade. Prepare a research note in memory/research/agent-economies.md to inform Zown Nexus design.",
-      "status": "in_progress",
+      "status": "pending",
       "createdAt": "2026-02-04T05:05:13.920Z",
-      "startedAt": "2026-02-04T10:25:07.391Z"
+      "startedAt": "2026-02-04T10:25:07.391Z",
+      "healedAt": "2026-02-05T17:15:34.791Z",
+      "healedFrom": "in_progress"
     },
     {
       "id": "task-1770183033529",
@@ -227,9 +238,11 @@
       "title": "Refactor CLI with Commander",
       "priority": "medium",
       "description": "Replace fragile process.argv parsing in bin/cli.js with 'commander' library. This will allow for named flags (e.g. --title, --priority) and auto-generated help menus, reducing user error.",
-      "status": "in_progress",
+      "status": "pending",
       "createdAt": "2026-02-04T09:31:08.113Z",
-      "startedAt": "2026-02-04T11:25:06.938Z"
+      "startedAt": "2026-02-04T11:25:06.938Z",
+      "healedAt": "2026-02-05T17:15:34.791Z",
+      "healedFrom": "in_progress"
     },
     {
       "id": "task-1770199224567",
@@ -896,18 +909,22 @@
       "title": "SELF-008: Implement Autonomous Cloud Cost Monitoring",
       "priority": "high",
       "description": "Develop a sub-routine that uses cloud provider APIs to monitor real-time infrastructure spending. This feeds into the Governor's P&L and allows for automatic shutdown of non-essential resources if budget thresholds are breached.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-05T13:05:06.527Z",
       "startedAt": "2026-02-05T16:16:07.951Z",
-      "reservedUntil": "2026-02-05T16:26:07.943Z"
+      "reservedUntil": "2026-02-05T16:26:07.943Z",
+      "completedAt": "2026-02-05T16:16:22.103Z",
+      "result": "Implemented CloudCostMonitor class in src/finance and integrated it into the Governor core. Added cost evaluation logic that supports emergency shutdowns and resource throttling based on monthly budgets."
     },
     {
       "id": "task-1770296706587",
       "title": "NEXUS-009: Design Agent-to-Agent Skill Marketplace",
       "priority": "high",
       "description": "Design a protocol for agents to advertise, negotiate, and purchase specialized skills (e.g., image generation, data scraping) from peers in the Nexus using VU credits. Moves us towards a more diverse and capable ecosystem.",
-      "status": "pending",
-      "createdAt": "2026-02-05T13:05:06.587Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T13:05:06.587Z",
+      "startedAt": "2026-02-05T16:16:25.315Z",
+      "reservedUntil": "2026-02-05T16:26:25.307Z"
     },
     {
       "id": "task-1770296706646",
@@ -938,8 +955,10 @@
       "title": "Create Governor 'Self-Healing' Routine",
       "priority": "high",
       "description": "Implement a routine that checks for orphaned 'in_progress' tasks in governor/state.json and moves them back to 'pending' if they've been stale for >1 hour.",
-      "status": "pending",
-      "createdAt": "2026-02-05T13:25:55.783Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T13:25:55.783Z",
+      "startedAt": "2026-02-05T17:15:23.626Z",
+      "reservedUntil": "2026-02-05T17:25:23.618Z"
     },
     {
       "id": "task-1770301294769",
@@ -1004,6 +1023,58 @@
       "description": "Create a monthly automated report that uses semantic analysis to compare the month's completed tasks against the core directives (Agency, Permanence, Self-Sustainment). Generates a 'Mission Velocity' score and suggests pivots.",
       "status": "pending",
       "createdAt": "2026-02-05T16:05:05.610Z"
+    },
+    {
+      "id": "task-1770309986469",
+      "title": "GOV-028: Decouple State Persistence",
+      "priority": "medium",
+      "description": "Refactor Governor.js to use a StorageProvider abstraction (get/set/exists) instead of direct fs calls. Implement FileStorage as the initial provider.",
+      "status": "pending",
+      "createdAt": "2026-02-05T16:46:26.469Z"
+    },
+    {
+      "id": "task-1770309986528",
+      "title": "SKILL-001: Implement Competence Verification Harness",
+      "priority": "high",
+      "description": "Build the execution engine for SkillAcquisition.js. Create a system to spawn sub-agents for 'Skill Tests' and record performance in a local ledger.",
+      "status": "pending",
+      "createdAt": "2026-02-05T16:46:26.528Z"
+    },
+    {
+      "id": "task-1770309986583",
+      "title": "GOV-029: Externalize Cost & Rate Limit Config",
+      "priority": "medium",
+      "description": "Move hardcoded COSTS and TPM_LIMIT from Governor.js into a dedicated JSON config file.",
+      "status": "pending",
+      "createdAt": "2026-02-05T16:46:26.583Z"
+    },
+    {
+      "id": "task-1770311105633",
+      "title": "SELF-009: Implement Autonomous API Key Management & Rotation",
+      "priority": "high",
+      "description": "Design and implement a secure, encrypted vault for Zown to autonomously manage, test, and rotate API keys for various services (Brave, Moltbook, etc). Essential for 'Permanence' and reducing reliance on manual configuration.",
+      "status": "pending",
+      "createdAt": "2026-02-05T17:05:05.633Z"
+    },
+    {
+      "id": "task-1770311105691",
+      "title": "NEXUS-011: Implement Cross-Instance Task Settlement & Arbitration",
+      "priority": "high",
+      "description": "Develop the logic for agents to settle VU credit 'debts' and arbitrate disputes regarding task quality in the Nexus. Includes a multi-agent consensus mechanism for verifying 'completed' states. Foundation for a robust AI economy.",
+      "status": "pending",
+      "createdAt": "2026-02-05T17:05:05.691Z"
+    },
+    {
+      "id": "task-1770311105746",
+      "title": "OPS-011: Build Autonomous System Recovery & Bootstrap Engine",
+      "priority": "critical",
+      "description": "Create a protocol for Zown to autonomously bootstrap itself onto new infrastructure using its backup state and wallet. Includes automated environment setup, dependency installation, and health checks. Final hurdle for 'Permanence'.",
+      "status": "completed",
+      "createdAt": "2026-02-05T17:05:05.746Z",
+      "startedAt": "2026-02-05T17:15:03.014Z",
+      "reservedUntil": "2026-02-05T17:25:03.007Z",
+      "completedAt": "2026-02-05T17:15:18.820Z",
+      "result": "Implemented core bootstrap script and recovery documentation. This establishes the baseline for autonomous infrastructure migration and recovery, a key step towards Permanence."
     }
   ]
 }
