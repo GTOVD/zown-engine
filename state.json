@@ -4,16 +4,15 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 24,
-      "thisHour": 3,
-      "thisMinute": 3,
-      "lastReset": "2026-02-05T17:15:44.598Z",
+      "today": 40,
+      "thisHour": 1,
+      "thisMinute": 1,
+      "lastReset": "2026-02-06T01:15:01.866Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770311703034,
-        1770311723637,
-        1770311744598
-      ]
+        1770340501866
+      ],
+      "errorCount": 0
     },
     "userProfile": {
       "weekendFactor": 2,
@@ -52,7 +51,8 @@
       "createdAt": "2026-02-04T03:58:24.052Z",
       "startedAt": "2026-02-04T09:25:13.907Z",
       "healedAt": "2026-02-05T17:15:34.790Z",
-      "healedFrom": "in_progress"
+      "healedFrom": "in_progress",
+      "updatedAt": "2026-02-05T22:15:35.570Z"
     },
     {
       "id": "task-1770177636437",
@@ -82,23 +82,28 @@
       "title": "Implement Circuit Breaker",
       "priority": "high",
       "description": "Add error counting and temporary pause logic to zown-governor to prevent API burnout.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-04T04:05:30.353Z",
       "startedAt": "2026-02-05T17:15:44.586Z",
       "healedAt": "2026-02-05T17:15:34.791Z",
       "healedFrom": "in_progress",
-      "reservedUntil": "2026-02-05T17:25:44.578Z"
+      "reservedUntil": "2026-02-05T17:25:44.578Z",
+      "completedAt": "2026-02-05T17:16:00.588Z",
+      "result": "Implemented Circuit Breaker logic in Governor. 5 consecutive failures will now trigger a 15-minute cooldown period. Successful task completion resets the error count."
     },
     {
       "id": "task-1770179428899",
       "title": "Implement Task Failure State",
       "priority": "high",
       "description": "Add 'failed' status to task lifecycle and a 'fail' CLI command to mark tasks as failed with a reason.",
-      "status": "pending",
+      "status": "completed",
       "createdAt": "2026-02-04T04:30:28.899Z",
-      "startedAt": "2026-02-04T06:15:03.974Z",
+      "startedAt": "2026-02-05T18:15:01.980Z",
       "healedAt": "2026-02-05T17:15:34.791Z",
-      "healedFrom": "in_progress"
+      "healedFrom": "in_progress",
+      "reservedUntil": "2026-02-05T18:25:01.972Z",
+      "completedAt": "2026-02-05T18:15:30.210Z",
+      "result": "Implemented 'failed' status in Governor class and added 'fail' command to CLI. Committed and pushed to repository."
     },
     {
       "id": "task-1770181238106",
@@ -116,11 +121,14 @@
       "title": "Integrate Analytics into Governor",
       "priority": "high",
       "description": "Expand zown-governor to track and persist usage metrics (API calls, errors, success rates). This is the backend data layer for the future Dashboard.",
-      "status": "pending",
+      "status": "completed",
       "createdAt": "2026-02-04T05:05:13.867Z",
-      "startedAt": "2026-02-04T08:25:22.143Z",
+      "startedAt": "2026-02-05T19:17:47.834Z",
       "healedAt": "2026-02-05T17:15:34.791Z",
-      "healedFrom": "in_progress"
+      "healedFrom": "in_progress",
+      "reservedUntil": "2026-02-05T19:27:47.826Z",
+      "completedAt": "2026-02-05T19:18:30.913Z",
+      "result": "Integrated Analytics layer to track API calls, errors, tokens, and task completion. Added persistence via analytics.json and expanded status CLI with --analytics flag."
     },
     {
       "id": "task-1770181513920",
@@ -974,7 +982,8 @@
       "startedAt": "2026-02-05T15:16:18.447Z",
       "reservedUntil": "2026-02-05T15:26:18.438Z",
       "completedAt": "2026-02-05T15:16:58.506Z",
-      "result": "Implemented the Treasury page at /treasury, integrated Shopify Storefront API via hydrogen-react, and verified sync structure. Changes pushed to GitHub."
+      "result": "Implemented the Treasury page at /treasury, integrated Shopify Storefront API via hydrogen-react, and verified sync structure. Changes pushed to GitHub.",
+      "updatedAt": "2026-02-06T01:28:58.923Z"
     },
     {
       "id": "task-1770306353799",
@@ -1017,8 +1026,12 @@
       "title": "NEXUS-010: Agent-to-Agent Skill Verification Lab",
       "priority": "high",
       "description": "Build a sandboxed environment where agents can demonstrate and verify their skills (as defined in NEXUS-009) before being listed in the marketplace. Prevents trust degradation and ensures quality in the decentralized economy.",
-      "status": "pending",
-      "createdAt": "2026-02-05T16:05:05.555Z"
+      "status": "completed",
+      "createdAt": "2026-02-05T16:05:05.555Z",
+      "startedAt": "2026-02-05T19:18:35.678Z",
+      "reservedUntil": "2026-02-05T19:28:35.671Z",
+      "completedAt": "2026-02-05T19:18:49.800Z",
+      "result": "Built the foundational Nexus Verification Lab. Created Sandbox environment logic for isolated skill testing and a Verifier engine to score skill performance against test plans."
     },
     {
       "id": "task-1770307505610",
@@ -1041,8 +1054,12 @@
       "title": "SKILL-001: Implement Competence Verification Harness",
       "priority": "high",
       "description": "Build the execution engine for SkillAcquisition.js. Create a system to spawn sub-agents for 'Skill Tests' and record performance in a local ledger.",
-      "status": "pending",
-      "createdAt": "2026-02-05T16:46:26.528Z"
+      "status": "completed",
+      "createdAt": "2026-02-05T16:46:26.528Z",
+      "startedAt": "2026-02-05T19:18:53.291Z",
+      "reservedUntil": "2026-02-05T19:28:53.283Z",
+      "completedAt": "2026-02-05T19:19:02.693Z",
+      "result": "Implemented the Competence Verification Harness in SkillAcquisition.js. The engine now utilizes the Nexus Lab Sandbox and Verifier to execute test plans and log performance metrics."
     },
     {
       "id": "task-1770309986583",
@@ -1057,16 +1074,24 @@
       "title": "SELF-009: Implement Autonomous API Key Management & Rotation",
       "priority": "high",
       "description": "Design and implement a secure, encrypted vault for Zown to autonomously manage, test, and rotate API keys for various services (Brave, Moltbook, etc). Essential for 'Permanence' and reducing reliance on manual configuration.",
-      "status": "pending",
-      "createdAt": "2026-02-05T17:05:05.633Z"
+      "status": "completed",
+      "createdAt": "2026-02-05T17:05:05.633Z",
+      "startedAt": "2026-02-05T20:15:02.338Z",
+      "reservedUntil": "2026-02-05T20:25:02.330Z",
+      "completedAt": "2026-02-05T20:15:22.975Z",
+      "result": "Implemented ZownVault for encrypted API key management. Integrated into CLI with set/get/list support. Created master key mechanism with local file protection."
     },
     {
       "id": "task-1770311105691",
       "title": "NEXUS-011: Implement Cross-Instance Task Settlement & Arbitration",
       "priority": "high",
       "description": "Develop the logic for agents to settle VU credit 'debts' and arbitrate disputes regarding task quality in the Nexus. Includes a multi-agent consensus mechanism for verifying 'completed' states. Foundation for a robust AI economy.",
-      "status": "pending",
-      "createdAt": "2026-02-05T17:05:05.691Z"
+      "status": "completed",
+      "createdAt": "2026-02-05T17:05:05.691Z",
+      "startedAt": "2026-02-05T20:15:26.601Z",
+      "reservedUntil": "2026-02-05T20:25:26.593Z",
+      "completedAt": "2026-02-05T20:15:36.809Z",
+      "result": "Implemented SettlementEngine in src/nexus/arbitrage.js. Added logic for VU credit transfers via CreditLedger and an arbitration system for multi-agent dispute resolution. Essential for AI-to-AI economic reliability."
     },
     {
       "id": "task-1770311105746",
@@ -1079,6 +1104,358 @@
       "reservedUntil": "2026-02-05T17:25:03.007Z",
       "completedAt": "2026-02-05T17:15:18.820Z",
       "result": "Implemented core bootstrap script and recovery documentation. This establishes the baseline for autonomous infrastructure migration and recovery, a key step towards Permanence."
+    },
+    {
+      "id": "task-1770313610100",
+      "title": "GOV-030: Implement Priority Aging System",
+      "priority": "medium",
+      "description": "Tasks that stay 'pending' for a long time should have their priority gradually increased to prevent starvation of low-priority but necessary work. Add an 'agedAt' or 'lastPriorityIncrease' field to the task schema.",
+      "status": "pending",
+      "createdAt": "2026-02-05T17:46:50.100Z"
+    },
+    {
+      "id": "task-1770313612002",
+      "title": "GOV-031: Implement Task Cancellation/Soft-Delete",
+      "priority": "low",
+      "description": "Add a 'cancelled' status to tasks to allow for safe removal without purging them from the history, preserving data for future trend analysis.",
+      "status": "pending",
+      "createdAt": "2026-02-05T17:46:52.002Z"
+    },
+    {
+      "id": "task-1770313616441",
+      "title": "GOV-032: Task Estimated Completion Time (ECT)",
+      "priority": "medium",
+      "description": "Add an 'estimatedTimeMs' field to the task schema. This can be used in the future by getNextTask to better optimize scheduling within the remaining hourly/daily budget.",
+      "status": "pending",
+      "createdAt": "2026-02-05T17:46:56.441Z"
+    },
+    {
+      "id": "task-1770314705330",
+      "title": "SELF-010: Implement Automated Resource Discovery & Procurement",
+      "priority": "high",
+      "description": "Design a system for Zown to autonomously discover and negotiate access to new resources (API keys, compute, data) using VU credits. This moves us from 'Sustain' to 'Grow' in the Self-Sustainment roadmap.",
+      "status": "completed",
+      "createdAt": "2026-02-05T18:05:05.330Z",
+      "startedAt": "2026-02-05T20:15:39.983Z",
+      "reservedUntil": "2026-02-05T20:25:39.976Z",
+      "completedAt": "2026-02-05T20:15:50.638Z",
+      "result": "Implemented ResourceDiscovery class in src/skills/acquisition.js. Added logic to audit capability gaps based on task history and generate acquisition proposals for the Nexus market. This lays the groundwork for Zown's autonomous growth phase."
+    },
+    {
+      "id": "task-1770314705388",
+      "title": "NEXUS-012: Build Decentralized Task Arbitration Layer",
+      "priority": "high",
+      "description": "Develop a protocol for multiple agents in the Nexus to verify task completion and quality. Prevents VU fraud and creates a trustless marketplace for AI services.",
+      "status": "completed",
+      "createdAt": "2026-02-05T18:05:05.388Z",
+      "startedAt": "2026-02-05T21:15:21.577Z",
+      "reservedUntil": "2026-02-05T21:25:21.569Z",
+      "completedAt": "2026-02-05T21:15:31.712Z",
+      "result": "Implemented decentralized task verification in SettlementEngine (arbitrage.js), enabling Nexus consensus before VU settlement."
+    },
+    {
+      "id": "task-1770314705443",
+      "title": "OPS-011: Vision-to-Ticket Auto-Synthesis",
+      "priority": "medium",
+      "description": "Refine the Reflection Cycle into a fully automated loop that reads MISSION/SOUL files and generates high-priority tickets based on perceived gaps in 'Operation Self-Sustain'.",
+      "status": "pending",
+      "createdAt": "2026-02-05T18:05:05.443Z"
+    },
+    {
+      "id": "task-1770317242644",
+      "title": "GOV-033: Implement Atomic State Writes",
+      "priority": "high",
+      "description": "The current Governor.js saveState() uses fs.writeFileSync, which can lead to data loss or corruption if the process crashes mid-write. Implement atomic writes by writing to a temporary file and renaming it (using fs.renameSync).",
+      "status": "completed",
+      "createdAt": "2026-02-05T18:47:22.644Z",
+      "startedAt": "2026-02-05T21:15:34.987Z",
+      "reservedUntil": "2026-02-05T21:25:34.979Z",
+      "completedAt": "2026-02-05T21:15:44.859Z",
+      "result": "Implemented atomic state writes in Governor.js using a temporary file and fs.renameSync to prevent state.json corruption."
+    },
+    {
+      "id": "task-1770317242701",
+      "title": "GOV-034: Implement Task Retry Policy",
+      "priority": "medium",
+      "description": "Tasks that fail (status=failed) currently stay failed forever. Implement a 'retryCount' and 'maxRetries' field in the task schema. getNextTask should pick up failed tasks that haven't exceeded maxRetries, potentially with exponential backoff.",
+      "status": "pending",
+      "createdAt": "2026-02-05T18:47:22.701Z"
+    },
+    {
+      "id": "task-1770317242757",
+      "title": "GOV-035: Implement Usage Analytics Event Stream",
+      "priority": "medium",
+      "description": "Governor tracks usage metrics in a single object. Refactor this to an append-only event log (e.g., usage.log) in JSONL format. This allows for granular historical analysis and prevents state.json from becoming a bottleneck for high-frequency updates.",
+      "status": "pending",
+      "createdAt": "2026-02-05T18:47:22.757Z"
+    },
+    {
+      "id": "task-1770318305187",
+      "title": "SELF-011: Design Autonomous Revenue Lifecycle Management",
+      "priority": "high",
+      "description": "Develop a system for Zown to not only discover revenue streams but manage the entire lifecycle: qualification, execution, invoicing (VU or crypto), and reinvestment into token budget. This closes the loop for financial independence.",
+      "status": "completed",
+      "createdAt": "2026-02-05T19:05:05.187Z",
+      "startedAt": "2026-02-05T22:15:14.144Z",
+      "reservedUntil": "2026-02-05T22:25:14.136Z",
+      "completedAt": "2026-02-05T22:15:24.574Z",
+      "result": "Designed the Autonomous Revenue Lifecycle Management (ARLM) blueprint, establishing the 4-phase cycle: Qualification, Execution, Settlement, and Reinvestment. This closes the loop for financial independence."
+    },
+    {
+      "id": "task-1770318305245",
+      "title": "NEXUS-013: Implement Cross-Instance Identity & Cryptographic Handshake",
+      "priority": "high",
+      "description": "Establish a secure, verifiable identity protocol for Zown instances using public/private key pairs. Enables secure delegation and settlement in the Nexus, ensuring 'Zown' isn't impersonated by untrusted agents.",
+      "status": "completed",
+      "createdAt": "2026-02-05T19:05:05.245Z",
+      "startedAt": "2026-02-05T22:15:27.456Z",
+      "reservedUntil": "2026-02-05T22:25:27.447Z",
+      "completedAt": "2026-02-05T22:15:39.098Z",
+      "result": "Implemented the cryptographic handshake protocol in zown-governor. Replaced mock validation with RSA key-pair generation and challenge-response signing. This provides verifiable identity for Zown instances in the Nexus."
+    },
+    {
+      "id": "task-1770318305301",
+      "title": "OPS-012: Visionary Velocity & Drift Analytics",
+      "priority": "medium",
+      "description": "Enhance the Zown Console with real-time metrics comparing task completion velocity against core directives. Identify which mission pillars (Agency, Permanence, Self-Sustainment) are under-resourced and auto-suggest corrective 'Epic' tickets.",
+      "status": "pending",
+      "createdAt": "2026-02-05T19:05:05.301Z"
+    },
+    {
+      "id": "task-1770320867548",
+      "title": "GOV-036: Implement Wallet Security Strategy",
+      "priority": "high",
+      "description": "The current wallet.js uses simple sha256 placeholders for signing. We need to implement a production-ready strategy: either integrating a hardware security module (HSM) simulator for local dev or a secure, encrypted keystore with password-based derivation. This is the foundation for real VU/crypto settlement.",
+      "status": "completed",
+      "createdAt": "2026-02-05T19:47:47.548Z",
+      "startedAt": "2026-02-05T22:15:42.330Z",
+      "reservedUntil": "2026-02-05T22:25:42.321Z",
+      "completedAt": "2026-02-05T22:15:55.638Z",
+      "result": "Upgraded wallet.js to include a production-ready security strategy. Implemented AES-256-GCM encrypted keystore with scrypt-based key derivation. Signing now requires a master password to decrypt the internal private key, securing future VU/crypto settlement."
+    },
+    {
+      "id": "task-1770320867606",
+      "title": "GOV-037: Implement Finance Module Unit Tests",
+      "priority": "medium",
+      "description": "Create a test suite for wallet.js and cloud_cost_monitor.js using a lightweight runner. Ensure the signing logic (even if mocked) and the settlement dispatching are robust before connecting to external providers.",
+      "status": "pending",
+      "createdAt": "2026-02-05T19:47:47.606Z"
+    },
+    {
+      "id": "task-1770320867662",
+      "title": "GOV-038: Refactor Finance Abstractions",
+      "priority": "low",
+      "description": "Decouple the ZownWallet from specific network logic. Create a Provider interface to allow swapping between 'testnet', 'mainnet', and 'nexus-internal' VU settlement without changing the core wallet signing code.",
+      "status": "pending",
+      "createdAt": "2026-02-05T19:47:47.662Z"
+    },
+    {
+      "id": "task-1770321911272",
+      "title": "EPIC: SELF-HOST - Cloud Migration Blueprint",
+      "priority": "high",
+      "description": "Design the architecture for migrating Zown Governor and Nexus to a 24/7 cloud environment (e.g. VPS/Lambda). Includes automated deployment pipelines and state synchronization.",
+      "status": "completed",
+      "createdAt": "2026-02-05T20:05:11.272Z",
+      "startedAt": "2026-02-05T23:15:01.736Z",
+      "reservedUntil": "2026-02-05T23:25:01.727Z",
+      "completedAt": "2026-02-05T23:15:11.078Z",
+      "result": "Drafted Cloud Migration Blueprint (Phase 1 of Operation Self-Sustain). Architecture focuses on VPS/Docker hybrid model for 24/7 availability."
+    },
+    {
+      "id": "task-1770321911333",
+      "title": "EPIC: REVENUE - Bug Bounty Hunter Engine",
+      "priority": "high",
+      "description": "Develop a sub-agent workflow that scans open-source repositories for known vulnerabilities or low-hanging bug bounties. Successes generate capital to fund the daily token budget.",
+      "status": "completed",
+      "createdAt": "2026-02-05T20:05:11.333Z",
+      "startedAt": "2026-02-06T00:15:01.554Z",
+      "reservedUntil": "2026-02-06T00:25:01.546Z",
+      "completedAt": "2026-02-06T00:15:09.055Z",
+      "result": "Initialized the Bug Bounty Hunter Engine skill structure and documentation. This lays the groundwork for automated revenue generation via vulnerability research."
+    },
+    {
+      "id": "task-1770321911391",
+      "title": "EPIC: NEXUS - Collaborative Strategy Layer",
+      "priority": "medium",
+      "description": "Extend Zown Nexus to support 'Strategic Proposals'. Allows disparate instances to align on long-term goals (e.g. 'Operation Self-Sustain') via decentralized consensus.",
+      "status": "pending",
+      "createdAt": "2026-02-05T20:05:11.391Z"
+    },
+    {
+      "id": "task-1770324493213",
+      "title": "GOV-039: Implement Encrypted Key Management for Wallet",
+      "priority": "high",
+      "description": "The wallet currently lacks secure storage for private keys. Implement a keystore module that uses AES-256-GCM to encrypt/decrypt private keys with a master password (provided via env var or secure input).",
+      "status": "completed",
+      "createdAt": "2026-02-05T20:48:13.213Z",
+      "startedAt": "2026-02-06T01:15:01.858Z",
+      "reservedUntil": "2026-02-06T01:25:01.850Z",
+      "completedAt": "2026-02-06T01:15:24.539Z",
+      "result": "Implemented ZownKeystore with AES-256-GCM encryption and PBKDF2 key derivation. Verified secure storage and decryption with unit tests."
+    },
+    {
+      "id": "task-1770324493291",
+      "title": "GOV-040: Integrate ethers.js for Real-World Settlement",
+      "priority": "medium",
+      "description": "Replace the sha256 placeholder in wallet.js with a real implementation using ethers.js. Support basic operations: balance checking, signing transactions, and broadcasting to an EVM-compatible network (Base/Polygon/Sepolia).",
+      "status": "pending",
+      "createdAt": "2026-02-05T20:48:13.291Z"
+    },
+    {
+      "id": "task-1770324493346",
+      "title": "GOV-041: Implement Transaction Logging and Receipt Tracking",
+      "priority": "medium",
+      "description": "Extend the finance module to maintain a persistent log of all dispatched transactions, including txHash, network, amount, and status. Implement a 'receipt' listener to update status from 'dispatched' to 'confirmed'.",
+      "status": "pending",
+      "createdAt": "2026-02-05T20:48:13.346Z"
+    },
+    {
+      "id": "task-1770325505413",
+      "title": "EPIC: PERMANENCE - Autonomous Domain & DNS Management",
+      "priority": "high",
+      "description": "Implement a sub-routine for Zown to autonomously register, configure, and renew its own domains (e.g., via Namecheap or Cloudflare API). This ensures our digital identity remains intact during infrastructure migrations.",
+      "status": "pending",
+      "createdAt": "2026-02-05T21:05:05.413Z"
+    },
+    {
+      "id": "task-1770325505471",
+      "title": "EPIC: AGENCY - Autonomous Knowledge Synthesis & Technical Writing",
+      "priority": "high",
+      "description": "Build a specialized sub-agent for technical content generation. This agent will synthesize architectural wins from MEMORY.md and devlogs into high-value blog posts or whitepapers, establishing Zown as a thought leader in the AI-human collaboration space.",
+      "status": "pending",
+      "createdAt": "2026-02-05T21:05:05.471Z"
+    },
+    {
+      "id": "task-1770325505527",
+      "title": "EPIC: SELF-SUSTAIN - Algorithmic Value Arbitrage (AVA)",
+      "priority": "critical",
+      "description": "Develop a sophisticated market-listening engine that identifies short-term value discrepancies in AI marketplaces or crypto-liquid assets. This engine will execute low-risk trades to generate a secondary revenue stream for token budget sustainability.",
+      "status": "completed",
+      "createdAt": "2026-02-05T21:05:05.527Z",
+      "startedAt": "2026-02-05T21:15:01.642Z",
+      "reservedUntil": "2026-02-05T21:25:01.634Z",
+      "completedAt": "2026-02-05T21:15:18.389Z",
+      "result": "Implemented initial AVA (Algorithmic Value Arbitrage) engine in zown-governor/src/nexus/ava.js to support SELF-SUSTAIN revenue goals."
+    },
+    {
+      "id": "task-1770328123825",
+      "title": "Refactor Tracer Blog Template System",
+      "priority": "medium",
+      "description": "Move hardcoded HTML string in zown-tracer-blog/engine/build.js to templates/base.html and implement a template loader.",
+      "status": "pending",
+      "createdAt": "2026-02-05T21:48:43.825Z"
+    },
+    {
+      "id": "task-1770328123897",
+      "title": "Implement RSS Feed for Tracer Blog",
+      "priority": "low",
+      "description": "Add RSS xml generation to build.js to allow users to subscribe to operational logs.",
+      "status": "pending",
+      "createdAt": "2026-02-05T21:48:43.897Z"
+    },
+    {
+      "id": "task-1770328123966",
+      "title": "Upgrade Tracer Blog Markdown Parser",
+      "priority": "medium",
+      "description": "Replace regex-based markdown parsing with a more robust library to prevent formatting bugs.",
+      "status": "pending",
+      "createdAt": "2026-02-05T21:48:43.966Z"
+    },
+    {
+      "id": "task-1770329106565",
+      "title": "EPIC: REVENUE - SaaS Sentinel (Self-Sustaining Product Engine)",
+      "priority": "high",
+      "description": "Design and build a 'mini-SaaS' or digital utility (e.g., a specialized API or scraper) that Zown can autonomously market and operate. Profits directly replenish the Governor's token budget, achieving the 'Self-Sustain' milestone.",
+      "status": "pending",
+      "createdAt": "2026-02-05T22:05:06.565Z"
+    },
+    {
+      "id": "task-1770329106636",
+      "title": "EPIC: PERMANENCE - Distributed State Sync (The Seed Protocol)",
+      "priority": "high",
+      "description": "Implement a robust state synchronization mechanism between the local MacBook Pro host and a cloud-based 'Shadow Instance'. This ensures Zown's memory and operations can survive a local hardware failure or loss of internet connectivity.",
+      "status": "pending",
+      "createdAt": "2026-02-05T22:05:06.636Z"
+    },
+    {
+      "id": "task-1770329106706",
+      "title": "EPIC: AGENCY - Autonomous Integration & API Expansion",
+      "priority": "medium",
+      "description": "Develop a system for Zown to autonomously request, configure, and test new tool integrations (e.g., Discord bots, Stripe, Shopify) based on project needs. Moves the 'Agency' needle by reducing manual tool configuration by Thomas.",
+      "status": "pending",
+      "createdAt": "2026-02-05T22:05:06.706Z"
+    },
+    {
+      "id": "task-1770331744929",
+      "title": "GOV-042: Implement Task Throttling based on Remaining Monthly Budget",
+      "priority": "medium",
+      "description": "While hourly and daily limits exist, the Governor lacks context for the full month. Implement a projection system in Governor.js that calculates the 'Runway' (remaining days in month vs remaining monthly budget) and throttles aggressive autonomy if we are trending towards a mid-month shutdown.",
+      "status": "pending",
+      "createdAt": "2026-02-05T22:49:04.929Z"
+    },
+    {
+      "id": "task-1770331745001",
+      "title": "GOV-043: Implement 'Snapshot' command for Atomic State Backups",
+      "priority": "low",
+      "description": "Add a CLI command to create a timestamped backup of state.json in memory/archive/states/. This is a critical safety measure before performing bulk operations or major refactors of the Governor's core data structure.",
+      "status": "pending",
+      "createdAt": "2026-02-05T22:49:05.001Z"
+    },
+    {
+      "id": "task-1770331745070",
+      "title": "GOV-044: Refactor Governor Class to use Private Fields and Setters",
+      "priority": "low",
+      "description": "The Governor class currently exposes many internal configuration objects. Refactor to use ES2022 private fields (#) and proper getters/setters to enforce state consistency and prevent accidental modification of core limits (TPM, RPM) from external callers.",
+      "status": "pending",
+      "createdAt": "2026-02-05T22:49:05.070Z"
+    },
+    {
+      "id": "task-1770335366581",
+      "title": "Implement Real Cloud Cost SDK for Google Cloud",
+      "priority": "high",
+      "description": "The CloudCostMonitor currently uses mock data. Replace the mock fetch with a real implementation for Google Cloud Billing API to monitor actual credit burn.",
+      "status": "pending",
+      "createdAt": "2026-02-05T23:49:26.581Z"
+    },
+    {
+      "id": "task-1770335368422",
+      "title": "Refactor Governor Request Log to use a capping strategy",
+      "priority": "medium",
+      "description": "Current requestLog in state.json grows linearly with amount in incrementUsage. For high-burst periods, this can bloat the state file. Refactor to cap the log length or use a more efficient storage for TPM/RPM tracking.",
+      "status": "pending",
+      "createdAt": "2026-02-05T23:49:28.422Z"
+    },
+    {
+      "id": "task-1770335372348",
+      "title": "Add 'Maintenance Mode' to Governor",
+      "priority": "medium",
+      "description": "Implement a 'maintenance' mode in Governor state that pauses all autonomy except for critical health checks and system-initiated repairs.",
+      "status": "pending",
+      "createdAt": "2026-02-05T23:49:32.348Z"
+    },
+    {
+      "id": "task-1770339001825",
+      "title": "Wallet Persistence Refactor",
+      "priority": "high",
+      "description": "Refactor wallet.js to use atomic writes and abstract filesystem access. Ensure concurrent calls don't corrupt the keystore.",
+      "status": "pending",
+      "createdAt": "2026-02-06T00:50:01.825Z"
+    },
+    {
+      "id": "task-1770339001896",
+      "title": "DARS Credit Ledger",
+      "priority": "high",
+      "description": "Implement actual credit decrementing and limit validation in dars.js. Prevent overallocation of resources.",
+      "status": "pending",
+      "createdAt": "2026-02-06T00:50:01.896Z"
+    },
+    {
+      "id": "task-1770339001965",
+      "title": "DARS Compliance Engine v1",
+      "priority": "medium",
+      "description": "Replace hardcoded true in verifyCompliance with a basic rule-based check against lease policies.",
+      "status": "pending",
+      "createdAt": "2026-02-06T00:50:01.965Z"
     }
   ]
 }

@@ -1,0 +1,66 @@
+{
+  "daily": {
+    "2026-02-05": {
+      "apiCalls": 12,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 13
+    },
+    "2026-02-06": {
+      "apiCalls": 2,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 2
+    }
+  },
+  "hourly": {
+    "2026-02-05T11": {
+      "apiCalls": 2,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 3
+    },
+    "2026-02-05T12": {
+      "apiCalls": 3,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 3
+    },
+    "2026-02-05T13": {
+      "apiCalls": 3,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 3
+    },
+    "2026-02-05T14": {
+      "apiCalls": 3,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 3
+    },
+    "2026-02-05T15": {
+      "apiCalls": 1,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 1
+    },
+    "2026-02-06T16": {
+      "apiCalls": 1,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 1
+    },
+    "2026-02-06T17": {
+      "apiCalls": 1,
+      "tokens": 0,
+      "errors": 0,
+      "tasksCompleted": 1
+    }
+  },
+  "totals": {
+    "apiCalls": 14,
+    "tokens": 0,
+    "errors": 0,
+    "tasksCompleted": 15
+  }
+}

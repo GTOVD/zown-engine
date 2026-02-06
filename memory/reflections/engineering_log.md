@@ -1,30 +1,27 @@
-# Engineering Ideation Log: 2026-02-05
+# Engineering Thought Cycle - 2026-02-05
 
-## 1. Scan: `zown-governor`
-I focused my attention on the core logic of the `zown-governor` package, specifically `src/index.js` and the nascent `src/skills/acquisition.js`.
+## Scan: `zown-governor`
+I reviewed `zown-governor/src/finance/wallet.js` and `zown-governor/src/nexus/dars.js`.
 
-## 2. Critique: Senior Software Engineer Perspective
+## Senior Engineer Critique
 
-### **Technical Debt & Architectural Observations**
-- **State Management Coupling:** The `Governor` class is heavily coupled to the filesystem (`fs.readFileSync`). While functional for a single-agent setup, this will break as we scale to a multi-agent Nexus. We need a `StorageProvider` abstraction.
-- **Cost/Budget Configuration:** Hardcoded values for `COSTS` (chat, agent_turn, etc.) should be externalized to a JSON config. This is already on the backlog (GOV-013), but seeing it in the code reinforces its priority.
-- **Skill Acquisition (Stubs):** `src/skills/acquisition.js` is a ghost town of stubs. The "Skill Acquisition" framework is one of our most visionary concepts (Agency/Self-Improvement), yet it lacks an actual execution engine.
-- **TPM Protection:** The 1M TPM limit is hardcoded. As Thomas adds more models or providers, the Governor will be blind to their specific rate limits.
+### 1. `zown-governor/src/finance/wallet.js`
+*   **Security Risk**: The `sign` method decrypts the private key into a string (`let privateKey = ...`). This remains in memory longer than necessary. It should ideally be handled in a `Buffer` and zeroed out if possible, though JS garbage collection makes this tricky.
+*   **Lack of Persistence Layer**: The current implementation reads/writes directly to the filesystem using `fs.readFileSync`. For a high-frequency autonomous governor, this should be abstracted behind a repository pattern or a database (even a simple one like SQLite) to handle concurrency and atomic writes.
+*   **Missing Multi-sig/Governance**: The wallet is a single-key setup. For a "Governor," we should ideate a "Council" or "Multi-sig" approach where significant resource allocations require signatures from both the Governor (Zown) and the User (Thomas).
 
-### **New Opportunities**
-- **Autonomous Refactoring:** We have a "filler" mode in the Governor. We could use this to trigger "Surgical Refactors" where a sub-agent is spawned specifically to clean up debt flagged by the Governor (like the coupling mentioned above).
-- **Competence Ledger:** The `SkillAcquisition` class needs a ledger to track *failed* verifications, not just successes, to prevent retrying expensive, impossible skills.
+### 2. `zown-governor/src/nexus/dars.js`
+*   **Skeletal Implementation**: The `DARSProtocol` is mostly placeholders (`verifyCompliance` always returns `true`). It lacks actual resource tracking (decrementing credits when leased).
+*   **Missing Telemetry**: There's no mechanism to report resource usage back to the governor. We need a "Heartbeat" or "Telemetry" hook for leased resources.
 
-## 3. Ideate: Concrete Tasks
+### 3. Architecture Improvements
+*   **Modularization**: `zown-governor` is growing. We need a clear separation between `Core` (Identity, Policy) and `Plugins` (Finance, Nexus, Skills). 
 
-### **Task A: [GOV-028] Decouple State Persistence**
-Refactor `Governor.js` to accept a `Storage` instance (interface: `get`, `set`, `exists`). Implement `FileStorage` as the default. This enables future `NexusStorage` or `RedisStorage` for distributed agents.
+## New Project Ideas
+*   **Nexus Telemetry Agent**: A lightweight sidecar that runs alongside leased resources to monitor compliance and report usage.
+*   **Governance UI (Console Upgrade)**: A real-time dashboard in `zown-console` to visualize the DARS lease graph and wallet flows.
 
-### **Task B: [SKILL-001] Implement 'Competence Verification' Harness**
-Develop the execution logic for `SkillAcquisition.verifyCompetence()`. It should be able to spawn a sandboxed sub-agent with a specific "Final Exam" task (e.g., "Write a Python script to calculate X without using Y") and grade the result.
-
-### **Task C: [GOV-029] Configurable Cost Profiles**
-Move `this.COSTS` and `this.TPM_LIMIT` from `index.js` into a `config/limits.json`. Update the constructor to merge user overrides.
-
----
-*Signed: Zown (Engineering Lead)*
+## Formulated Tasks
+1.  **Refactor Wallet for Atomic Operations**: Implement a robust persistence layer to prevent corruption during concurrent access.
+2.  **Implement Credit Tracking in DARS**: Actually decrement `availableCredits` and validate limits in `createLease`.
+3.  **DARS Compliance Engine**: Implement a basic rule-based engine for `verifyCompliance` instead of a hardcoded `true`.
