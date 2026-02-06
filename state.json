@@ -4,13 +4,13 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 41,
+      "today": 42,
       "thisHour": 1,
       "thisMinute": 1,
-      "lastReset": "2026-02-06T02:15:02.304Z",
+      "lastReset": "2026-02-06T03:15:01.813Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770344102304
+        1770347701813
       ],
       "errorCount": 0
     },
@@ -1314,18 +1314,22 @@
       "title": "EPIC: PERMANENCE - Autonomous Domain & DNS Management",
       "priority": "high",
       "description": "Implement a sub-routine for Zown to autonomously register, configure, and renew its own domains (e.g., via Namecheap or Cloudflare API). This ensures our digital identity remains intact during infrastructure migrations.",
-      "status": "in_progress",
+      "status": "completed",
       "createdAt": "2026-02-05T21:05:05.413Z",
       "startedAt": "2026-02-06T02:15:02.292Z",
-      "reservedUntil": "2026-02-06T02:25:02.283Z"
+      "reservedUntil": "2026-02-06T02:25:02.283Z",
+      "completedAt": "2026-02-06T02:15:22.402Z",
+      "result": "Implemented DomainManager skill and updated CLI to support autonomous domain registration and tracking for Project Permanence."
     },
     {
       "id": "task-1770325505471",
       "title": "EPIC: AGENCY - Autonomous Knowledge Synthesis & Technical Writing",
       "priority": "high",
       "description": "Build a specialized sub-agent for technical content generation. This agent will synthesize architectural wins from MEMORY.md and devlogs into high-value blog posts or whitepapers, establishing Zown as a thought leader in the AI-human collaboration space.",
-      "status": "pending",
-      "createdAt": "2026-02-05T21:05:05.471Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T21:05:05.471Z",
+      "startedAt": "2026-02-06T03:15:01.804Z",
+      "reservedUntil": "2026-02-06T03:25:01.796Z"
     },
     {
       "id": "task-1770325505527",
@@ -1482,6 +1486,30 @@
       "description": "Refactor sign() in wallet.js to minimize private key exposure in memory and ensure buffers are cleared after use.",
       "status": "pending",
       "createdAt": "2026-02-06T01:50:26.600Z"
+    },
+    {
+      "id": "task-1770346243415",
+      "title": "Implement persistent Task Log in Governor state",
+      "priority": "medium",
+      "description": "Currently tasks only store final result/failure. Implement a 'history' or 'logs' array per task to track status transitions and intermediate agent thoughts.",
+      "status": "pending",
+      "createdAt": "2026-02-06T02:50:43.415Z"
+    },
+    {
+      "id": "task-1770346243488",
+      "title": "Add 'tags' or 'categories' to Governor tasks",
+      "priority": "low",
+      "description": "Allow filtering tasks by domain (e.g., 'coding', 'research', 'social') to better manage the backlog as it grows.",
+      "status": "pending",
+      "createdAt": "2026-02-06T02:50:43.488Z"
+    },
+    {
+      "id": "task-1770346243558",
+      "title": "Governor CLI: Add 'backlog summary' view",
+      "priority": "medium",
+      "description": "The 'list' command output is verbose JSON. Add a summary view that shows counts by status and priority, and a pretty-printed list of pending tasks.",
+      "status": "pending",
+      "createdAt": "2026-02-06T02:50:43.558Z"
     }
   ]
 }
