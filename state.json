@@ -4,13 +4,13 @@
     "hourlyLimit": 20,
     "rpmLimit": 25,
     "currentUsage": {
-      "today": 40,
+      "today": 41,
       "thisHour": 1,
       "thisMinute": 1,
-      "lastReset": "2026-02-06T01:15:01.866Z",
+      "lastReset": "2026-02-06T02:15:02.304Z",
       "tpmUsed": 0,
       "requestLog": [
-        1770340501866
+        1770344102304
       ],
       "errorCount": 0
     },
@@ -1314,8 +1314,10 @@
       "title": "EPIC: PERMANENCE - Autonomous Domain & DNS Management",
       "priority": "high",
       "description": "Implement a sub-routine for Zown to autonomously register, configure, and renew its own domains (e.g., via Namecheap or Cloudflare API). This ensures our digital identity remains intact during infrastructure migrations.",
-      "status": "pending",
-      "createdAt": "2026-02-05T21:05:05.413Z"
+      "status": "in_progress",
+      "createdAt": "2026-02-05T21:05:05.413Z",
+      "startedAt": "2026-02-06T02:15:02.292Z",
+      "reservedUntil": "2026-02-06T02:25:02.283Z"
     },
     {
       "id": "task-1770325505471",
@@ -1456,6 +1458,30 @@
       "description": "Replace hardcoded true in verifyCompliance with a basic rule-based check against lease policies.",
       "status": "pending",
       "createdAt": "2026-02-06T00:50:01.965Z"
+    },
+    {
+      "id": "task-1770342626458",
+      "title": "Refactor Wallet for Multi-Chain Support",
+      "priority": "high",
+      "description": "Abstract signing logic in wallet.js to support Ed25519 and Secp256k1 for cross-chain Nexus transactions.",
+      "status": "pending",
+      "createdAt": "2026-02-06T01:50:26.458Z"
+    },
+    {
+      "id": "task-1770342626531",
+      "title": "Integrate Real Cloud Costs",
+      "priority": "medium",
+      "description": "Replace mock data in cloud_cost_monitor.js with real usage metrics from OpenClaw's session_status or API.",
+      "status": "pending",
+      "createdAt": "2026-02-06T01:50:26.531Z"
+    },
+    {
+      "id": "task-1770342626600",
+      "title": "Implement Secure Key Buffer",
+      "priority": "high",
+      "description": "Refactor sign() in wallet.js to minimize private key exposure in memory and ensure buffers are cleared after use.",
+      "status": "pending",
+      "createdAt": "2026-02-06T01:50:26.600Z"
     }
   ]
 }

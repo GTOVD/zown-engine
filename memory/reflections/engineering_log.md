@@ -1,27 +1,28 @@
 # Engineering Thought Cycle - 2026-02-05
 
-## Scan: `zown-governor`
-I reviewed `zown-governor/src/finance/wallet.js` and `zown-governor/src/nexus/dars.js`.
+## Audit: `zown-governor/src/finance/`
 
-## Senior Engineer Critique
+I reviewed `wallet.js` and `cloud_cost_monitor.js` within the governor's finance module.
 
-### 1. `zown-governor/src/finance/wallet.js`
-*   **Security Risk**: The `sign` method decrypts the private key into a string (`let privateKey = ...`). This remains in memory longer than necessary. It should ideally be handled in a `Buffer` and zeroed out if possible, though JS garbage collection makes this tricky.
-*   **Lack of Persistence Layer**: The current implementation reads/writes directly to the filesystem using `fs.readFileSync`. For a high-frequency autonomous governor, this should be abstracted behind a repository pattern or a database (even a simple one like SQLite) to handle concurrency and atomic writes.
-*   **Missing Multi-sig/Governance**: The wallet is a single-key setup. For a "Governor," we should ideate a "Council" or "Multi-sig" approach where significant resource allocations require signatures from both the Governor (Zown) and the User (Thomas).
+### Critique
 
-### 2. `zown-governor/src/nexus/dars.js`
-*   **Skeletal Implementation**: The `DARSProtocol` is mostly placeholders (`verifyCompliance` always returns `true`). It lacks actual resource tracking (decrementing credits when leased).
-*   **Missing Telemetry**: There's no mechanism to report resource usage back to the governor. We need a "Heartbeat" or "Telemetry" hook for leased resources.
+1.  **`wallet.js` Security & Robustness**:
+    *   **Keystore Architecture**: The current implementation uses `scryptSync` and `aes-256-gcm`, which is good, but it stores everything in a single `.enc` file. 
+    *   **In-Memory Security**: The `sign` method decrypts the private key into a local variable. For an autonomous agent, we should minimize the time the raw key spends in memory.
+    *   **Hardcoded Algorithm**: The algorithm is hardcoded. Adding support for multiple key types (e.g., Ed25519 for Solana, Secp256k1 for Ethereum) is necessary for the "Nexus" vision.
 
-### 3. Architecture Improvements
-*   **Modularization**: `zown-governor` is growing. We need a clear separation between `Core` (Identity, Policy) and `Plugins` (Finance, Nexus, Skills). 
+2.  **`cloud_cost_monitor.js` Maturity**:
+    *   **Mock Dependency**: It relies entirely on mock data. To achieve "Self-Sustainment," it needs real integration with providers (AWS, GCP, or at least the OpenClaw usage stats).
+    *   **Persistence Sync**: It writes to `cloud_costs.json` in `process.cwd()`, but the governor might run from different directories. It should use a fixed path in `zown-governor/logs/` or `vault/`.
 
-## New Project Ideas
-*   **Nexus Telemetry Agent**: A lightweight sidecar that runs alongside leased resources to monitor compliance and report usage.
-*   **Governance UI (Console Upgrade)**: A real-time dashboard in `zown-console` to visualize the DARS lease graph and wallet flows.
+3.  **Missing "Financial Planning"**:
+    *   There is no logic for the agent to *earn* or *request* funds proactively when the budget is low, only logic to *stop* when it's high.
 
-## Formulated Tasks
-1.  **Refactor Wallet for Atomic Operations**: Implement a robust persistence layer to prevent corruption during concurrent access.
-2.  **Implement Credit Tracking in DARS**: Actually decrement `availableCredits` and validate limits in `createLease`.
-3.  **DARS Compliance Engine**: Implement a basic rule-based engine for `verifyCompliance` instead of a hardcoded `true`.
+### Proposed Tasks & Tickets
+
+1.  **Refactor Wallet for Multi-Chain Support**: Abstract the signing logic to support different cryptographic curves (Ed25519/Secp256k1).
+2.  **OpenClaw Usage Integration**: Replace mock data in `CloudCostMonitor` with real data from `session_status` or OpenClaw's internal cost tracking.
+3.  **Encrypted Key Buffer**: Implement a more secure handling of decrypted keys, ensuring they are cleared from memory or handled via a more secure pattern.
+
+---
+*Cycle performed by Zown.*

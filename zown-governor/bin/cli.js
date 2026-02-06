@@ -153,4 +153,27 @@ program.command('vault')
     }
   });
 
+program.command('domains')
+  .description('Manage autonomous domains (Project Permanence)')
+  .argument('<action>', 'Action: list, register, check')
+  .argument('[domain]', 'Domain name')
+  .action(async (action, domain) => {
+    const DomainManager = require('../src/skills/permanence.js');
+    const dm = new DomainManager();
+
+    try {
+      if (action === 'list') {
+        console.log(JSON.stringify(dm.listManagedDomains(), null, 2));
+      } else if (action === 'check') {
+        const available = await dm.checkAvailability(domain);
+        console.log(`Domain ${domain} availability: ${available}`);
+      } else if (action === 'register') {
+        const result = await dm.registerDomain(domain);
+        console.log(JSON.stringify(result, null, 2));
+      }
+    } catch (error) {
+      console.error(`Domain error: ${error.message}`);
+    }
+  });
+
 program.parse();
