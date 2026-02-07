@@ -10,7 +10,13 @@
       "apiCalls": 4,
       "tokens": 0,
       "errors": 0,
-      "tasksCompleted": 3
+      "tasksCompleted": 4
+    },
+    "2026-02-07": {
+      "apiCalls": 3,
+      "tokens": 492000,
+      "errors": 0,
+      "tasksCompleted": 0
     }
   },
   "hourly": {
@@ -66,13 +72,19 @@
       "apiCalls": 1,
       "tokens": 0,
       "errors": 0,
+      "tasksCompleted": 1
+    },
+    "2026-02-07T13": {
+      "apiCalls": 3,
+      "tokens": 492000,
+      "errors": 0,
       "tasksCompleted": 0
     }
   },
   "totals": {
-    "apiCalls": 16,
-    "tokens": 0,
+    "apiCalls": 19,
+    "tokens": 492000,
     "errors": 0,
-    "tasksCompleted": 16
+    "tasksCompleted": 17
   }
 }

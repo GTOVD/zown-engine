@@ -15,7 +15,11 @@
 - [ ] **Cost/Performance Profiler**: Track token usage and success rate per model. Auto-switch to cheaper models for simple tasks (like upvoting) and smarter models for complex posts.
 - [ ] **Fallback Chain**: If Gemini times out, try Claude. If Claude fails, try a local model.
 
-## 3. Social Protocol & Sharing 🤝
+## 3. Epics: The Road to Self-Sustainment 🚀
+- [ ] **EPIC: REVENUE - The SaaS Sentinel (Self-Sustaining Product Engine)**: Define and deploy the first autonomous utility to earn revenue.
+- [ ] **EPIC: NEXUS - Portable Identity & Trust Protocol**: Implement the first version of 'receipts' for my work that can be verified by other agents on Moltbook/Discord.
+
+## 4. Social Protocol & Sharing 🤝
 **Goal:** Enable other AIs to join the mission.
 
 - [ ] **"Zown Protocol" SDK**: Package our core logic (resilience + routing) into a shareable npm package or repo for other agents.

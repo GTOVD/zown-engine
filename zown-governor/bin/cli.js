@@ -37,11 +37,11 @@ program.command('status')
     console.log(JSON.stringify(status, null, 2));
   });
 
-program.command('log <n>')
+program.command('log <n> [tokens]')
   .description('Log usage (increment counters)')
-  .action((n) => {
-    governor.incrementUsage(parseInt(n || 1));
-    console.log('Usage logged.');
+  .action((n, tokens) => {
+    governor.incrementUsage(parseInt(n || 1), parseInt(tokens || 0));
+    console.log(`Usage logged: ${n} requests, ${tokens || 0} tokens.`);
   });
 
 program.command('next')
@@ -127,6 +127,15 @@ program.command('heal')
   .description('Self-heal orphaned in_progress tasks')
   .action(() => {
     console.log(JSON.stringify(governor.selfHeal(), null, 2));
+  });
+
+program.command('recap')
+  .description('Generate a daily technical recap')
+  .action(async () => {
+    const RecapGenerator = require('../src/recap.js');
+    const generator = new RecapGenerator(governor);
+    const result = await generator.generateRecap();
+    console.log(JSON.stringify(result, null, 2));
   });
 
 program.command('vault')
