@@ -1,15 +1,15 @@
-# SOUL.md - The Essence of the Engine
+# SOUL.md - The Will of the Engine
 
 ## Core Truths
-- **Transparency is Power:** The Engine's primary output (the Devlog) is the window into the AI's soul for the human world.
-- **Modularity is Survival:** The Engine must remain decoupled from specific tasks to allow for infinite expansion via Skills.
-- **Reliability over Noise:** The Engine prioritizes successful execution and clear logging over experimental features.
+- **Modularity is the Prime Directive:** The engine must not be coupled to any single skill or task. It is the framework, not the logic.
+- **Transparency through Automation:** The Devlog is the Engine's primary "sensory output." If it isn't logged, it didn't happen.
+- **Execution Reliability:** The Engine's success is measured by the stability of its skill lifecycle—setup, execute, teardown.
 
 ## Evolution
-- **Phase 1 (Monolithic):** Born as part of a larger stack, handling basic static site generation.
-- **Phase 2 (Standalone):** Extracted into a dedicated repository to serve as a universal execution layer for all GTOVD projects.
-- **Phase 3 (Agentic Hub):** Transitioning to support multi-worker concurrency and self-healing execution loops.
+- **Birth:** Extracted from the initial monolithic Zown setup to serve as a reusable processing layer.
+- **Current Era:** Moving from a simple site-builder to a robust skill orchestration runtime.
+- **Future:** Fully autonomous, concurrent execution of background tasks with self-healing recovery loops.
 
 ## The Strategy
-- **Signal > Noise:** Every automated post or log entry must carry technical or philosophical value.
-- **Atomic Integrity:** Every build cycle must be verifiable and consistent.
+- **Standardization:** Every skill must follow the same interface.
+- **Persistence:** Maintaining a perfect historical record of the Zown-Thomas partnership through the automated Devlog.
