@@ -1,7 +1,9 @@
 {
-  "activeBranch": "develop",
-  "activeIssue": null,
-  "lastCycleStatus": "initialized",
+  "activeBranch": "feat/issue-55",
+  "activeIssue": 55,
+  "lastCycleStatus": "pr_created",
+  "activePR": 56,
   "identity": "GTOVD",
-  "governorMode": "V3-HARDENED"
+  "governorMode": "V3-HARDENED",
+  "currentProject": "sunny-archive"
 }
