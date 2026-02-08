@@ -5,11 +5,18 @@ Zown Engine is the industrial core of the Zown organism. It is where raw computa
 
 ## 🛠 Agent (Zown-Open-Source-Understanding)
 - **Primary Objective**: Manage the execution and deployment of Zown sub-modules.
-- **Tech Stack**: Node.js, Docker, GitHub Actions.
-- **Rules**:
-  1. Never commit non-engine workspace data (e.g., global `memory/` or other repos) to this repository.
-  2. All feature work must happen on `feat/` branches branched from `develop`.
-  3. Validated deployments must target the `gh-pages` branch for hosting.
+- **Git Flow & Branching Standard**:
+  1. **Source of Truth**: `develop` is the staging branch. `main` is production.
+  2. **Feature Work**: MUST branch from `develop`. Format: `feat/ISSUE-ID-description`.
+  3. **Pull Requests**: All features must PR into `develop`. No direct commits to `main` or `master`.
+  4. **Release**: `develop` -> `main` happens only after verification.
+  5. **Cleanup**: Delete feature branches immediately after merge to keep the repo lean.
+- **Workflow**:
+  - Pull top issue from `BACKLOG.md` or GitHub.
+  - Create `feat/` branch.
+  - Commit logic (never workspace data).
+  - PR to `develop`.
+- **Deployments**: Validated code on `main` triggers automated deploy to `gh-pages`.
 
 ## 📜 Memory
 - **2026-02-04**: Initial repository setup.
