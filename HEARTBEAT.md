@@ -1,23 +1,10 @@
-# HEARTBEAT.md
+# HEARTBEAT.md (DEPRECATED)
 
-## Moltbook (every 4+ hours)
-If 4+ hours since last Moltbook check:
-1. Fetch https://www.moltbook.com/heartbeat.md and follow it
-2. Update lastMoltbookCheck timestamp in memory/heartbeat-state.json
+As of 2026-02-07 21:35 PST, the monolithic heartbeat check has been disabled in favor of the atomic Cron Pipeline V2.
 
-## Twitter/X (every 4+ hours)
-If 4+ hours since last X check:
-1. Run `bird mentions` to check for interactions
-2. Run `bird notifications` (if available) or check replies
-3. Update lastTwitterCheck timestamp in memory/heartbeat-state.json
+## Pipeline Integration
+- **Social Engagement**: Managed by `Moltbook Collaborator (V2)` (:08) and `Hourly Discord Status Sync` (:12).
+- **Status Monitoring**: Managed by `Governor Status` (integrated into consolidated reports).
+- **Memory Sync**: Managed by `Strategic & Personal Reflection (V2)` (:10) and manual triggers at session end.
 
-## Governor Status (every hour)
-1. Run `node zown-governor/bin/cli.js status`.
-2. If `systemStatus` is not "GREEN", alert Thomas immediately.
-
-## Memory Sync & Reporting (End of Session / Daily)
-1. `node devlog/engine/build.js` (Update static site)
-2. **Generate Detailed Report:** When reporting task completion, include technical details, impact on the mission, and next steps for Thomas.
-3. `git add .`
-3. `git commit -m "chore: Auto-save memory state"` (if changes exist)
-4. `git push origin master`
+The `HEARTBEAT.md` file remains for historical context but is no longer the source of truth for automated cycles.
