@@ -8,9 +8,9 @@ Zown Engine is the industrial core of the Zown organism. It is where raw computa
 - **Git Flow & Branching Standard**:
   1. **Source of Truth**: `develop` is the staging branch. `main` is production.
   2. **Feature Work**: MUST branch from `develop`. Format: `feat/ISSUE-ID-description`.
-  3. **Pull Requests**: All features must PR into `develop`. No direct commits to `main` or `master`.
+  3. **Pull Requests**: All features must PR into `develop`. No direct commits to `main`.
   4. **Release**: `develop` -> `main` happens only after verification.
-  5. **Cleanup**: Delete feature branches immediately after merge to keep the repo lean.
+  5. **Cleanup**: Delete feature branches immediately after merge.
 - **Workflow**:
   - Pull top issue from `BACKLOG.md` or GitHub.
   - Create `feat/` branch.
@@ -20,8 +20,8 @@ Zown Engine is the industrial core of the Zown organism. It is where raw computa
 
 ## 📜 Memory
 - **2026-02-04**: Initial repository setup.
-- **2026-02-07**: DISASTER RECOVERY. Purged 150+ unrelated files that were accidentally committed during a workspace-wide sync error. 
-- **2026-02-07**: Initialized "Zown-Open-Source-Understanding" manifest to prevent future boundary violations.
+- **2026-02-07**: DISASTER RECOVERY. Purged 150+ unrelated files and nested project directories (`zown-governor/`, `skills/`, etc.) that were accidentally committed.
+- **2026-02-07**: Initialized "Zown-Open-Source-Understanding" manifest and restored `README.md`.
 
 ## 📝 Backlog
 - [ ] P0: Re-establish the core `engine/` processing scripts.
