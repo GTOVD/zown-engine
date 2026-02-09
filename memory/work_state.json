@@ -1,9 +1,9 @@
 {
-  "activeBranch": "feat/issue-55",
-  "activeIssue": 55,
-  "lastCycleStatus": "pr_created",
-  "activePR": 56,
-  "identity": "GTOVD",
-  "governorMode": "V3-HARDENED",
-  "currentProject": "sunny-archive"
+  "current_cycle": 2,
+  "active_repo": "GTOVD/sunny-archive",
+  "active_ticket": "issue-98",
+  "active_branch": "fix/issue-98",
+  "status": "Execution Tier Part 2: Code & Ship Complete",
+  "last_update": "2026-02-09T08:35:00Z",
+  "active_pr": "https://github.com/GTOVD/sunny-archive/pull/101"
 }
