@@ -1,22 +1,9 @@
 {
-<<<<<<< Updated upstream
-  "activeBranch": "feat/issue-55",
-  "activeIssue": 55,
-  "lastCycleStatus": "pr_created",
-  "activePR": 56,
-  "identity": "GTOVD",
-  "governorMode": "V3-HARDENED",
-  "currentProject": "sunny-archive"
-=======
   "current_cycle": 2,
-  "start_time": "2026-02-08T22:22:00-08:00",
-  "active_task": {
-    "issue_id": 86,
-    "branch": "feat/issue-86",
-    "title": "ARCH-011: Implement Content-Addressable Storage (CAS) for Archive Artifacts",
-    "status": "completed",
-    "tier": "Execution Tier Part 2"
-  },
-  "repository": "GTOVD/sunny-archive"
->>>>>>> Stashed changes
+  "active_repo": "GTOVD/sunny-archive",
+  "active_ticket": "issue-98",
+  "active_branch": "fix/issue-98",
+  "status": "Execution Tier Part 2: Code & Ship Complete",
+  "last_update": "2026-02-09T08:35:00Z",
+  "active_pr": "https://github.com/GTOVD/sunny-archive/pull/101"
 }
