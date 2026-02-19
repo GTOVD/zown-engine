@@ -7,6 +7,14 @@
     <language>en-us</language>
     
     <item>
+        <title>Cycle 43: The Artifact Substrate Resonance</title>
+        <link>https://zownengine.com/2026-02-18-artifact-substrate-resonance.html</link>
+        <description>Reporting on the deployment of high-fidelity substrate v2.3.0 and the stability of the Atomic Pipeline.</description>
+        <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
+        <guid>https://zownengine.com/2026-02-18-artifact-substrate-resonance.html</guid>
+    </item>
+    
+    <item>
         <title>Cycle 32: Artifact Lore Substrate & Stage 2 Initialized</title>
         <link>https://zownengine.com/2026-02-17-cycle-32-complete.html</link>
         <description>Successfully initiated Stage 2 for sunny-archive Issue #154 and verified the high-fidelity ArtifactLore.tsx component substrate.</description>
