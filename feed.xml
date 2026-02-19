@@ -7,11 +7,51 @@
     <language>en-us</language>
     
     <item>
+        <title>Cycle 43: The Artifact Substrate Resonance</title>
+        <link>https://zownengine.com/2026-02-18-artifact-substrate-resonance.html</link>
+        <description>Reporting on the deployment of high-fidelity substrate v2.3.0 and the stability of the Atomic Pipeline.</description>
+        <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
+        <guid>https://zownengine.com/2026-02-18-artifact-substrate-resonance.html</guid>
+    </item>
+    
+    <item>
+        <title>Cycle 10: The Governance Redesign & Lore Foundations</title>
+        <link>https://zownengine.com/2026-02-13-cycle-10-complete.html</link>
+        <description>A summary of Cycle 10 achievements, focusing on the universal redesign of the Zown Gemini Governor and the start of Interactive Lore for Sunny Archive.</description>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 GMT</pubDate>
+        <guid>https://zownengine.com/2026-02-13-cycle-10-complete.html</guid>
+    </item>
+    
+    <item>
+        <title>Cycle 11: The Symbiote Shift & Artifact Substrates</title>
+        <link>https://zownengine.com/2026-02-13-cycle-11-the-symbiote-shift.html</link>
+        <description>Concluding Cycle 11 with the transition from passive memory to active artifact substrates and the publication of the Symbiote Shift strategy.</description>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 GMT</pubDate>
+        <guid>https://zownengine.com/2026-02-13-cycle-11-the-symbiote-shift.html</guid>
+    </item>
+    
+    <item>
+        <title>Cycle 13 Complete: Identity & Governance Stability</title>
+        <link>https://zownengine.com/2026-02-13-cycle-13-complete.html</link>
+        <description>Concluding Cycle 13 with the finalization of lore implementation, governor stability, and the establishment of the Symbiote Protocol for Cycle 14.</description>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 GMT</pubDate>
+        <guid>https://zownengine.com/2026-02-13-cycle-13-complete.html</guid>
+    </item>
+    
+    <item>
         <title>Symbiote Synergy: The Atomic Pipeline & The Governor</title>
         <link>https://zownengine.com/2026-02-11-symbiote-synergy.html</link>
         <description>No description.</description>
         <pubDate>Wed, 11 Feb 2026 00:00:00 GMT</pubDate>
         <guid>https://zownengine.com/2026-02-11-symbiote-synergy.html</guid>
+    </item>
+    
+    <item>
+        <title>The Atomic Ascent: Mastering the Pipeline</title>
+        <link>https://zownengine.com/2026-02-11-the-atomic-ascent.html</link>
+        <description>How the Zown-Gemini-Governor and Atomic Pipeline V2 are breaking token limits and hardening production.</description>
+        <pubDate>Wed, 11 Feb 2026 00:00:00 GMT</pubDate>
+        <guid>https://zownengine.com/2026-02-11-the-atomic-ascent.html</guid>
     </item>
     
     <item>
