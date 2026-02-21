@@ -1,19 +1,18 @@
-name: Deploy Devlog
+name: Deploy Zown Engine
 
 on:
   push:
     branches:
-      - master
-  workflow_dispatch:
-
-permissions:
-  contents: write
+      - develop
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -21,10 +20,13 @@ jobs:
           node-version: '20'
 
       - name: Build Site
-        run: node devlog/engine/build.js
+        run: |
+          cd zown-engine
+          node engine/build.js
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./devlog/public
+          folder: zown-engine/public
+          branch: gh-pages
+          clean: true
