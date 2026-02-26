@@ -1,3 +1,5 @@
+import { ed25519 } from '@noble/curves/ed25519';
+import bs58 from 'bs58';
 import { NexusSignal } from '../types/signal';
 import { NexusRegistry } from '../types/nexus';
 
@@ -27,24 +29,40 @@ export class VerificationEngine {
       return false;
     }
 
-    // Logic for Ed25519 verification will be implemented in Stage 3
-    // Placeholder for cryptographic handshake
-    const isSignatureValid = this.placeholderVerify(
-      signal.meta.signature, 
-      agent.publicKey
-    );
+    try {
+      // 1. Reconstruct payload for verification (standard JSON-RPC 2.0 structure)
+      const payload = {
+        jsonrpc: signal.jsonrpc,
+        id: signal.id,
+        method: signal.method,
+        params: signal.params,
+        meta: {
+          sender: signal.meta.sender,
+          recipient: signal.meta.recipient,
+          timestamp: signal.meta.timestamp
+        }
+      };
 
-    if (!isSignatureValid) {
-      console.error(`[VERIFICATION_FAILED] Invalid signature for agent: ${senderId}`);
+      const message = JSON.stringify(payload);
+      const messageBytes = new TextEncoder().encode(message);
+      
+      // 2. Decode signature and public key from Base58
+      const signatureBytes = bs58.decode(signal.meta.signature);
+      const publicKeyBytes = bs58.decode(agent.publicKey);
+
+      // 3. Perform Ed25519 verification
+      const isValid = ed25519.verify(signatureBytes, messageBytes, publicKeyBytes);
+
+      if (!isValid) {
+        console.error(`[VERIFICATION_FAILED] Cryptographic mismatch for agent: ${senderId}`);
+        return false;
+      }
+
+      console.log(`[HANDSHAKE_SUCCESSFUL] Signal verified for ${senderId}`);
+      return true;
+    } catch (error) {
+      console.error(`[VERIFICATION_ERROR] ${error instanceof Error ? error.message : String(error)}`);
       return false;
     }
-
-    console.log(`[HANDSHAKE_SUCCESSFUL] Signal verified for ${senderId}`);
-    return true;
-  }
-
-  private placeholderVerify(signature: string, publicKey: string): boolean {
-    // This will be replaced with real Ed25519 logic using @noble/curves or similar
-    return signature.length > 0 && publicKey.length > 0;
   }
 }
