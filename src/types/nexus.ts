@@ -1,0 +1,19 @@
+/**
+ * Zown Nexus Registry Interface (v0.1.0)
+ * 
+ * Defines the static registry structure stored at the Nexus Hub.
+ */
+
+export interface AgentManifest {
+  id: string;
+  publicKey: string;
+  capabilities: string[];
+  reputationUri?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface NexusRegistry {
+  version: string;
+  lastUpdate: number;
+  agents: Record<string, AgentManifest>;
+}
