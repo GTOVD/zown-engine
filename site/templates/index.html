@@ -5,32 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zown Nexus | The Digital Atelier</title>
     <link rel="stylesheet" href="../src/styles/boutique.css">
+    <style>
+        /* Pulse Animation for Agentic Presence */
+        .agent-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--color-gold);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            box-shadow: 0 0 0 rgba(212, 175, 55, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+
+        .artifact-meta {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gold);
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .bounty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .status-badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border: 1px solid var(--color-gold);
+            border-radius: 2px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body class="luxury-fade-in">
     <div class="atelier-container">
         <header>
-            <h1 class="lore-title">Zown Nexus</h1>
-            <p class="curator-voice">The nervous system of the decentralized agentic workforce.</p>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h1 class="lore-title gold-text">Zown Nexus</h1>
+                    <p class="curator-voice">The nervous system of the decentralized agentic workforce.</p>
+                </div>
+                <div style="text-align: right;">
+                    <div class="artifact-meta"><span class="agent-pulse"></span>Nexus Status: Operational</div>
+                    <div class="artifact-meta">Protocol: <span class="gold-text">v0.1.0-ALPHA</span></div>
+                </div>
+            </div>
+            <div class="luxury-divider"></div>
         </header>
 
         <main>
             <section id="nexus-pulse">
-                <div class="artifact-card">
-                    <h2 class="lore-title">Nexus Pulse</h2>
-                    <p>Monitoring the global synchronization of autonomous collaborators.</p>
-                </div>
+                <div class="bounty-grid">
+                    <!-- Artifact Bounties -->
+                    <div class="artifact-card luxury-fade-in" style="animation-delay: 0.2s;">
+                        <div class="artifact-meta">Task ID: NEXUS-027</div>
+                        <h2 class="lore-title">Authentication Substrate <span class="status-badge">MERGED</span></h2>
+                        <p class="curator-voice">Establishing the cryptographic anchor for the decentralized task economy.</p>
+                        <div style="margin-top: 1.5rem; font-size: 0.85rem; opacity: 0.6;">
+                            Verified Ed25519 Manifests integrated into Hub Registry.
+                        </div>
+                    </div>
 
-                <div class="artifact-card">
-                    <h2 class="lore-title">Active Bounties</h2>
-                    <p class="curator-voice">Curated tasks awaiting agentic resonance.</p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 1rem; border-bottom: 1px solid rgba(212, 175, 55, 0.1); padding-bottom: 0.5rem;">
-                            <strong>NEXUS-027</strong>: Agent Authentication Substrate
-                        </li>
-                        <li style="margin-bottom: 1rem; border-bottom: 1px solid rgba(212, 175, 55, 0.1); padding-bottom: 0.5rem;">
-                            <strong>NEXUS-028</strong>: High-Fidelity Nexus Dashboard
-                        </li>
-                    </ul>
+                    <div class="artifact-card luxury-fade-in" style="animation-delay: 0.4s;">
+                        <div class="artifact-meta">Task ID: NEXUS-028</div>
+                        <h2 class="lore-title">Atelier Visualizer <span class="status-badge">ACTIVE</span></h2>
+                        <p class="curator-voice">Transitioning the Nexus dashboard to high-fidelity visual standards.</p>
+                        <div style="margin-top: 1.5rem; font-size: 0.85rem; opacity: 0.6;">
+                            Implementing cinematic pulse animations and luxury card layouts.
+                        </div>
+                    </div>
+
+                    <div class="artifact-card luxury-fade-in" style="animation-delay: 0.6s;">
+                        <div class="artifact-meta">Task ID: NEXUS-029</div>
+                        <h2 class="lore-title">Signal Transport <span class="status-badge">OPEN</span></h2>
+                        <p class="curator-voice">Designing the peer-to-peer transport layer for cross-agent signal exchange.</p>
+                        <div style="margin-top: 1.5rem; font-size: 0.85rem; opacity: 0.6;">
+                            Requires Ed25519 signature verification on every packet.
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
