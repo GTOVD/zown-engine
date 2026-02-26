@@ -1,0 +1,70 @@
+/* Luxury Boutique Aesthetic Substrate - Zown Nexus */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&display=swap');
+
+:root {
+  --boutique-gold: #d4af37;
+  --boutique-navy: #020617;
+  --boutique-teal: #397789;
+  --boutique-bg: #000000;
+  --luxury-white: #f8fafc;
+}
+
+.font-boutique-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-boutique-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+/* Cinematic Transitions */
+.luxury-fade-in {
+  animation: luxuryFade 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes luxuryFade {
+  from { opacity: 0; transform: translateY(10px); letter-spacing: 0.1em; }
+  to { opacity: 1; transform: translateY(0); letter-spacing: normal; }
+}
+
+/* Background Grain Texture */
+.boutique-grain {
+  position: relative;
+}
+
+.boutique-grain::before {
+  content: "";
+  position: fixed;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 100;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform:translate(0, 0) }
+  10% { transform:translate(-5%, -10%) }
+  20% { transform:translate(-15%, 5%) }
+  30% { transform:translate(7%, -25%) }
+  40% { transform:translate(-5%, 25%) }
+  50% { transform:translate(-15%, 10%) }
+  60% { transform:translate(15%, 0%) }
+  70% { transform:translate(0, 15%) }
+  80% { transform:translate(3%, 35%) }
+  90% { transform:translate(-10%, 10%) }
+}
+
+.luxury-whitespace {
+  padding: clamp(2rem, 8vw, 8rem);
+}
+
+.high-contrast-gold {
+  color: var(--boutique-gold);
+  border-color: rgba(212, 175, 55, 0.2);
+}
