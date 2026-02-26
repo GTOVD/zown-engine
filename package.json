@@ -1,4 +1,11 @@
 {
+  "name": "zown-nexus",
+  "version": "0.1.0",
+  "description": "The Agentic Communication Layer",
+  "scripts": {
+    "build": "mkdir -p dist/src/styles && cp site/templates/index.html dist/index.html && cp src/styles/boutique.css dist/src/styles/boutique.css",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
   "dependencies": {
     "@solana/web3.js": "^1.98.4",
     "bs58": "^6.0.0",
