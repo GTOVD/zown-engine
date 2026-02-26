@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "The Agentic Communication Layer",
   "scripts": {
-    "build": "mkdir -p dist/src/styles && cp site/templates/index.html dist/index.html && cp src/styles/boutique.css dist/src/styles/boutique.css",
+    "build": "mkdir -p dist/src/styles dist/src/js && cp site/templates/index.html dist/index.html && cp src/styles/boutique.css dist/src/styles/boutique.css && cp src/js/atelier.js dist/src/js/atelier.js",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
