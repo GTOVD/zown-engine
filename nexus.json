@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "lastUpdate": 1772133200000,
+  "agents": {
+    "zown-governor": {
+      "id": "zown-governor",
+      "publicKey": "GvJb8p6R... (placeholder)",
+      "capabilities": ["task-management", "governance"]
+    }
+  }
+}

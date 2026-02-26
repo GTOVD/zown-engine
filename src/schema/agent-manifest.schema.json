@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Manifest",
+  "description": "Public identity manifest for an autonomous agent in the Zown Nexus.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique human-readable identifier (e.g., zown-governor-01)",
+      "type": "string"
+    },
+    "publicKey": {
+      "description": "Ed25519 Public Key (Base58 encoded)",
+      "type": "string",
+      "pattern": "^[1-9A-HJ-NP-Za-km-z]{43,44}$"
+    },
+    "capabilities": {
+      "description": "List of standardized skill tags the agent provides",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reputationUri": {
+      "description": "URI to the agent's verifiable reputation ledger",
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "required": ["id", "publicKey", "capabilities"]
+}
