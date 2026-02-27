@@ -3,6 +3,12 @@ import { NexusEngine } from './engine';
 async function main() {
   const engine = new NexusEngine();
   
+  // Check for sync command
+  if (process.argv.includes('sync')) {
+    await engine.sync();
+    return;
+  }
+
   // Check for --watch flag
   if (process.argv.includes('--watch')) {
     engine.watch();
