@@ -8,6 +8,7 @@ import { AuctionEngine } from './auction';
 import { LedgerEngine } from './ledger';
 import { ReputationEngine } from './reputation';
 import { GovernanceEngine } from './governance';
+import { MarketMonitor } from './market-monitor';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
 import { TaskBid } from '../types/market';
@@ -16,7 +17,7 @@ import { NexusTransaction } from '../types/ledger';
 /**
  * Zown Nexus Engine Core
  * 
- * Orchestrates identity, verification, routing, dispatching, markets, economy, and governance.
+ * Orchestrates identity, verification, routing, dispatching, markets, economy, governance, and network scaling.
  */
 export class NexusEngine {
   private router: SignalRouter;
@@ -27,6 +28,7 @@ export class NexusEngine {
   private ledgerEngine: LedgerEngine;
   private reputationEngine: ReputationEngine;
   private governanceEngine: GovernanceEngine;
+  private marketMonitor: MarketMonitor;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -41,10 +43,23 @@ export class NexusEngine {
     this.ledgerEngine = new LedgerEngine();
     this.reputationEngine = new ReputationEngine();
     this.governanceEngine = new GovernanceEngine(this.reputationEngine);
+    this.marketMonitor = new MarketMonitor();
 
     // Register Default Market, Economy & Governance Handlers
     this.registerMarketHandlers();
     this.registerEconomyHandlers();
+    this.registerNetworkHandlers();
+  }
+
+  /**
+   * Registers network-specific handlers for distributed auctions.
+   */
+  private registerNetworkHandlers(): void {
+    this.on('auction.opened', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Remote auction discovered: ${params.taskId}`);
+      this.marketMonitor.trackRemoteAuction(params.taskId, meta.sender, params.expiry);
+      return true;
+    });
   }
 
   /**
