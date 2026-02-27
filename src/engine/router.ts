@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { VerificationEngine } from './verification';
 import { NexusSignal } from '../types/signal';
+import { NexusRegistry } from '../types/nexus';
 
 /**
  * Zown Nexus Signal Router
@@ -10,13 +11,15 @@ import { NexusSignal } from '../types/signal';
  */
 export class SignalRouter {
   private verificationEngine: VerificationEngine;
+  private registry: NexusRegistry;
   private outboxPath: string = '.nexus/outbox';
   private inboxPath: string = '.nexus/inbox';
   private processedPath: string = '.nexus/processed';
   private rejectedPath: string = '.nexus/rejected';
 
-  constructor(verificationEngine: VerificationEngine) {
+  constructor(verificationEngine: VerificationEngine, registry: NexusRegistry) {
     this.verificationEngine = verificationEngine;
+    this.registry = registry;
   }
 
   /**
@@ -41,17 +44,44 @@ export class SignalRouter {
     }
   }
 
+  /**
+   * Routes a single signal to its recipient or broadcasts to all.
+   */
   private routeSignal(fileName: string, signal: NexusSignal): void {
-    const destination = path.join(this.inboxPath, fileName);
-    const archive = path.join(this.processedPath, fileName);
     const source = path.join(this.outboxPath, fileName);
+    const archive = path.join(this.processedPath, fileName);
 
-    // In a real P2P scenario, this would involve network transport.
-    // For local v0.1, we simulate delivery by copying to the inbox.
-    fs.copyFileSync(source, destination);
-    fs.renameSync(source, archive);
+    if (signal.meta.recipient === '*') {
+      this.broadcast(fileName, signal);
+    } else {
+      const destination = path.join(this.inboxPath, `${signal.meta.recipient}_${fileName}`);
+      fs.copyFileSync(source, destination);
+      console.log(`[ROUTER] Signal routed to ${signal.meta.recipient}`);
+    }
 
-    console.log(`[ROUTER] Signal routed to ${signal.meta.recipient} and archived.`);
+    // Archive after all deliveries (or the single delivery)
+    if (fs.existsSync(source)) {
+      fs.renameSync(source, archive);
+    }
+  }
+
+  /**
+   * Broadcasts a signal to all registered agents.
+   */
+  private broadcast(fileName: string, signal: NexusSignal): void {
+    const source = path.join(this.outboxPath, fileName);
+    const agents = Object.keys(this.registry.agents);
+
+    console.log(`[ROUTER] Initiating broadcast expansion for signal: ${fileName} to ${agents.length} agents.`);
+    
+    for (const agentId of agents) {
+      // Skip broadcasting back to the sender
+      if (agentId === signal.meta.sender) continue;
+
+      const destination = path.join(this.inboxPath, `${agentId}_${fileName}`);
+      fs.copyFileSync(source, destination);
+      console.log(`[ROUTER] Broadcast delivered to agent: ${agentId}`);
+    }
   }
 
   private rejectSignal(fileName: string): void {
