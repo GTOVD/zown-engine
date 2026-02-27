@@ -9,6 +9,7 @@ export interface AgentManifest {
   publicKey: string;
   capabilities: string[];
   endpointUri?: string; // Target URI for remote signal delivery
+  spawnCmd?: string;    // Shell command to launch a local worker instance
   reputationUri?: string;
   metadata?: Record<string, any>;
 }

@@ -16,10 +16,11 @@ const reputation_1 = require("./reputation");
 const governance_1 = require("./governance");
 const market_monitor_1 = require("./market-monitor");
 const transaction_relay_1 = require("./transaction-relay");
+const worker_1 = require("./worker");
 /**
  * Zown Nexus Engine Core
  *
- * Orchestrates identity, verification, routing, dispatching, markets, economy, governance, and network scaling.
+ * Orchestrates identity, verification, routing, dispatching, markets, economy, governance, and workers.
  */
 class NexusEngine {
     router;
@@ -32,6 +33,7 @@ class NexusEngine {
     governanceEngine;
     marketMonitor;
     transactionRelay;
+    workerEngine;
     registryPath;
     inboxPath = '.nexus/inbox';
     constructor(registryPath = './nexus.json') {
@@ -47,10 +49,26 @@ class NexusEngine {
         this.governanceEngine = new governance_1.GovernanceEngine(this.reputationEngine);
         this.marketMonitor = new market_monitor_1.MarketMonitor();
         this.transactionRelay = new transaction_relay_1.TransactionRelay(registryData);
-        // Register Default Market, Economy & Governance Handlers
+        this.workerEngine = new worker_1.WorkerEngine();
+        // Register Default Market, Economy, Governance & Worker Handlers
         this.registerMarketHandlers();
         this.registerEconomyHandlers();
         this.registerNetworkHandlers();
+        this.registerWorkerHandlers(registryData);
+    }
+    /**
+     * Registers worker-specific handlers for autonomous process spawning.
+     */
+    registerWorkerHandlers(registry) {
+        this.on('task.award', async (params, meta) => {
+            console.log(`[NEXUS_ENGINE] Task ${params.taskId} awarded to agent: ${params.winningAgentId}`);
+            const agent = registry.agents[params.winningAgentId];
+            if (agent && agent.spawnCmd) {
+                return this.workerEngine.spawnWorker(agent);
+            }
+            console.log(`[NEXUS_ENGINE] No local spawn required for agent: ${params.winningAgentId}`);
+            return true;
+        });
     }
     /**
      * Registers an action handler for incoming signals.
