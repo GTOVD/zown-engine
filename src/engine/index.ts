@@ -11,6 +11,7 @@ import { GovernanceEngine } from './governance';
 import { MarketMonitor } from './market-monitor';
 import { TransactionRelay } from './transaction-relay';
 import { WorkerEngine } from './worker';
+import { AuctionPropagator } from './auction-propagator';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
 import { TaskBid } from '../types/market';
@@ -33,6 +34,7 @@ export class NexusEngine {
   private marketMonitor: MarketMonitor;
   private transactionRelay: TransactionRelay;
   private workerEngine: WorkerEngine;
+  private auctionPropagator: AuctionPropagator;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -50,29 +52,13 @@ export class NexusEngine {
     this.marketMonitor = new MarketMonitor();
     this.transactionRelay = new TransactionRelay(registryData);
     this.workerEngine = new WorkerEngine();
+    this.auctionPropagator = new AuctionPropagator(registryData);
 
     // Register Default Market, Economy, Governance & Worker Handlers
     this.registerMarketHandlers();
     this.registerEconomyHandlers();
     this.registerNetworkHandlers();
     this.registerWorkerHandlers(registryData);
-  }
-
-  /**
-   * Registers worker-specific handlers for autonomous process spawning.
-   */
-  private registerWorkerHandlers(registry: NexusRegistry): void {
-    this.on('task.award', async (params, meta) => {
-      console.log(`[NEXUS_ENGINE] Task ${params.taskId} awarded to agent: ${params.winningAgentId}`);
-      
-      const agent = registry.agents[params.winningAgentId];
-      if (agent && agent.spawnCmd) {
-        return this.workerEngine.spawnWorker(agent);
-      }
-      
-      console.log(`[NEXUS_ENGINE] No local spawn required for agent: ${params.winningAgentId}`);
-      return true;
-    });
   }
 
   /**
@@ -108,6 +94,8 @@ export class NexusEngine {
       const updatedData = JSON.parse(fs.readFileSync(this.registryPath, 'utf-8')) as NexusRegistry;
       this.verificationEngine = new VerificationEngine(updatedData);
       this.router = new SignalRouter(this.verificationEngine, updatedData);
+      this.transactionRelay = new TransactionRelay(updatedData);
+      this.auctionPropagator = new AuctionPropagator(updatedData);
       
       console.log('[NEXUS_ENGINE] Synchronization successful.');
     } catch (error) {
@@ -138,12 +126,29 @@ export class NexusEngine {
         params: params as TaskBid['params'],
         meta
       };
-      return this.auctionEngine.submitBid(params.taskId, bid);
+
+      // Check if task is local or remote
+      const localAuction = this.auctionEngine.getAuction(params.taskId);
+      if (localAuction) {
+        return this.auctionEngine.submitBid(params.taskId, bid);
+      }
+
+      const remoteAuction = this.marketMonitor.getAuction(params.taskId);
+      if (remoteAuction) {
+        return await this.auctionPropagator.relayBidToOrigin(params.taskId, remoteAuction.creatorId, bid);
+      }
+
+      console.warn(`[NEXUS_ENGINE] Bid rejected: Unknown Task ID ${params.taskId}`);
+      return false;
     });
 
     this.on('task.broadcast', async (params, meta) => {
       console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
-      return this.auctionEngine.createAuction(params.taskId, meta.sender);
+      const auction = this.auctionEngine.createAuction(params.taskId, meta.sender);
+      
+      // Propagate auction to the rest of the network
+      await this.auctionPropagator.propagateAuction(auction);
+      return true;
     });
   }
 
@@ -189,6 +194,23 @@ export class NexusEngine {
     this.on('auction.opened', async (params, meta) => {
       console.log(`[NEXUS_ENGINE] Remote auction discovered: ${params.taskId}`);
       this.marketMonitor.trackRemoteAuction(params.taskId, meta.sender, params.expiry);
+      return true;
+    });
+  }
+
+  /**
+   * Registers worker-specific handlers for autonomous process spawning.
+   */
+  private registerWorkerHandlers(registry: NexusRegistry): void {
+    this.on('task.award', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Task ${params.taskId} awarded to agent: ${params.winningAgentId}`);
+      
+      const agent = registry.agents[params.winningAgentId];
+      if (agent && agent.spawnCmd) {
+        return this.workerEngine.spawnWorker(agent);
+      }
+      
+      console.log(`[NEXUS_ENGINE] No local spawn required for agent: ${params.winningAgentId}`);
       return true;
     });
   }
