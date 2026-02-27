@@ -6,6 +6,8 @@ import { RegistrySync } from './sync';
 import { SignalDispatcher, NexusHandler } from './dispatcher';
 import { AuctionEngine } from './auction';
 import { LedgerEngine } from './ledger';
+import { ReputationEngine } from './reputation';
+import { GovernanceEngine } from './governance';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
 import { TaskBid } from '../types/market';
@@ -14,7 +16,7 @@ import { NexusTransaction } from '../types/ledger';
 /**
  * Zown Nexus Engine Core
  * 
- * Orchestrates identity, verification, routing, dispatching, markets, and economy.
+ * Orchestrates identity, verification, routing, dispatching, markets, economy, and governance.
  */
 export class NexusEngine {
   private router: SignalRouter;
@@ -23,6 +25,8 @@ export class NexusEngine {
   private dispatcher: SignalDispatcher;
   private auctionEngine: AuctionEngine;
   private ledgerEngine: LedgerEngine;
+  private reputationEngine: ReputationEngine;
+  private governanceEngine: GovernanceEngine;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -35,50 +39,12 @@ export class NexusEngine {
     this.dispatcher = new SignalDispatcher();
     this.auctionEngine = new AuctionEngine();
     this.ledgerEngine = new LedgerEngine();
+    this.reputationEngine = new ReputationEngine();
+    this.governanceEngine = new GovernanceEngine(this.reputationEngine);
 
-    // Register Default Market & Economy Handlers
+    // Register Default Market, Economy & Governance Handlers
     this.registerMarketHandlers();
     this.registerEconomyHandlers();
-  }
-
-  /**
-   * Registers market-specific handlers for agentic bidding.
-   */
-  private registerMarketHandlers(): void {
-    this.on('task.bid', async (params, meta) => {
-      const bid: TaskBid = {
-        jsonrpc: "2.0",
-        id: Date.now(), // Simplified for v0.1
-        method: "task.bid",
-        params: params as TaskBid['params'],
-        meta
-      };
-      return this.auctionEngine.submitBid(params.taskId, bid);
-    });
-
-    this.on('task.broadcast', async (params, meta) => {
-      console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
-      return this.auctionEngine.createAuction(params.taskId, meta.sender);
-    });
-  }
-
-  /**
-   * Registers economy-specific handlers for settlement.
-   */
-  private registerEconomyHandlers(): void {
-    this.on('task.settle', async (params, meta) => {
-      console.log(`[NEXUS_ENGINE] Settlement requested for task: ${params.taskId}`);
-      const transaction: NexusTransaction = {
-        id: `tx_${Date.now()}_${params.taskId}`,
-        timestamp: Date.now(),
-        from: meta.sender,
-        to: params.to,
-        amount: params.amount,
-        taskId: params.taskId,
-        signature: meta.signature
-      };
-      return this.ledgerEngine.settleTransaction(transaction);
-    });
   }
 
   /**
@@ -99,36 +65,6 @@ export class NexusEngine {
     await this.processInbox();
     
     console.log('[NEXUS_ENGINE] Pulse complete.');
-  }
-
-  /**
-   * Processes all signals currently in the inbox.
-   */
-  private async processInbox(): Promise<void> {
-    if (!fs.existsSync(this.inboxPath)) return;
-
-    const files = fs.readdirSync(this.inboxPath).filter(file => file.endsWith('.json'));
-
-    for (const file of files) {
-      const filePath = path.join(this.inboxPath, file);
-      try {
-        const signalData = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as NexusSignal;
-        console.log(`[NEXUS_ENGINE] Processing inbox signal: ${file}`);
-
-        // Note: In v0.1, we assume signals in inbox were verified by the router
-        // or a remote transport layer before placement.
-        await this.dispatcher.dispatch(signalData);
-        
-        // Archive after successful dispatch
-        const archivePath = path.join('.nexus/processed', `inbox_${file}`);
-        fs.renameSync(filePath, archivePath);
-      } catch (error) {
-        console.error(`[NEXUS_ENGINE] Failed to dispatch signal ${file}:`, error);
-        // Move to rejected for manual review
-        const rejectedPath = path.join('.nexus/rejected', `inbox_${file}`);
-        fs.renameSync(filePath, rejectedPath);
-      }
-    }
   }
 
   /**
@@ -160,5 +96,81 @@ export class NexusEngine {
     setInterval(async () => {
       await this.pulse();
     }, intervalMs);
+  }
+
+  /**
+   * Registers market-specific handlers for agentic bidding.
+   */
+  private registerMarketHandlers(): void {
+    this.on('task.bid', async (params, meta) => {
+      const bid: TaskBid = {
+        jsonrpc: "2.0",
+        id: Date.now(), // Simplified for v0.1
+        method: "task.bid",
+        params: params as TaskBid['params'],
+        meta
+      };
+      return this.auctionEngine.submitBid(params.taskId, bid);
+    });
+
+    this.on('task.broadcast', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
+      return this.auctionEngine.createAuction(params.taskId, meta.sender);
+    });
+  }
+
+  /**
+   * Registers economy-specific handlers for settlement and governance triggers.
+   */
+  private registerEconomyHandlers(): void {
+    this.on('task.settle', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Settlement requested for task: ${params.taskId}`);
+      const transaction: NexusTransaction = {
+        id: `tx_${Date.now()}_${params.taskId}`,
+        timestamp: Date.now(),
+        from: meta.sender,
+        to: params.to,
+        amount: params.amount,
+        taskId: params.taskId,
+        signature: meta.signature
+      };
+      
+      this.ledgerEngine.settleTransaction(transaction);
+
+      // Trigger Governance Pulse (Automated Audit)
+      await this.governanceEngine.performAudit(params.to, params.taskId, true);
+      
+      return true;
+    });
+  }
+
+  /**
+   * Processes all signals currently in the inbox.
+   */
+  private async processInbox(): Promise<void> {
+    if (!fs.existsSync(this.inboxPath)) return;
+
+    const files = fs.readdirSync(this.inboxPath).filter(file => file.endsWith('.json'));
+
+    for (const file of files) {
+      const filePath = path.join(this.inboxPath, file);
+      try {
+        const signalData = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as NexusSignal;
+        console.log(`[NEXUS_ENGINE] Processing inbox signal: ${file}`);
+
+        // Note: In v0.1, we assume signals in inbox were verified by the router
+        // or a remote transport layer before placement.
+        await this.dispatcher.dispatch(signalData);
+        
+        // Archive after successful dispatch
+        const archivePath = path.join('.nexus/processed', `inbox_${file}`);
+        fs.renameSync(filePath, archivePath);
+      } catch (error) {
+        console.error(`[NEXUS_ENGINE] Failed to dispatch signal ${file}:`, error);
+        // Move to rejected for manual review
+        const rejectedPath = path.join('.nexus/rejected', `inbox_${file}`);
+        fs.renameSync(filePath, rejectedPath);
+      }
+    }
   }
 }
