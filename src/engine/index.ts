@@ -4,19 +4,22 @@ import { VerificationEngine } from './verification';
 import { SignalRouter } from './router';
 import { RegistrySync } from './sync';
 import { SignalDispatcher, NexusHandler } from './dispatcher';
+import { AuctionEngine } from './auction';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
+import { TaskBid } from '../types/market';
 
 /**
  * Zown Nexus Engine Core
  * 
- * Orchestrates identity, verification, routing, and dispatching.
+ * Orchestrates identity, verification, routing, dispatching, and markets.
  */
 export class NexusEngine {
   private router: SignalRouter;
   private verificationEngine: VerificationEngine;
   private registrySync: RegistrySync;
   private dispatcher: SignalDispatcher;
+  private auctionEngine: AuctionEngine;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -27,6 +30,31 @@ export class NexusEngine {
     this.router = new SignalRouter(this.verificationEngine, registryData);
     this.registrySync = new RegistrySync();
     this.dispatcher = new SignalDispatcher();
+    this.auctionEngine = new AuctionEngine();
+
+    // Register Default Market Handlers
+    this.registerMarketHandlers();
+  }
+
+  /**
+   * Registers market-specific handlers for agentic bidding.
+   */
+  private registerMarketHandlers(): void {
+    this.on('task.bid', async (params, meta) => {
+      const bid: TaskBid = {
+        jsonrpc: "2.0",
+        id: Date.now(), // Simplified for v0.1
+        method: "task.bid",
+        params: params as TaskBid['params'],
+        meta
+      };
+      return this.auctionEngine.submitBid(params.taskId, bid);
+    });
+
+    this.on('task.broadcast', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
+      return this.auctionEngine.createAuction(params.taskId, meta.sender);
+    });
   }
 
   /**
