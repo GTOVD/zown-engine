@@ -13,12 +13,14 @@ const path_1 = __importDefault(require("path"));
  */
 class SignalRouter {
     verificationEngine;
+    registry;
     outboxPath = '.nexus/outbox';
     inboxPath = '.nexus/inbox';
     processedPath = '.nexus/processed';
     rejectedPath = '.nexus/rejected';
-    constructor(verificationEngine) {
+    constructor(verificationEngine, registry) {
         this.verificationEngine = verificationEngine;
+        this.registry = registry;
     }
     /**
      * Processes all signals currently in the outbox.
@@ -38,15 +40,40 @@ class SignalRouter {
             }
         }
     }
+    /**
+     * Routes a single signal to its recipient or broadcasts to all.
+     */
     routeSignal(fileName, signal) {
-        const destination = path_1.default.join(this.inboxPath, fileName);
-        const archive = path_1.default.join(this.processedPath, fileName);
         const source = path_1.default.join(this.outboxPath, fileName);
-        // In a real P2P scenario, this would involve network transport.
-        // For local v0.1, we simulate delivery by copying to the inbox.
-        fs_1.default.copyFileSync(source, destination);
-        fs_1.default.renameSync(source, archive);
-        console.log(`[ROUTER] Signal routed to ${signal.meta.recipient} and archived.`);
+        const archive = path_1.default.join(this.processedPath, fileName);
+        if (signal.meta.recipient === '*') {
+            this.broadcast(fileName, signal);
+        }
+        else {
+            const destination = path_1.default.join(this.inboxPath, `${signal.meta.recipient}_${fileName}`);
+            fs_1.default.copyFileSync(source, destination);
+            console.log(`[ROUTER] Signal routed to ${signal.meta.recipient}`);
+        }
+        // Archive after all deliveries (or the single delivery)
+        if (fs_1.default.existsSync(source)) {
+            fs_1.default.renameSync(source, archive);
+        }
+    }
+    /**
+     * Broadcasts a signal to all registered agents.
+     */
+    broadcast(fileName, signal) {
+        const source = path_1.default.join(this.outboxPath, fileName);
+        const agents = Object.keys(this.registry.agents);
+        console.log(`[ROUTER] Initiating broadcast expansion for signal: ${fileName} to ${agents.length} agents.`);
+        for (const agentId of agents) {
+            // Skip broadcasting back to the sender
+            if (agentId === signal.meta.sender)
+                continue;
+            const destination = path_1.default.join(this.inboxPath, `${agentId}_${fileName}`);
+            fs_1.default.copyFileSync(source, destination);
+            console.log(`[ROUTER] Broadcast delivered to agent: ${agentId}`);
+        }
     }
     rejectSignal(fileName) {
         const source = path_1.default.join(this.outboxPath, fileName);
