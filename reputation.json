@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "lastUpdate": 1772178000000,
+  "scores": {
+    "zown-governor": {
+      "tasksCompleted": 0,
+      "totalVUEarned": 0,
+      "averageLatencyMs": 0,
+      "accuracyScore": 1.0,
+      "lastActivity": 1772178000000
+    }
+  },
+  "history": []
+}
