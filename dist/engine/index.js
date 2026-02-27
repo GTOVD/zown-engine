@@ -22,7 +22,7 @@ class NexusEngine {
         this.registryPath = registryPath;
         const registryData = JSON.parse(fs_1.default.readFileSync(registryPath, 'utf-8'));
         this.verificationEngine = new verification_1.VerificationEngine(registryData);
-        this.router = new router_1.SignalRouter(this.verificationEngine);
+        this.router = new router_1.SignalRouter(this.verificationEngine, registryData);
         this.registrySync = new sync_1.RegistrySync();
     }
     /**
@@ -44,7 +44,7 @@ class NexusEngine {
             // Refresh engines with new registry data
             const updatedData = JSON.parse(fs_1.default.readFileSync(this.registryPath, 'utf-8'));
             this.verificationEngine = new verification_1.VerificationEngine(updatedData);
-            this.router = new router_1.SignalRouter(this.verificationEngine);
+            this.router = new router_1.SignalRouter(this.verificationEngine, updatedData);
             console.log('[NEXUS_ENGINE] Synchronization successful.');
         }
         catch (error) {
