@@ -9,6 +9,7 @@ import { LedgerEngine } from './ledger';
 import { ReputationEngine } from './reputation';
 import { GovernanceEngine } from './governance';
 import { MarketMonitor } from './market-monitor';
+import { TransactionRelay } from './transaction-relay';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
 import { TaskBid } from '../types/market';
@@ -29,6 +30,7 @@ export class NexusEngine {
   private reputationEngine: ReputationEngine;
   private governanceEngine: GovernanceEngine;
   private marketMonitor: MarketMonitor;
+  private transactionRelay: TransactionRelay;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -44,22 +46,12 @@ export class NexusEngine {
     this.reputationEngine = new ReputationEngine();
     this.governanceEngine = new GovernanceEngine(this.reputationEngine);
     this.marketMonitor = new MarketMonitor();
+    this.transactionRelay = new TransactionRelay(registryData);
 
     // Register Default Market, Economy & Governance Handlers
     this.registerMarketHandlers();
     this.registerEconomyHandlers();
     this.registerNetworkHandlers();
-  }
-
-  /**
-   * Registers network-specific handlers for distributed auctions.
-   */
-  private registerNetworkHandlers(): void {
-    this.on('auction.opened', async (params, meta) => {
-      console.log(`[NEXUS_ENGINE] Remote auction discovered: ${params.taskId}`);
-      this.marketMonitor.trackRemoteAuction(params.taskId, meta.sender, params.expiry);
-      return true;
-    });
   }
 
   /**
@@ -139,7 +131,7 @@ export class NexusEngine {
    */
   private registerEconomyHandlers(): void {
     this.on('task.settle', async (params, meta) => {
-      console.log(`[NEXUS_ENGINE] Settlement requested for task: ${params.taskId}`);
+      console.log(`[NEXUS_ENGINE] Local settlement request: ${params.taskId}`);
       const transaction: NexusTransaction = {
         id: `tx_${Date.now()}_${params.taskId}`,
         timestamp: Date.now(),
@@ -152,9 +144,30 @@ export class NexusEngine {
       
       this.ledgerEngine.settleTransaction(transaction);
 
+      // Relay to remote hub if recipient is non-local
+      await this.transactionRelay.relayTransaction(transaction);
+
       // Trigger Governance Pulse (Automated Audit)
       await this.governanceEngine.performAudit(params.to, params.taskId, true);
       
+      return true;
+    });
+
+    this.on('task.settle.receive', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Remote settlement received: ${params.transaction.id}`);
+      // Record the inbound transaction in local ledger
+      this.ledgerEngine.settleTransaction(params.transaction);
+      return true;
+    });
+  }
+
+  /**
+   * Registers network-specific handlers for distributed auctions.
+   */
+  private registerNetworkHandlers(): void {
+    this.on('auction.opened', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Remote auction discovered: ${params.taskId}`);
+      this.marketMonitor.trackRemoteAuction(params.taskId, meta.sender, params.expiry);
       return true;
     });
   }
