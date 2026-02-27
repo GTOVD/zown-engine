@@ -8,6 +8,7 @@ export interface AgentManifest {
   id: string;
   publicKey: string;
   capabilities: string[];
+  endpointUri?: string; // Target URI for remote signal delivery
   reputationUri?: string;
   metadata?: Record<string, any>;
 }
