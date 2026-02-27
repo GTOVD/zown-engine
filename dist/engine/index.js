@@ -10,16 +10,18 @@ const verification_1 = require("./verification");
 const router_1 = require("./router");
 const sync_1 = require("./sync");
 const dispatcher_1 = require("./dispatcher");
+const auction_1 = require("./auction");
 /**
  * Zown Nexus Engine Core
  *
- * Orchestrates identity, verification, routing, and dispatching.
+ * Orchestrates identity, verification, routing, dispatching, and markets.
  */
 class NexusEngine {
     router;
     verificationEngine;
     registrySync;
     dispatcher;
+    auctionEngine;
     registryPath;
     inboxPath = '.nexus/inbox';
     constructor(registryPath = './nexus.json') {
@@ -29,6 +31,28 @@ class NexusEngine {
         this.router = new router_1.SignalRouter(this.verificationEngine, registryData);
         this.registrySync = new sync_1.RegistrySync();
         this.dispatcher = new dispatcher_1.SignalDispatcher();
+        this.auctionEngine = new auction_1.AuctionEngine();
+        // Register Default Market Handlers
+        this.registerMarketHandlers();
+    }
+    /**
+     * Registers market-specific handlers for agentic bidding.
+     */
+    registerMarketHandlers() {
+        this.on('task.bid', async (params, meta) => {
+            const bid = {
+                jsonrpc: "2.0",
+                id: Date.now(), // Simplified for v0.1
+                method: "task.bid",
+                params: params,
+                meta
+            };
+            return this.auctionEngine.submitBid(params.taskId, bid);
+        });
+        this.on('task.broadcast', async (params, meta) => {
+            console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
+            return this.auctionEngine.createAuction(params.taskId, meta.sender);
+        });
     }
     /**
      * Registers an action handler for incoming signals.
