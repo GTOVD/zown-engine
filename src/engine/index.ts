@@ -5,14 +5,16 @@ import { SignalRouter } from './router';
 import { RegistrySync } from './sync';
 import { SignalDispatcher, NexusHandler } from './dispatcher';
 import { AuctionEngine } from './auction';
+import { LedgerEngine } from './ledger';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
 import { TaskBid } from '../types/market';
+import { NexusTransaction } from '../types/ledger';
 
 /**
  * Zown Nexus Engine Core
  * 
- * Orchestrates identity, verification, routing, dispatching, and markets.
+ * Orchestrates identity, verification, routing, dispatching, markets, and economy.
  */
 export class NexusEngine {
   private router: SignalRouter;
@@ -20,6 +22,7 @@ export class NexusEngine {
   private registrySync: RegistrySync;
   private dispatcher: SignalDispatcher;
   private auctionEngine: AuctionEngine;
+  private ledgerEngine: LedgerEngine;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -31,9 +34,11 @@ export class NexusEngine {
     this.registrySync = new RegistrySync();
     this.dispatcher = new SignalDispatcher();
     this.auctionEngine = new AuctionEngine();
+    this.ledgerEngine = new LedgerEngine();
 
-    // Register Default Market Handlers
+    // Register Default Market & Economy Handlers
     this.registerMarketHandlers();
+    this.registerEconomyHandlers();
   }
 
   /**
@@ -54,6 +59,25 @@ export class NexusEngine {
     this.on('task.broadcast', async (params, meta) => {
       console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
       return this.auctionEngine.createAuction(params.taskId, meta.sender);
+    });
+  }
+
+  /**
+   * Registers economy-specific handlers for settlement.
+   */
+  private registerEconomyHandlers(): void {
+    this.on('task.settle', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Settlement requested for task: ${params.taskId}`);
+      const transaction: NexusTransaction = {
+        id: `tx_${Date.now()}_${params.taskId}`,
+        timestamp: Date.now(),
+        from: meta.sender,
+        to: params.to,
+        amount: params.amount,
+        taskId: params.taskId,
+        signature: meta.signature
+      };
+      return this.ledgerEngine.settleTransaction(transaction);
     });
   }
 
