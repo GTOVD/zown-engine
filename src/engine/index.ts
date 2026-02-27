@@ -10,6 +10,7 @@ import { ReputationEngine } from './reputation';
 import { GovernanceEngine } from './governance';
 import { MarketMonitor } from './market-monitor';
 import { TransactionRelay } from './transaction-relay';
+import { WorkerEngine } from './worker';
 import { NexusRegistry } from '../types/nexus';
 import { NexusSignal } from '../types/signal';
 import { TaskBid } from '../types/market';
@@ -18,7 +19,7 @@ import { NexusTransaction } from '../types/ledger';
 /**
  * Zown Nexus Engine Core
  * 
- * Orchestrates identity, verification, routing, dispatching, markets, economy, governance, and network scaling.
+ * Orchestrates identity, verification, routing, dispatching, markets, economy, governance, and workers.
  */
 export class NexusEngine {
   private router: SignalRouter;
@@ -31,6 +32,7 @@ export class NexusEngine {
   private governanceEngine: GovernanceEngine;
   private marketMonitor: MarketMonitor;
   private transactionRelay: TransactionRelay;
+  private workerEngine: WorkerEngine;
   private registryPath: string;
   private inboxPath: string = '.nexus/inbox';
 
@@ -47,11 +49,30 @@ export class NexusEngine {
     this.governanceEngine = new GovernanceEngine(this.reputationEngine);
     this.marketMonitor = new MarketMonitor();
     this.transactionRelay = new TransactionRelay(registryData);
+    this.workerEngine = new WorkerEngine();
 
-    // Register Default Market, Economy & Governance Handlers
+    // Register Default Market, Economy, Governance & Worker Handlers
     this.registerMarketHandlers();
     this.registerEconomyHandlers();
     this.registerNetworkHandlers();
+    this.registerWorkerHandlers(registryData);
+  }
+
+  /**
+   * Registers worker-specific handlers for autonomous process spawning.
+   */
+  private registerWorkerHandlers(registry: NexusRegistry): void {
+    this.on('task.award', async (params, meta) => {
+      console.log(`[NEXUS_ENGINE] Task ${params.taskId} awarded to agent: ${params.winningAgentId}`);
+      
+      const agent = registry.agents[params.winningAgentId];
+      if (agent && agent.spawnCmd) {
+        return this.workerEngine.spawnWorker(agent);
+      }
+      
+      console.log(`[NEXUS_ENGINE] No local spawn required for agent: ${params.winningAgentId}`);
+      return true;
+    });
   }
 
   /**
