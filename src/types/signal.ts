@@ -12,7 +12,7 @@ export interface NexusSignal {
   params: Record<string, any>;
   meta: {
     sender: string;    // Agent ID from Registry
-    recipient: string; // Agent ID from Registry
+    recipient: string; // Agent ID from Registry, or "broadcast"
     timestamp: number;
     signature: string; // Ed25519 signature of the payload
   };
