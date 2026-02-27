@@ -3,6 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const engine_1 = require("./engine");
 async function main() {
     const engine = new engine_1.NexusEngine();
+    // Check for sync command
+    if (process.argv.includes('sync')) {
+        await engine.sync();
+        return;
+    }
     // Check for --watch flag
     if (process.argv.includes('--watch')) {
         engine.watch();
