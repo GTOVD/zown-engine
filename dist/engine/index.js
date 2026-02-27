@@ -11,10 +11,11 @@ const router_1 = require("./router");
 const sync_1 = require("./sync");
 const dispatcher_1 = require("./dispatcher");
 const auction_1 = require("./auction");
+const ledger_1 = require("./ledger");
 /**
  * Zown Nexus Engine Core
  *
- * Orchestrates identity, verification, routing, dispatching, and markets.
+ * Orchestrates identity, verification, routing, dispatching, markets, and economy.
  */
 class NexusEngine {
     router;
@@ -22,6 +23,7 @@ class NexusEngine {
     registrySync;
     dispatcher;
     auctionEngine;
+    ledgerEngine;
     registryPath;
     inboxPath = '.nexus/inbox';
     constructor(registryPath = './nexus.json') {
@@ -32,8 +34,10 @@ class NexusEngine {
         this.registrySync = new sync_1.RegistrySync();
         this.dispatcher = new dispatcher_1.SignalDispatcher();
         this.auctionEngine = new auction_1.AuctionEngine();
-        // Register Default Market Handlers
+        this.ledgerEngine = new ledger_1.LedgerEngine();
+        // Register Default Market & Economy Handlers
         this.registerMarketHandlers();
+        this.registerEconomyHandlers();
     }
     /**
      * Registers market-specific handlers for agentic bidding.
@@ -52,6 +56,24 @@ class NexusEngine {
         this.on('task.broadcast', async (params, meta) => {
             console.log(`[NEXUS_ENGINE] Task broadcast detected: ${params.taskId}. Opening auction.`);
             return this.auctionEngine.createAuction(params.taskId, meta.sender);
+        });
+    }
+    /**
+     * Registers economy-specific handlers for settlement.
+     */
+    registerEconomyHandlers() {
+        this.on('task.settle', async (params, meta) => {
+            console.log(`[NEXUS_ENGINE] Settlement requested for task: ${params.taskId}`);
+            const transaction = {
+                id: `tx_${Date.now()}_${params.taskId}`,
+                timestamp: Date.now(),
+                from: meta.sender,
+                to: params.to,
+                amount: params.amount,
+                taskId: params.taskId,
+                signature: meta.signature
+            };
+            return this.ledgerEngine.settleTransaction(transaction);
         });
     }
     /**
